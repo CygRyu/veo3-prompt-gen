@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Veo 3 Prompt Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    h1 { color: #333; }
+    textarea, select, input { width: 100%; padding: 8px; margin: 8px 0 16px; }
+    label { font-weight: bold; margin-top: 12px; display: block; }
+    button { padding: 10px 20px; font-size: 16px; }
+    #output { margin-top: 24px; background: #f4f4f4; padding: 12px; border: 1px solid #ccc; white-space: pre-wrap; }
+    .collapsible { cursor: pointer; color: blue; text-decoration: underline; margin-bottom: 8px; }
+    .advanced-section { display: none; }
+  </style>
+</head>
+<body>
+  <h1>🎬 Veo 3 Prompt Generator</h1>
+
+  <label for="description">Main Scene Description:</label>
+  <textarea id="description" rows="4" placeholder="e.g. A cat flying through a futuristic city during a thunderstorm..."></textarea>
+
+  <label for="subject">Subject / Character Focus:</label>
+  <input id="subject" type="text" placeholder="e.g. Cat, Robot, Samurai, Cloud, etc."/>
+
+  <label for="action">Action / Movement Type:</label>
+  <select id="action">
+    <option value="">Select an action</option>
+    <option>Walking</option>
+    <option>Dancing</option>
+    <option>Flying</option>
+    <option>Transformation</option>
+    <option>Interaction</option>
+  </select>
+
+  <label for="style">Video Style:</label>
+  <select id="style">
+    <option>Auto Detect (AI chooses best style)</option>
+    <option>Cinematic / Hollywood Film</option>
+    <option>Realistic Live Action</option>
+    <option>Aerial Cinematic Drone Shot</option>
+    <option>Time-lapse / Slow Motion</option>
+    <option>Film Noir / Black-and-White</option>
+    <option>Analog / Film Grain</option>
+    <option>IMAX Look</option>
+    <option>Documentary Style</option>
+    <option>Natural History / Wildlife</option>
+    <option>Found Footage / Handheld Cam</option>
+    <option>News Report Style</option>
+    <option>Surveillance Footage Look</option>
+    <option>Dreamscape / Surreal</option>
+    <option>Fantasy / Magic Realism</option>
+    <option>Oil Painting / Watercolor</option>
+    <option>Sketch / Ink Drawing</option>
+    <option>Abstract / Experimental</option>
+    <option>Double Exposure / Visual Metaphor</option>
+    <option>Stylized 2D Animation / Anime-like</option>
+    <option>Cartoon 2D</option>
+    <option>Cute Cartoon / Kawaii Style</option>
+    <option>Cartoon 3D / Pixar-like</option>
+    <option>Stop Motion Look</option>
+    <option>Claymation Style</option>
+    <option>Motion Graphic / Minimal Vector</option>
+    <option>Retro 80s / VHS Look</option>
+    <option>Cyberpunk / Futuristic</option>
+    <option>Noir Detective Style</option>
+    <option>Western / Cowboy Film</option>
+    <option>Horror (grainy, eerie lighting)</option>
+    <option>Tiny World / Tilt Shift</option>
+    <option>Microscopic View / Science-Lab Look</option>
+    <option>Macro Lens Simulation</option>
+    <option>Cinematic Portrait Mode</option>
+    <option>Bokeh-Focused Depth-of-Field</option>
+    <option>Overexposed / Underexposed Look</option>
+    <option>Infrared or Thermal Cam Simulation</option>
+    <option>Isometric / Diorama</option>
+    <option>Fantasy Landscapes</option>
+    <option>Post-Apocalyptic World</option>
+    <option>Urban Street Aesthetic</option>
+    <option>Studio Look (ASMR/Product Videos)</option>
+  </select>
+
+  <div class="collapsible" onclick="toggleAdvanced()">+ Advanced Parameters (click to toggle)</div>
+  <div id="advanced" class="advanced-section">
+    <label>Camera Movement:</label>
+    <select id="camera">
+      <option>Auto Detect</option>
+      <option>Static</option>
+      <option>Pan Left/Right</option>
+      <option>Zoom In/Out</option>
+      <option>Dolly Forward/Back</option>
+      <option>Handheld</option>
+      <option>Orbital</option>
+      <option>Tracking Shot</option>
+    </select>
+
+    <label>Lighting:</label>
+    <select id="lighting">
+      <option>Auto Detect</option>
+      <option>Natural</option>
+      <option>Dramatic</option>
+      <option>Soft</option>
+      <option>Harsh</option>
+      <option>Golden Hour</option>
+      <option>Blue Hour</option>
+      <option>Neon</option>
+      <option>Candlelit</option>
+      <option>Studio Lighting</option>
+    </select>
+  </div>
+
+  <button onclick="generatePrompt()">🎥 Generate Prompt</button>
+
+  <div id="output"></div>
+
+  <script>
+    function toggleAdvanced() {
+      const adv = document.getElementById("advanced");
+      adv.style.display = adv.style.display === "none" ? "block" : "none";
+    }
+
+    async function generatePrompt() {
+      const payload = {
+        description: document.getElementById("description").value,
+        subject: document.getElementById("subject").value,
+        action: document.getElementById("action").value,
+        style: document.getElementById("style").value,
+        camera: document.getElementById("camera")?.value || "Auto Detect",
+        lighting: document.getElementById("lighting")?.value || "Auto Detect"
+      };
+
+      document.getElementById("output").innerText = "⏳ Generating...";
+
+      // Replace this with your real backend URL later
+      const response = await fetch("https://your-backend-url.com/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+      document.getElementById("output").innerText = data.prompt || "⚠️ Failed to generate.";
+    }
+
+    // Collapse Advanced by default
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("advanced").style.display = "none";
+    });
+  </script>
+</body>
+</html>
