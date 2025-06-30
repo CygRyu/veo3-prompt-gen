@@ -1293,7 +1293,8 @@
   auth.onAuthStateChanged((user) => {
     if (user) {
       loginBtn.innerText = "🚪 Sign out";
-      userInfo.innerText = `Signed in as ${user.email}`;
+      const username = user.email.split('@')[0];
+      userInfo.innerText = `Welcome, ${username}!`;
       window.currentUID = user.uid;
       updateQuotaCounter(); // ← add this
     } else {
