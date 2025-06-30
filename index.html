@@ -1097,12 +1097,13 @@
 
                 const data = await response.json();
                 
-                if (response.ok) {
-                    document.getElementById("output").innerText = data.prompt || "⚠️ Failed to generate.";
-                } else {
-                    showError(data.error || "Server error occurred.");
-                    document.getElementById("outputSection").classList.add("hidden");
-                }
+                if (response.ok && data.prompt) {
+    document.getElementById("output").innerText = data.prompt;
+    await updateQuotaCounter();  // ✅ update only if successful
+} else {
+    showError(data.error || "Server error occurred.");
+    document.getElementById("outputSection").classList.add("hidden");
+}
             } catch (error) {
                 showError("Error connecting to server. Please try again.");
                 document.getElementById("outputSection").classList.add("hidden");
@@ -1194,6 +1195,28 @@
             }, 2000);
         }
 
+	async function updateQuotaCounter() {
+  if (!window.currentUID) return;
+
+  try {
+    const response = await fetch('https://YOUR-BACKEND-URL-HERE/get-quota', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid: window.currentUID })
+    });
+
+    const data = await response.json();
+    if (data.quota !== undefined) {
+      document.getElementById("quotaCounter").innerText = `🎟️ You have ${data.quota} prompts left`;
+    } else {
+      document.getElementById("quotaCounter").innerText = `❌ Could not retrieve quota`;
+    }
+  } catch (e) {
+    console.error("Quota fetch failed:", e);
+    document.getElementById("quotaCounter").innerText = `⚠️ Error loading quota`;
+  }
+}
+
         // Collapse Advanced and Gallery by default
         document.addEventListener("DOMContentLoaded", () => {
   // Collapse Advanced and Gallery by default
@@ -1220,6 +1243,16 @@
   loginBtn.innerText = "🔐 Sign in with Google";
   loginBtn.style.float = "right";
   document.getElementById("authPanel").appendChild(loginBtn);
+
+  // ⬇️ Add quota counter just below login button
+  const quotaCounter = document.createElement('div');
+  quotaCounter.id = "quotaCounter";
+  quotaCounter.style.fontSize = "13px";
+  quotaCounter.style.color = "#444";
+  quotaCounter.style.marginTop = "4px";
+  quotaCounter.style.float = "right";
+  quotaCounter.style.marginLeft = "10px";
+  document.getElementById("authPanel").appendChild(quotaCounter);
 
   const userInfo = document.createElement('div');
   userInfo.id = "userInfo";
@@ -1262,6 +1295,7 @@
       loginBtn.innerText = "🚪 Sign out";
       userInfo.innerText = `Signed in as ${user.email}`;
       window.currentUID = user.uid;
+      updateQuotaCounter(); // ← add this
     } else {
       loginBtn.innerText = "🔐 Sign in with Google";
       userInfo.innerText = "";
