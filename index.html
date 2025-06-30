@@ -1267,7 +1267,8 @@
     try {
       const result = await auth.signInWithPopup(provider);
       loginBtn.innerText = "🚪 Sign out";
-      userInfo.innerText = `Signed in as ${result.user.email}`;
+      const username = user.email.split('@')[0];
+      userInfo.innerText = `Welcome, ${username}!`;
       window.currentUID = result.user.uid;
       
       // Add this to verify the redirect is working
