@@ -899,11 +899,11 @@
         </div>
     </div>
 
-    <!-- Firebase SDKs -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+<!-- Firebase Core SDK -->
+<script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js"></script>
 
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyBviu7SbOiiaiElR-iw_ORS4d1-8XPkIWM",
     authDomain: "veo3-generator-94c0e.firebaseapp.com",
@@ -913,9 +913,9 @@
     appId: "1:910119717790:web:d90ecf2adc011fd608e48f"
   };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const provider = new firebase.auth.GoogleAuthProvider();
 
   const loginBtn = document.createElement('button');
   loginBtn.id = "loginBtn";
@@ -935,21 +935,22 @@
     const user = auth.currentUser;
     if (!user) {
       try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
+        const result = await auth.signInWithPopup(provider);
         loginBtn.innerText = "🚪 Sign out";
-        userInfo.innerText = `Signed in as ${user.email}`;
+        userInfo.innerText = `Signed in as ${result.user.email}`;
+        window.currentUID = result.user.uid;
       } catch (error) {
         alert("Login failed: " + error.message);
       }
     } else {
-      await signOut(auth);
+      await auth.signOut();
       loginBtn.innerText = "🔐 Sign in with Google";
       userInfo.innerText = "";
+      window.currentUID = null;
     }
   });
 
-  onAuthStateChanged(auth, (user) => {
+  auth.onAuthStateChanged((user) => {
     if (user) {
       loginBtn.innerText = "🚪 Sign out";
       userInfo.innerText = `Signed in as ${user.email}`;
@@ -961,7 +962,6 @@
     }
   });
 </script>
-
 
     <script>
         // Dark mode detection
