@@ -899,6 +899,70 @@
         </div>
     </div>
 
+    <!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBviu7SbOiiaiElR-iw_ORS4d1-8XPkIWM",
+    authDomain: "veo3-generator-94c0e.firebaseapp.com",
+    projectId: "veo3-generator-94c0e",
+    storageBucket: "veo3-generator-94c0e.firebasestorage.app",
+    messagingSenderId: "910119717790",
+    appId: "1:910119717790:web:d90ecf2adc011fd608e48f"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const loginBtn = document.createElement('button');
+  loginBtn.id = "loginBtn";
+  loginBtn.className = "copy-btn";
+  loginBtn.innerText = "🔐 Sign in with Google";
+  loginBtn.style.float = "right";
+  document.querySelector("h1").appendChild(loginBtn);
+
+  const userInfo = document.createElement('div');
+  userInfo.id = "userInfo";
+  userInfo.style.fontSize = "12px";
+  userInfo.style.color = "#666";
+  userInfo.style.marginTop = "8px";
+  document.querySelector("h1").appendChild(userInfo);
+
+  loginBtn.addEventListener("click", async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        loginBtn.innerText = "🚪 Sign out";
+        userInfo.innerText = `Signed in as ${user.email}`;
+      } catch (error) {
+        alert("Login failed: " + error.message);
+      }
+    } else {
+      await signOut(auth);
+      loginBtn.innerText = "🔐 Sign in with Google";
+      userInfo.innerText = "";
+    }
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loginBtn.innerText = "🚪 Sign out";
+      userInfo.innerText = `Signed in as ${user.email}`;
+      window.currentUID = user.uid;
+    } else {
+      loginBtn.innerText = "🔐 Sign in with Google";
+      userInfo.innerText = "";
+      window.currentUID = null;
+    }
+  });
+</script>
+
+
     <script>
         // Dark mode detection
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1053,6 +1117,7 @@
             existingErrors.forEach(error => error.remove());
 
             const payload = {
+		uid: window.currentUID || null,
                 description: description,
                 subject: document.getElementById("subject").value,
                 action: document.getElementById("action").value,
