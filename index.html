@@ -335,36 +335,24 @@
         }
         
         .video-container {
- 	    position: relative;
-    	    width: 100%;
-    	    max-width: 800px; /* Optional: Set maximum width */
-    	    margin: 0 auto 16px; /* Centers the container */
-	}
+            position: relative;
+            width: 100%;
+            margin-bottom: 16px;
+        }
         
         .video-frame {
-    	    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-	 }
-
-	/* NEW RULES ADDED HERE */
-	.video-wrapper {
-    	    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    height: 0;
-    overflow: hidden;
-	 }
-
-	.video-gallery {
-    	   display: none;
-    	   max-width: 800px;
-    	   margin: 0 auto;
-    	   padding: 0 16px;
-	 }
+            width: 100%;
+            height: 315px;
+            border: none;
+            border-radius: 6px;
+        }
+        
+        /* Enhanced 16:9 aspect ratio for video frames */
+        @media (max-width: 560px) {
+            .video-frame {
+                height: calc(100vw * 9 / 16 - 32px); /* Responsive 16:9 ratio on mobile */
+            }
+        }
         
         .video-navigation {
             display: flex;
@@ -852,15 +840,9 @@
         <button class="collapsible" onclick="toggleGallery()">+ Sample Gallery</button>
         <div id="videoGallery" class="video-gallery">
             <div class="video-container">
-    <div class="video-title" id="videoTitle">Sample Video 1</div>
-    <div class="video-wrapper">
-        <iframe id="videoFrame" class="video-frame" 
-                src="about:blank"
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
-    </div>
-</div>
+                <div class="video-title" id="videoTitle">Sample Video 1</div>
+                <iframe id="videoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
+            </div>
             <div class="video-navigation">
                 <button class="video-nav-btn" id="prevBtn" onclick="previousVideo()">← Previous</button>
                 <span class="video-counter" id="videoCounter">1 / 3</span>
@@ -868,7 +850,7 @@
             </div>
         </div>
         <div id="galleryPlaceholder" class="gallery-placeholder">
-            Featured video examples will be showcased here (click '+ Sample Gallery' button above to expand)
+            Coming soon - Featured video examples will be showcased here
         </div>
     </div>
 
@@ -906,20 +888,19 @@
             unique: ['Quirky/Weird', 'Luxurious', 'Cozy', 'Badass', 'Awkward', 'Chaotic', 'Zen/Spiritual']
         };
 
-        // Video gallery data - Replace these URLs with your actual YouTube URLs
+        // Video gallery data with your YouTube video
         const videoData = [
             {
-                title: "Sample Difference",
-		url: "https://www.youtube.com/embed/MK2sbQper4M?rel=0&enablejsapi=1" 
-
+                title: "Veo 3 Showcase Video - AI Video Generation Demo",
+                url: "https://www.youtube.com/embed/MK2sbQper4M?rel=0" // Your actual YouTube video
             },
             {
                 title: "Sample Video 2 - Advanced Settings Demo",
-                url: "https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_2" // Replace PLACEHOLDER_VIDEO_ID_2 with actual video ID
+                url: "https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_2" // Replace with another video if needed
             },
             {
                 title: "Sample Video 3 - Creative Style Examples",
-                url: "https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_3" // Replace PLACEHOLDER_VIDEO_ID_3 with actual video ID
+                url: "https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_3" // Replace with another video if needed
             }
         ];
 
@@ -956,23 +937,19 @@
         }
 
         function loadVideo(index) {
-    if (index >= 0 && index < videoData.length) {
-        const video = videoData[index];
-        const iframe = document.getElementById("videoFrame");
-        iframe.src = video.url;
-        document.getElementById("videoTitle").textContent = video.title;
-        document.getElementById("videoCounter").textContent = `${index + 1} / ${videoData.length}`;
-        
-        // Force iframe reload
-        iframe.contentWindow.location.reload(true);
-        
-        // Update navigation buttons
-        document.getElementById("prevBtn").disabled = index === 0;
-        document.getElementById("nextBtn").disabled = index === videoData.length - 1;
-        
-        currentVideoIndex = index;
-    }
-}
+            if (index >= 0 && index < videoData.length) {
+                const video = videoData[index];
+                document.getElementById("videoFrame").src = video.url;
+                document.getElementById("videoTitle").textContent = video.title;
+                document.getElementById("videoCounter").textContent = `${index + 1} / ${videoData.length}`;
+                
+                // Update navigation buttons
+                document.getElementById("prevBtn").disabled = index === 0;
+                document.getElementById("nextBtn").disabled = index === videoData.length - 1;
+                
+                currentVideoIndex = index;
+            }
+        }
 
         function previousVideo() {
             if (currentVideoIndex > 0) {
