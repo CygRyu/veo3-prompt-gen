@@ -1229,23 +1229,33 @@
   document.getElementById("authPanel").appendChild(userInfo);
 
   loginBtn.addEventListener("click", async () => {
-    const user = auth.currentUser;
-    if (!user) {
-      try {
-        const result = await auth.signInWithPopup(provider);
-        loginBtn.innerText = "🚪 Sign out";
-        userInfo.innerText = `Signed in as ${result.user.email}`;
-        window.currentUID = result.user.uid;
-      } catch (error) {
-        alert("Login failed: " + error.message);
-      }
-    } else {
+  const user = auth.currentUser;
+  if (!user) {
+    try {
+      const result = await auth.signInWithPopup(provider);
+      loginBtn.innerText = "🚪 Sign out";
+      userInfo.innerText = `Signed in as ${result.user.email}`;
+      window.currentUID = result.user.uid;
+      
+      // Add this to verify the redirect is working
+      console.log("User signed in:", result.user);
+    } catch (error) {
+      console.error("Login error:", error);
+      // Show more detailed error to user
+      showPopupNotification(`Login failed: ${error.message}`);
+    }
+  } else {
+    try {
       await auth.signOut();
       loginBtn.innerText = "🔐 Sign in with Google";
       userInfo.innerText = "";
       window.currentUID = null;
+    } catch (error) {
+      console.error("Logout error:", error);
+      showPopupNotification(`Logout failed: ${error.message}`);
     }
-  });
+  }
+});
 
   auth.onAuthStateChanged((user) => {
     if (user) {
