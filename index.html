@@ -7,149 +7,195 @@
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         
         body { 
-            font-family: Arial, sans-serif; 
-            padding: 20px; 
-            max-width: 800px; 
-            margin: auto; 
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            padding: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            line-height: 1.5;
             background-color: #ffffff;
-            color: #333;
+            color: #1f2328;
         }
         
         @media (max-width: 768px) {
             body {
-                padding: 15px;
+                padding: 16px;
             }
         }
         
         h1 { 
-            color: #333; 
+            font-size: 32px;
+            font-weight: 600;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
+            color: #1f2328;
+            border-bottom: 1px solid #d1d9e0;
+            padding-bottom: 16px;
         }
         
         h2 {
-            color: #333;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1f2328;
             padding-bottom: 8px;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 1px solid #d1d9e0;
         }
         
         h3 {
-            color: #555;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: #656d76;
         }
         
         textarea, select, input[type="text"], input[type="range"] { 
-            width: 100%; 
-            padding: 12px; 
-            margin: 8px 0 16px; 
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            width: 100%;
+            padding: 8px 12px;
+            margin: 8px 0 16px;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
             font-size: 16px;
-            font-family: Arial, sans-serif;
+            font-family: inherit;
+            background-color: #ffffff;
+            color: #1f2328;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        textarea:focus, select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #0969da;
+            box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
         }
         
         textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
+            font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
         }
         
         label { 
-            font-weight: bold; 
-            margin-top: 12px; 
-            display: block; 
-            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: block;
+            color: #1f2328;
         }
         
         button { 
-            padding: 12px 24px; 
-            font-size: 16px; 
-            background-color: #007cba;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: #1f883d;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.15s ease-in-out;
+            font-family: inherit;
         }
         
         button:hover {
-            background-color: #005fa3;
+            background-color: #1a7f37;
+        }
+        
+        button:active {
+            background-color: #18752f;
         }
         
         .generate-btn {
             display: block;
-            margin: 30px auto;
-            font-size: 18px;
-            padding: 15px 30px;
+            margin: 32px auto;
+            font-size: 16px;
+            padding: 12px 24px;
+            background-color: #0969da;
+        }
+        
+        .generate-btn:hover {
+            background-color: #0860ca;
+        }
+        
+        .generate-btn:active {
+            background-color: #0757ba;
         }
         
         .copy-btn {
-            background-color: #28a745;
-            font-size: 14px;
-            padding: 8px 16px;
-            margin-left: 10px;
+            background-color: #656d76;
+            font-size: 12px;
+            padding: 6px 12px;
+            margin-left: 12px;
         }
         
         .copy-btn:hover {
-            background-color: #218838;
+            background-color: #4c545c;
         }
         
         #output { 
-            margin-top: 24px; 
-            background: #f4f4f4; 
-            padding: 15px; 
-            border: 1px solid #ccc; 
-            white-space: pre-wrap; 
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, 'Lucida Console', 'Monaco', monospace;
+            margin-top: 16px;
+            background: #f6f8fa;
+            padding: 16px;
+            border: 1px solid #d1d9e0;
+            white-space: pre-wrap;
+            border-radius: 6px;
+            font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 13px;
-            line-height: 1.4;
+            line-height: 1.45;
+            color: #1f2328;
         }
         
         .output-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
         
         @media (max-width: 480px) {
             .output-header {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 12px;
             }
             
             .copy-btn {
                 margin-left: 0;
-                margin-top: 10px;
             }
         }
         
         .collapsible { 
-            cursor: pointer; 
-            color: blue; 
-            text-decoration: underline; 
-            margin-bottom: 15px;
-            padding: 10px 0;
+            cursor: pointer;
+            color: #0969da;
+            text-decoration: none;
+            margin-bottom: 16px;
+            padding: 12px 0;
             display: block;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            background: none;
+            text-align: left;
+            width: 100%;
+            transition: none;
+        }
+        
+        .collapsible:hover {
+            background: none;
+            color: #0969da;
         }
         
         .advanced-section { 
-            display: none; 
+            display: none;
         }
         
         .form-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 16px;
         }
         
         @media (min-width: 768px) {
@@ -174,16 +220,17 @@
         }
         
         .slider-value {
-            font-weight: normal;
-            color: #007cba;
+            font-weight: 500;
+            color: #0969da;
+            font-size: 12px;
         }
         
         input[type="range"] {
             -webkit-appearance: none;
             appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: #e0e0e0;
+            height: 4px;
+            border-radius: 2px;
+            background: #d1d9e0;
             outline: none;
             margin: 0;
         }
@@ -191,46 +238,82 @@
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background: #007cba;
+            background: #0969da;
             cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 1px rgba(9, 105, 218, 0.2);
         }
         
         input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background: #007cba;
+            background: #0969da;
             cursor: pointer;
-            border: none;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 1px rgba(9, 105, 218, 0.2);
         }
         
         .section {
-            background: #f9f9f9;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            background: #ffffff;
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 6px;
+            border: 1px solid #d1d9e0;
         }
         
         .hidden {
             display: none;
         }
         
+        .error-message {
+            background-color: #fff8f0;
+            border: 1px solid #d1242f;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 16px 0;
+            color: #d1242f;
+            font-size: 14px;
+        }
+        
+        .popup-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #1f883d;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .popup-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         .footer {
             text-align: center;
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid #e0e0e0;
-            color: #666;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #d1d9e0;
+            color: #656d76;
+            font-size: 14px;
         }
         
         .footer a {
-            color: #007cba;
+            color: #0969da;
             text-decoration: none;
-            margin: 0 15px;
+            margin: 0 12px;
         }
         
         .footer a:hover {
@@ -238,62 +321,166 @@
         }
         
         .gallery-placeholder {
-            background: #f0f0f0;
-            padding: 40px 20px;
+            background: #f6f8fa;
+            padding: 48px 24px;
             text-align: center;
-            color: #888;
+            color: #656d76;
             font-style: italic;
-            border-radius: 8px;
+            border-radius: 6px;
+            border: 1px solid #d1d9e0;
+        }
+        
+        .video-gallery {
+            display: none;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        
+        .video-frame {
+            width: 100%;
+            height: 315px;
+            border: none;
+            border-radius: 6px;
+        }
+        
+        .video-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+        }
+        
+        .video-nav-btn {
+            background-color: #0969da;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.15s ease-in-out;
+        }
+        
+        .video-nav-btn:hover {
+            background-color: #0860ca;
+        }
+        
+        .video-nav-btn:disabled {
+            background-color: #656d76;
+            cursor: not-allowed;
+        }
+        
+        .video-counter {
+            font-size: 14px;
+            color: #656d76;
+            font-weight: 500;
+        }
+        
+        .video-title {
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2328;
         }
 
         /* Dark mode support */
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #1a1a1a;
-                color: #e0e0e0;
+                background-color: #0d1117;
+                color: #e6edf3;
             }
             
             h1, h2 {
-                color: #e0e0e0;
+                color: #e6edf3;
+                border-bottom-color: #30363d;
             }
             
             h3, label {
-                color: #c0c0c0;
+                color: #8d96a0;
             }
             
             textarea, select, input[type="text"] {
-                background-color: #2a2a2a;
-                border-color: #555;
-                color: #e0e0e0;
+                background-color: #21262d;
+                border-color: #30363d;
+                color: #e6edf3;
+            }
+            
+            textarea:focus, select:focus, input[type="text"]:focus {
+                border-color: #1f6feb;
+                box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
             }
             
             #output {
-                background: #2a2a2a;
-                border-color: #555;
-                color: #e0e0e0;
+                background: #161b22;
+                border-color: #30363d;
+                color: #e6edf3;
             }
             
             .section {
-                background: #242424;
-                border-color: #444;
+                background: #0d1117;
+                border-color: #30363d;
             }
             
             input[type="range"] {
-                background: #444;
+                background: #30363d;
+            }
+            
+            input[type="range"]::-webkit-slider-thumb {
+                background: #1f6feb;
+                border-color: #0d1117;
+                box-shadow: 0 0 0 1px rgba(31, 111, 235, 0.2);
+            }
+            
+            input[type="range"]::-moz-range-thumb {
+                background: #1f6feb;
+                border-color: #0d1117;
+                box-shadow: 0 0 0 1px rgba(31, 111, 235, 0.2);
             }
             
             .gallery-placeholder {
-                background: #2a2a2a;
-                color: #888;
+                background: #161b22;
+                color: #8d96a0;
+                border-color: #30363d;
             }
             
             .footer {
-                border-top-color: #444;
-                color: #999;
+                border-top-color: #30363d;
+                color: #8d96a0;
             }
             
-            h2 {
-                border-bottom-color: #444;
+            .collapsible {
+                color: #58a6ff;
+            }
+            
+            .slider-value {
+                color: #58a6ff;
+            }
+            
+            .error-message {
+                background-color: #2d1617;
+                border-color: #f85149;
+                color: #ffa198;
+            }
+            
+            .generate-btn {
+                background-color: #238636;
+            }
+            
+            .generate-btn:hover {
+                background-color: #2ea043;
+            }
+            
+            .video-title {
+                color: #e6edf3;
+            }
+            
+            .video-counter {
+                color: #8d96a0;
             }
         }
     </style>
@@ -305,17 +492,17 @@
     <div class="section">
         <h2>Basic Settings</h2>
         
-        <label for="description">Your Prompt:</label>
+        <label for="description">Your Prompt *</label>
         <textarea id="description" rows="4" placeholder="e.g. A cat flying through a futuristic city during a thunderstorm..."></textarea>
 
         <div class="form-grid form-grid-2">
             <div>
-                <label for="subject">Subject / Character Focus:</label>
+                <label for="subject">Subject / Character Focus</label>
                 <input id="subject" type="text" placeholder="e.g. Cat, Robot, Samurai, Cloud, etc."/>
             </div>
             
             <div>
-                <label for="action">Action / Movement Type:</label>
+                <label for="action">Action / Movement Type</label>
                 <select id="action">
                     <option value="">Auto Detect</option>
                     <option>Walking</option>
@@ -331,7 +518,7 @@
             </div>
         </div>
 
-        <label for="style">Video Style:</label>
+        <label for="style">Video Style</label>
         <select id="style">
             <option>Auto Detect (AI chooses best style)</option>
             <option>Cinematic / Hollywood Film</option>
@@ -385,7 +572,7 @@
         
         <div class="form-grid form-grid-2">
             <div>
-                <label for="generalTone">General Tone:</label>
+                <label for="generalTone">General Tone</label>
                 <select id="generalTone" onchange="updateSubTones()">
                     <option value="">Auto Detect</option>
                     <option value="emotional">Emotional Tones</option>
@@ -400,7 +587,7 @@
             </div>
 
             <div>
-                <label for="subTone">Specific Tone:</label>
+                <label for="subTone">Specific Tone</label>
                 <select id="subTone">
                     <option value="">Auto Detect</option>
                 </select>
@@ -414,7 +601,7 @@
         
         <div class="form-grid form-grid-2">
             <div>
-                <label for="aspectRatio">Aspect Ratio:</label>
+                <label for="aspectRatio">Aspect Ratio</label>
                 <select id="aspectRatio">
                     <option value="16:9">16:9 (Widescreen)</option>
                     <option value="9:16">9:16 (Vertical)</option>
@@ -425,21 +612,21 @@
             </div>
 
             <div>
-                <label for="duration">Duration:</label>
-                <input id="duration" type="text" value="8 seconds" readonly style="background-color: #f0f0f0; color: #666;"/>
+                <label for="duration">Duration</label>
+                <input id="duration" type="text" value="8 seconds" readonly style="background-color: #f6f8fa; color: #656d76;"/>
             </div>
         </div>
     </div>
 
     <!-- Advanced Parameters -->
-    <div class="collapsible" onclick="toggleAdvanced()">+ Advanced Parameters (Optional/Collapsible Section)</div>
+    <button class="collapsible" onclick="toggleAdvanced()">+ Advanced Parameters (Optional)</button>
     <div id="advanced" class="advanced-section">
         <div class="section">
             <!-- Camera Settings -->
             <h3>Camera Settings</h3>
             <div class="form-grid form-grid-3">
                 <div>
-                    <label for="cameraMovement">Camera Movement:</label>
+                    <label for="cameraMovement">Camera Movement</label>
                     <select id="cameraMovement">
                         <option>Auto Detect</option>
                         <option>Static</option>
@@ -456,7 +643,7 @@
                 </div>
 
                 <div>
-                    <label for="cameraLevel">Camera Level:</label>
+                    <label for="cameraLevel">Camera Level</label>
                     <select id="cameraLevel">
                         <option>Auto Detect</option>
                         <option>Eye Level</option>
@@ -469,7 +656,7 @@
                 </div>
 
                 <div>
-                    <label for="lensType">Lens Type:</label>
+                    <label for="lensType">Lens Type</label>
                     <select id="lensType">
                         <option>Auto Detect</option>
                         <option>Standard (50mm)</option>
@@ -486,7 +673,7 @@
             <h3>Visual Settings</h3>
             <div class="form-grid form-grid-2">
                 <div>
-                    <label for="depthOfField">Depth of Field:</label>
+                    <label for="depthOfField">Depth of Field</label>
                     <select id="depthOfField">
                         <option>Auto Detect</option>
                         <option>Shallow</option>
@@ -496,7 +683,7 @@
                 </div>
 
                 <div>
-                    <label for="lighting">Lighting Preference:</label>
+                    <label for="lighting">Lighting Preference</label>
                     <select id="lighting">
                         <option>Auto Detect</option>
                         <option>Natural</option>
@@ -516,7 +703,7 @@
             <h3>Visual Effects</h3>
             <div class="slider-container">
                 <div class="slider-label">
-                    <label for="filmGrain">Film Grain:</label>
+                    <label for="filmGrain">Film Grain</label>
                     <span class="slider-value" id="filmGrainValue">0%</span>
                 </div>
                 <input type="range" id="filmGrain" min="0" max="100" value="0" oninput="updateSliderValue('filmGrain')">
@@ -524,7 +711,7 @@
 
             <div class="slider-container">
                 <div class="slider-label">
-                    <label for="chromaticAberration">Chromatic Aberration:</label>
+                    <label for="chromaticAberration">Chromatic Aberration</label>
                     <span class="slider-value" id="chromaticAberrationValue">0%</span>
                 </div>
                 <input type="range" id="chromaticAberration" min="0" max="100" value="0" oninput="updateSliderValue('chromaticAberration')">
@@ -534,7 +721,7 @@
             <h3>Environment & Atmosphere</h3>
             <div class="form-grid form-grid-3">
                 <div>
-                    <label for="environment">Environment/Setting:</label>
+                    <label for="environment">Environment/Setting</label>
                     <select id="environment">
                         <option>Auto Detect</option>
                         <option>Indoor</option>
@@ -551,7 +738,7 @@
                 </div>
 
                 <div>
-                    <label for="colorPalette">Color Palette:</label>
+                    <label for="colorPalette">Color Palette</label>
                     <select id="colorPalette">
                         <option>Auto Detect</option>
                         <option>Warm Tones</option>
@@ -566,7 +753,7 @@
                 </div>
 
                 <div>
-                    <label for="weather">Weather/Atmosphere:</label>
+                    <label for="weather">Weather/Atmosphere</label>
                     <select id="weather">
                         <option>Auto Detect</option>
                         <option>Sunny</option>
@@ -582,7 +769,7 @@
                 </div>
 
                 <div>
-                    <label for="timeOfDay">Time of Day:</label>
+                    <label for="timeOfDay">Time of Day</label>
                     <select id="timeOfDay">
                         <option>Auto Detect</option>
                         <option>Dawn</option>
@@ -596,7 +783,7 @@
                 </div>
 
                 <div>
-                    <label for="motionIntensity">Motion Intensity:</label>
+                    <label for="motionIntensity">Motion Intensity</label>
                     <select id="motionIntensity">
                         <option>Auto Detect</option>
                         <option>Subtle</option>
@@ -608,7 +795,7 @@
                 </div>
 
                 <div>
-                    <label for="moodEmotion">Mood/Emotion:</label>
+                    <label for="moodEmotion">Mood/Emotion</label>
                     <select id="moodEmotion">
                         <option>Auto Detect</option>
                         <option>Happy</option>
@@ -624,7 +811,7 @@
             </div>
 
             <!-- Dialogue/Text Overlay -->
-            <label for="dialogue">Dialogue/Text Overlay (Optional):</label>
+            <label for="dialogue">Dialogue/Text Overlay (Optional)</label>
             <textarea id="dialogue" rows="2" placeholder="Enter any dialogue or text elements to include..."></textarea>
         </div>
     </div>
@@ -640,10 +827,21 @@
         <div id="output"></div>
     </div>
 
-    <!-- Sample Gallery Placeholder -->
+    <!-- Sample Gallery -->
     <div class="section">
-        <h2>Sample Gallery</h2>
-        <div class="gallery-placeholder">
+        <button class="collapsible" onclick="toggleGallery()">+ Sample Gallery</button>
+        <div id="videoGallery" class="video-gallery">
+            <div class="video-container">
+                <div class="video-title" id="videoTitle">Sample Video 1</div>
+                <iframe id="videoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
+            </div>
+            <div class="video-navigation">
+                <button class="video-nav-btn" id="prevBtn" onclick="previousVideo()">← Previous</button>
+                <span class="video-counter" id="videoCounter">1 / 3</span>
+                <button class="video-nav-btn" id="nextBtn" onclick="nextVideo()">Next →</button>
+            </div>
+        </div>
+        <div id="galleryPlaceholder" class="gallery-placeholder">
             Coming soon - Featured video examples will be showcased here
         </div>
     </div>
@@ -658,6 +856,18 @@
     </div>
 
     <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
         // Tone options mapping
         const toneOptions = {
             emotional: ['Happy/Joyful', 'Funny/Comedic', 'Heartwarming', 'Sad/Melancholic', 'Romantic', 'Inspirational/Motivational', 'Peaceful/Calming', 'Nostalgic'],
@@ -670,16 +880,78 @@
             unique: ['Quirky/Weird', 'Luxurious', 'Cozy', 'Badass', 'Awkward', 'Chaotic', 'Zen/Spiritual']
         };
 
+        // Video gallery data - Replace these URLs with your actual YouTube URLs
+        const videoData = [
+            {
+                title: "Sample Video 1 - Basic Prompt Enhancement",
+                url: "https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_1" // Replace PLACEHOLDER_VIDEO_ID_1 with actual video ID
+            },
+            {
+                title: "Sample Video 2 - Advanced Settings Demo",
+                url: "https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_2" // Replace PLACEHOLDER_VIDEO_ID_2 with actual video ID
+            },
+            {
+                title: "Sample Video 3 - Creative Style Examples",
+                url: "https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_3" // Replace PLACEHOLDER_VIDEO_ID_3 with actual video ID
+            }
+        ];
+
+        let currentVideoIndex = 0;
+
         function toggleAdvanced() {
             const adv = document.getElementById("advanced");
             const button = event.target;
             
             if (adv.style.display === "none" || adv.style.display === "") {
                 adv.style.display = "block";
-                button.innerHTML = "- Advanced Parameters (Optional/Collapsible Section)";
+                button.innerHTML = "- Advanced Parameters (Optional)";
             } else {
                 adv.style.display = "none";
-                button.innerHTML = "+ Advanced Parameters (Optional/Collapsible Section)";
+                button.innerHTML = "+ Advanced Parameters (Optional)";
+            }
+        }
+
+        function toggleGallery() {
+            const gallery = document.getElementById("videoGallery");
+            const placeholder = document.getElementById("galleryPlaceholder");
+            const button = event.target;
+            
+            if (gallery.style.display === "none" || gallery.style.display === "") {
+                gallery.style.display = "block";
+                placeholder.style.display = "none";
+                button.innerHTML = "- Sample Gallery";
+                loadVideo(currentVideoIndex);
+            } else {
+                gallery.style.display = "none";
+                placeholder.style.display = "block";
+                button.innerHTML = "+ Sample Gallery";
+            }
+        }
+
+        function loadVideo(index) {
+            if (index >= 0 && index < videoData.length) {
+                const video = videoData[index];
+                document.getElementById("videoFrame").src = video.url;
+                document.getElementById("videoTitle").textContent = video.title;
+                document.getElementById("videoCounter").textContent = `${index + 1} / ${videoData.length}`;
+                
+                // Update navigation buttons
+                document.getElementById("prevBtn").disabled = index === 0;
+                document.getElementById("nextBtn").disabled = index === videoData.length - 1;
+                
+                currentVideoIndex = index;
+            }
+        }
+
+        function previousVideo() {
+            if (currentVideoIndex > 0) {
+                loadVideo(currentVideoIndex - 1);
+            }
+        }
+
+        function nextVideo() {
+            if (currentVideoIndex < videoData.length - 1) {
+                loadVideo(currentVideoIndex + 1);
             }
         }
 
@@ -706,9 +978,38 @@
             valueSpan.textContent = slider.value + '%';
         }
 
+        function showError(message) {
+            // Remove existing error messages
+            const existingErrors = document.querySelectorAll('.error-message');
+            existingErrors.forEach(error => error.remove());
+            
+            // Create new error message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            
+            // Insert after the description field
+            const descriptionField = document.getElementById('description');
+            descriptionField.parentNode.insertBefore(errorDiv, descriptionField.nextSibling);
+            
+            // Scroll to error
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
         async function generatePrompt() {
+            // Validate description field
+            const description = document.getElementById("description").value.trim();
+            if (!description) {
+                showError("Please enter a prompt description before generating.");
+                return;
+            }
+            
+            // Remove any existing error messages
+            const existingErrors = document.querySelectorAll('.error-message');
+            existingErrors.forEach(error => error.remove());
+
             const payload = {
-                description: document.getElementById("description").value,
+                description: description,
                 subject: document.getElementById("subject").value,
                 action: document.getElementById("action").value,
                 style: document.getElementById("style").value,
@@ -743,9 +1044,16 @@
                 });
 
                 const data = await response.json();
-                document.getElementById("output").innerText = data.prompt || "⚠️ Failed to generate.";
+                
+                if (response.ok) {
+                    document.getElementById("output").innerText = data.prompt || "⚠️ Failed to generate.";
+                } else {
+                    showError(data.error || "Server error occurred.");
+                    document.getElementById("outputSection").classList.add("hidden");
+                }
             } catch (error) {
-                document.getElementById("output").innerText = "⚠️ Error connecting to server. Please try again.";
+                showError("Error connecting to server. Please try again.");
+                document.getElementById("outputSection").classList.add("hidden");
                 console.error('Error:', error);
             }
         }
@@ -787,20 +1095,57 @@
         }
 
         function showCopyFeedback() {
+            // Show popup notification
+            showPopupNotification('✅ Copied to clipboard!');
+            
+            // Also change button text briefly
             const button = event.target;
             const originalText = button.innerHTML;
             button.innerHTML = '✅ Copied!';
-            button.style.backgroundColor = '#218838';
+            const originalBg = button.style.backgroundColor;
+            button.style.backgroundColor = '#1a7f37';
             
             setTimeout(() => {
                 button.innerHTML = originalText;
-                button.style.backgroundColor = '#28a745';
+                button.style.backgroundColor = originalBg;
             }, 2000);
         }
 
-        // Collapse Advanced by default
+        function showPopupNotification(message) {
+            // Remove any existing popup
+            const existingPopup = document.querySelector('.popup-notification');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
+
+            // Create new popup
+            const popup = document.createElement('div');
+            popup.className = 'popup-notification';
+            popup.textContent = message;
+            
+            // Add to body
+            document.body.appendChild(popup);
+            
+            // Trigger animation
+            setTimeout(() => {
+                popup.classList.add('show');
+            }, 10);
+            
+            // Remove after delay
+            setTimeout(() => {
+                popup.classList.remove('show');
+                setTimeout(() => {
+                    if (popup.parentNode) {
+                        popup.remove();
+                    }
+                }, 300);
+            }, 2000);
+        }
+
+        // Collapse Advanced and Gallery by default
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("advanced").style.display = "none";
+            document.getElementById("videoGallery").style.display = "none";
         });
     </script>
 </body>
