@@ -342,18 +342,21 @@
 	}
         
         .video-frame {
-    	    width: 100%;
-            height: 0;
-    	    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    	    border: none;
-    	    border-radius: 6px;
+    	    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 	 }
 
 	/* NEW RULES ADDED HERE */
 	.video-wrapper {
     	    position: relative;
-    	    width: 100%;
-    	    overflow: hidden;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
 	 }
 
 	.video-gallery {
@@ -849,11 +852,15 @@
         <button class="collapsible" onclick="toggleGallery()">+ Sample Gallery</button>
         <div id="videoGallery" class="video-gallery">
             <div class="video-container">
-    		<div class="video-title" id="videoTitle">Sample Video 1</div>
-    		<div class="video-wrapper">
-        		<iframe id="videoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
-    		</div>
-	    </div>
+    <div class="video-title" id="videoTitle">Sample Video 1</div>
+    <div class="video-wrapper">
+        <iframe id="videoFrame" class="video-frame" 
+                src="about:blank"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+    </div>
+</div>
             <div class="video-navigation">
                 <button class="video-nav-btn" id="prevBtn" onclick="previousVideo()">← Previous</button>
                 <span class="video-counter" id="videoCounter">1 / 3</span>
@@ -903,7 +910,8 @@
         const videoData = [
             {
                 title: "Sample Difference",
-		url: "https://www.youtube.com/embed/MK2sbQper4M?rel=0"
+		url: "https://www.youtube.com/embed/MK2sbQper4M?rel=0&enablejsapi=1" 
+
             },
             {
                 title: "Sample Video 2 - Advanced Settings Demo",
@@ -948,19 +956,23 @@
         }
 
         function loadVideo(index) {
-            if (index >= 0 && index < videoData.length) {
-                const video = videoData[index];
-                document.getElementById("videoFrame").src = video.url;
-                document.getElementById("videoTitle").textContent = video.title;
-                document.getElementById("videoCounter").textContent = `${index + 1} / ${videoData.length}`;
-                
-                // Update navigation buttons
-                document.getElementById("prevBtn").disabled = index === 0;
-                document.getElementById("nextBtn").disabled = index === videoData.length - 1;
-                
-                currentVideoIndex = index;
-            }
-        }
+    if (index >= 0 && index < videoData.length) {
+        const video = videoData[index];
+        const iframe = document.getElementById("videoFrame");
+        iframe.src = video.url;
+        document.getElementById("videoTitle").textContent = video.title;
+        document.getElementById("videoCounter").textContent = `${index + 1} / ${videoData.length}`;
+        
+        // Force iframe reload
+        iframe.contentWindow.location.reload(true);
+        
+        // Update navigation buttons
+        document.getElementById("prevBtn").disabled = index === 0;
+        document.getElementById("nextBtn").disabled = index === videoData.length - 1;
+        
+        currentVideoIndex = index;
+    }
+}
 
         function previousVideo() {
             if (currentVideoIndex > 0) {
