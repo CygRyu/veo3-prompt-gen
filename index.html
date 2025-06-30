@@ -529,7 +529,10 @@
     </style>
 </head>
 <body>
-    <h1>🎬 Veo 3 Prompt Generator</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+  <h1 style="margin-bottom: 0;">🎬 Veo 3 Prompt Generator</h1>
+  <div id="authPanel"></div>
+</div>
 
     <!-- Basic Settings -->
     <div class="section">
@@ -923,14 +926,14 @@ document.addEventListener("DOMContentLoaded", () => {
   loginBtn.className = "copy-btn";
   loginBtn.innerText = "🔐 Sign in with Google";
   loginBtn.style.float = "right";
-  document.querySelector("h1").appendChild(loginBtn);
+  document.getElementById("authPanel").appendChild(loginBtn);
 
   const userInfo = document.createElement('div');
   userInfo.id = "userInfo";
   userInfo.style.fontSize = "12px";
   userInfo.style.color = "#666";
   userInfo.style.marginTop = "8px";
-  document.querySelector("h1").appendChild(userInfo);
+  document.getElementById("authPanel").appendChild(userInfo);
 
   loginBtn.addEventListener("click", async () => {
     const user = auth.currentUser;
