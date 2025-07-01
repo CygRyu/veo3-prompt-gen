@@ -2412,6 +2412,7 @@ document.addEventListener("DOMContentLoaded", () => {
       window.currentUID = user.uid;
       await updateQuotaCounter();
       if (isAdmin(user.uid)) {
+  // 🔹 Admin Code Generator UI
   const adminPanel = document.createElement("div");
   adminPanel.id = "adminPanel";
   adminPanel.style.marginTop = "16px";
@@ -2421,7 +2422,6 @@ document.addEventListener("DOMContentLoaded", () => {
     <input type="number" id="quotaInput" placeholder="Quota (e.g., 50)" /><br>
     <input type="date" id="expiryInput" placeholder="Expiry Date (YYYY-MM-DD)" /><br>
     <button class="copy-btn" id="generateCodeBtn">Generate Code</button>
-    <div id="adminFeedback" style="margin-top:4px; font-size:13px;"></div>
   `;
   document.getElementById("authPanel").appendChild(adminPanel);
 
@@ -2453,44 +2453,54 @@ document.addEventListener("DOMContentLoaded", () => {
       showPopupNotification("⚠️ Network error.");
     }
   };
-}
-    } else {
-      loginBtn.innerText = "🔐 Sign in with Google";
-      userInfo.innerText = "";
-      window.currentUID = null;
-    }
-  });
 
-  // Redeem button logic
-  redeemBtn.addEventListener("click", async () => {
-    const code = redeemInput.value.trim();
-    const uid = window.currentUID;
+  // 🔸 Admin: View Redemption History
+  const historyPanel = document.createElement("div");
+  historyPanel.id = "historyPanel";
+  historyPanel.style.marginTop = "24px";
+  historyPanel.innerHTML = `
+    <h4>🧾 View User Redemption History</h4>
+    <input type="text" id="historyUserInput" placeholder="Enter user UID" style="margin-bottom:4px" /><br>
+    <button class="copy-btn" id="viewHistoryBtn">View History</button>
+    <div id="historyResult" style="margin-top:8px; font-size:13px;"></div>
+  `;
+  document.getElementById("authPanel").appendChild(historyPanel);
 
-    if (!uid || !code) {
-      showPopupNotification("❌ Please enter a code and sign in.", 'error');
+  document.getElementById("viewHistoryBtn").onclick = async () => {
+    const targetUID = document.getElementById("historyUserInput").value.trim();
+    const historyResult = document.getElementById("historyResult");
+
+    if (!targetUID) {
+      showPopupNotification("⚠️ Please enter a user UID.");
       return;
     }
 
     try {
-      const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/redeem-code", {
+      const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/user-history", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid, code })
+        body: JSON.stringify({ uid: window.currentUID, target: targetUID })
       });
 
       const data = await res.json();
-      if (data.success) {
-        showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
-        await updateQuotaCounter();
+
+      if (data.error) {
+        historyResult.innerHTML = `<span style="color:red">❌ ${data.error}</span>`;
       } else {
-        showPopupNotification(`❌ ${data.error}`, 'error');
+        historyResult.innerHTML = `
+          <b>Quota:</b> ${data.quota}<br>
+          <b>Used Today:</b> ${data.usedToday}<br>
+          <b>Last Use:</b> ${data.lastUseDate}<br>
+          <b>Redeemed Codes:</b><br>
+          <ul>${(data.redeemedCodes || []).map(code => `<li>${code}</li>`).join("")}</ul>
+        `;
       }
     } catch (err) {
-      console.error("Redeem failed", err);
-      showPopupNotification("⚠️ Network error", 'warning');
+      console.error("Fetch failed:", err);
+      historyResult.innerHTML = `<span style="color:red">⚠️ Network error</span>`;
     }
-  });
-});
+  };
+}
     </script>
 </body>
 </html>
