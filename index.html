@@ -2230,42 +2230,35 @@
         }
 
         function showPopupNotification(message) {
-  // Remove any existing popup
-  const existingPopup = document.querySelector('.popup-notification');
-  if (existingPopup) existingPopup.remove();
+            // Remove any existing popup
+            const existingPopup = document.querySelector('.popup-notification');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
 
-  // Create new popup
-  const popup = document.createElement('div');
-  popup.className = 'popup-notification';
-  popup.textContent = message;
-
-  // Detect message type from emoji prefix
-  if (message.startsWith("✅")) {
-    popup.classList.add("success");
-  } else if (message.startsWith("❌")) {
-    popup.classList.add("error");
-  } else if (message.startsWith("⚠️")) {
-    popup.classList.add("warn");
-  }
-
-  // Add to body
-  document.body.appendChild(popup);
-
-  // Animate in
-  setTimeout(() => {
-    popup.classList.add('show');
-  }, 10);
-
-  // Animate out and remove
-  setTimeout(() => {
-    popup.classList.remove('show');
-    setTimeout(() => {
-      if (popup.parentNode) {
-        popup.remove();
-      }
-    }, 400); // match CSS transition
-  }, 3500);
-}
+            // Create new popup
+            const popup = document.createElement('div');
+            popup.className = 'popup-notification';
+            popup.textContent = message;
+            
+            // Add to body
+            document.body.appendChild(popup);
+            
+            // Trigger animation
+            setTimeout(() => {
+                popup.classList.add('show');
+            }, 10);
+            
+            // Remove after delay
+            setTimeout(() => {
+                popup.classList.remove('show');
+                setTimeout(() => {
+                    if (popup.parentNode) {
+                        popup.remove();
+                    }
+                }, 300);
+            }, 2000);
+        }
 
         async function updateQuotaCounter() {
             if (!window.currentUID) return;
@@ -2438,39 +2431,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
     </script>
-
-<style>
-  #popupNotification {
-    position: fixed;
-    top: 30px;
-    right: -400px; /* Start offscreen */
-    max-width: 300px;
-    padding: 12px 16px;
-    font-size: 14px;
-    border-radius: 8px;
-    color: white;
-    background-color: #444;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    opacity: 0;
-    pointer-events: none;
-    transition:
-      right 0.4s ease-out,
-      opacity 0.4s ease-out;
-    z-index: 9999;
-  }
-
-  #popupNotification.show {
-    right: 30px;
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  #popupNotification.success { background-color: #28a745; }   /* ✅ Green */
-  #popupNotification.error { background-color: #dc3545; }     /* ❌ Red */
-  #popupNotification.warn  { background-color: #ffc107; color: #222; } /* ⚠️ Yellow */
-</style>
-
-<div id="popupNotification"></div>
-
 </body>
 </html>
