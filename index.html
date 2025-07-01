@@ -2314,6 +2314,11 @@ document.addEventListener("DOMContentLoaded", () => {
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const provider = new firebase.auth.GoogleAuthProvider();
+  const ADMIN_UIDS = ["YOUR_GOOGLE_UID_HERE"]; // 👈 Replace with your actual UID
+
+  function isAdmin(uid) {
+     return ADMIN_UIDS.includes(uid);
+  }
 
   const authPanel = document.getElementById("authPanel");
 
@@ -2378,6 +2383,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loginBtn.innerText = "🚪 Sign out";
         userInfo.innerText = `Welcome, ${username}!`;
         window.currentUID = result.user.uid;
+        console.log("Your UID:", result.user.uid); // ✅ Print your UID in browser console
         await updateQuotaCounter();
         console.log("User signed in:", result.user);
       } catch (error) {
