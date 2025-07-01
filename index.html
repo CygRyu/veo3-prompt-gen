@@ -341,7 +341,6 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: #1f883d;
             color: white;
             padding: 12px 20px;
             border-radius: 6px;
@@ -349,14 +348,27 @@
             font-weight: 500;
             z-index: 1000;
             opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease-in-out;
+            transform: translateX(100px);
+            transition: all 0.4s ease-in-out;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
         }
         
         .popup-notification.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(0);
+        }
+        
+        .popup-notification.success {
+            background-color: #1f883d;
+        }
+        
+        .popup-notification.error {
+            background-color: #cf222e;
+        }
+        
+        .popup-notification.warning {
+            background-color: #fb8500;
         }
         
         .footer {
@@ -2214,7 +2226,7 @@
 
         function showCopyFeedback() {
             // Show popup notification
-            showPopupNotification('✅ Copied to clipboard!');
+            showPopupNotification('✅ Copied to clipboard!', 'success');
             
             // Also change button text briefly
             const button = event.target;
@@ -2229,7 +2241,7 @@
             }, 2000);
         }
 
-        function showPopupNotification(message) {
+        function showPopupNotification(message, type = 'success') {
             // Remove any existing popup
             const existingPopup = document.querySelector('.popup-notification');
             if (existingPopup) {
@@ -2238,7 +2250,7 @@
 
             // Create new popup
             const popup = document.createElement('div');
-            popup.className = 'popup-notification';
+            popup.className = `popup-notification ${type}`;
             popup.textContent = message;
             
             // Add to body
@@ -2249,15 +2261,15 @@
                 popup.classList.add('show');
             }, 10);
             
-            // Remove after delay
+            // Remove after delay (3.5s)
             setTimeout(() => {
                 popup.classList.remove('show');
                 setTimeout(() => {
                     if (popup.parentNode) {
                         popup.remove();
                     }
-                }, 300);
-            }, 2000);
+                }, 400);
+            }, 3500);
         }
 
         async function updateQuotaCounter() {
@@ -2370,7 +2382,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("User signed in:", result.user);
       } catch (error) {
         console.error("Login error:", error);
-        showPopupNotification(`Login failed: ${error.message}`);
+        showPopupNotification(`Login failed: ${error.message}`, 'error');
       }
     } else {
       try {
@@ -2380,7 +2392,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.currentUID = null;
       } catch (error) {
         console.error("Logout error:", error);
-        showPopupNotification(`Logout failed: ${error.message}`);
+        showPopupNotification(`Logout failed: ${error.message}`, 'error');
       }
     }
   });
@@ -2407,6 +2419,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!uid || !code) {
       redeemStatus.innerText = "❌ Please enter a code and sign in.";
+      showPopupNotification("❌ Please enter a code and sign in.", 'error');
       return;
     }
 
@@ -2420,13 +2433,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       if (data.success) {
         redeemStatus.innerText = `✅ Code redeemed! +${data.added} prompts added.`;
+        showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
         await updateQuotaCounter();
       } else {
         redeemStatus.innerText = `❌ ${data.error}`;
+        showPopupNotification(`❌ ${data.error}`, 'error');
       }
     } catch (err) {
       console.error("Redeem failed", err);
       redeemStatus.innerText = "⚠️ Network error";
+      showPopupNotification("⚠️ Network error", 'warning');
     }
   });
 });
