@@ -2418,7 +2418,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const uid = window.currentUID;
 
     if (!uid || !code) {
-      redeemStatus.innerText = "❌ Please enter a code and sign in.";
       showPopupNotification("❌ Please enter a code and sign in.", 'error');
       return;
     }
@@ -2432,16 +2431,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
       if (data.success) {
-        redeemStatus.innerText = `✅ Code redeemed! +${data.added} prompts added.`;
         showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
         await updateQuotaCounter();
       } else {
-        redeemStatus.innerText = `❌ ${data.error}`;
         showPopupNotification(`❌ ${data.error}`, 'error');
       }
     } catch (err) {
       console.error("Redeem failed", err);
-      redeemStatus.innerText = "⚠️ Network error";
       showPopupNotification("⚠️ Network error", 'warning');
     }
   });
