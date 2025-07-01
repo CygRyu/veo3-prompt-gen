@@ -1938,71 +1938,85 @@
                 title.textContent = 'Enhance Tab - Best Practices';
                 content.innerHTML = `
                     <h4>🎯 What is the Enhance Feature?</h4>
-                    <p>The Enhance feature takes your basic prompt idea and transforms it into a detailed, professional-quality Veo 3 prompt with rich cinematographic details.</p>
+                    <p>The Enhance feature transforms your basic prompt idea into a detailed, professional-quality Veo 3 prompt with rich cinematographic details, structured formatting, and technical specifications optimized for AI video generation.</p>
                     
                     <h4>📝 How to Use Effectively:</h4>
                     <ul>
                         <li><strong>Start Simple:</strong> Enter a basic description in "Your Prompt" field (e.g., "A cat flying through a city")</li>
-                        <li><strong>Add Context:</strong> Use Subject and Action fields to specify key elements</li>
-                        <li><strong>Choose Style:</strong> Select a video style that matches your vision</li>
-                        <li><strong>Expand Advanced:</strong> Use advanced parameters for fine-tuning technical aspects</li>
-                        <li><strong>Include Dialogue:</strong> Add specific dialogue in quotes for characters to speak</li>
+                        <li><strong>Add Context:</strong> Use Subject and Action fields to specify key elements and movements</li>
+                        <li><strong>Choose Style:</strong> Select from 40+ video styles including Cinematic, Documentary, Animation, VHS, etc.</li>
+			<li><strong>Set Tone:</strong> Pick from 8 general tone categories with specific sub-tones for precise mood control</li>
+                        <li><strong>Advanced Parameters:</strong> Fine-tune camera movement, lighting, visual effects, environment, and atmosphere</li>
+    			<li><strong>Include Dialogue:</strong> Add specific dialogue in quotes - the AI will preserve exact wording and add proper formatting</li>
                     </ul>
                     
                     <h4>💡 Pro Tips:</h4>
                     <ul>
-                        <li>Even vague prompts work well - the AI will add professional details</li>
-                        <li>Combine different styles for unique results (e.g., "Cinematic + Horror")</li>
-                        <li>Use "Auto Detect" for most fields to let AI choose optimal settings</li>
-                        <li>Experiment with aspect ratios based on your platform (16:9 for YouTube, 9:16 for TikTok)</li>
+                        <li><strong>Start Broad:</strong> Even vague prompts work well - the AI will add professional details</li>
+		        <li><strong>Control Tips:</strong> But if you want more control in output result, feel free to be as detailed as possible</li>
+		        <li><strong>Mix Styles:</strong> Combine different elements for unique results (e.g., "Horror + Documentary")</li>
+                        <li><strong>Use Auto Detect:</strong> Let AI choose optimal settings when unsure</li>
+			<li><strong>Dialogue Precision:</strong> The AI preserves exact dialogue wording and adds proper tone descriptions</li>
+			<li><strong>Technical Quality:</strong> Generated prompts include professional terminology for lighting, camera work, and audio design</li>
                     </ul>
                     
                     <div class="example">
-                        <strong>Example Input:</strong><br>
-                        Prompt: "A robot serving coffee"<br>
-                        Subject: "Friendly robot"<br>
-                        Style: "Cinematic"<br><br>
-                        
-                        <strong>Enhanced Output:</strong><br>
-                        "Medium shot. Subject: A sleek, humanoid robot with polished chrome exterior and gentle blue LED eyes, wearing a vintage coffee shop apron, carefully operating a professional espresso machine. Scene: Modern café interior with warm wood furnishings..."
-                    </div>
+    <strong>Example Enhancement:</strong><br>
+    <strong>Input:</strong> "A robot serving coffee"<br>
+    <strong>Enhanced Output:</strong><br>
+    "Medium shot. Subject: A sleek, humanoid robot with polished chrome exterior and gentle blue LED eyes, wearing a vintage coffee shop apron, carefully operating a professional espresso machine. Scene: Modern café interior with warm wood furnishings, exposed brick walls, and soft natural light filtering through large windows. Action: The robot methodically steams milk with precise movements, creating perfect microfoam while maintaining eye contact with an off-camera customer. Style: Cinematic, high-definition with warm color grading and shallow depth of field. Audio: Gentle hiss of the espresso machine, subtle café ambiance, and the robot's soft mechanical whirring. --ar 16:9"
+</div>
                 `;
             } else {
                 title.textContent = 'Remix Tab - Best Practices';
                 content.innerHTML = `
                     <h4>🎛️ What is the Remix Feature?</h4>
-                    <p>The Remix feature takes an existing prompt (from anywhere) and creates variations based on your specific instructions. Perfect for adapting successful prompts or exploring creative alternatives.</p>
+                    <p>The Remix feature takes any existing prompt (from social media, other generators, or previous creations) and creates intelligent variations based on your specific instructions. Perfect for adapting viral prompts, exploring creative alternatives, or fine-tuning existing concepts. 
+(PS: It also enhances the output prompt automatically. How cool is that?)</p>
                     
                     <h4>📝 How to Use Effectively:</h4>
                     <ul>
                         <li><strong>Paste Original:</strong> Copy any existing prompt into "Original Prompt" field</li>
-                        <li><strong>Specify Changes:</strong> Clearly describe what you want to change in "How to Vary"</li>
-                        <li><strong>Choose Mode:</strong> Use Simple for quick changes, Advanced for detailed control</li>
-                        <li><strong>Be Specific:</strong> The more specific your variation instructions, the better the result</li>
+                        <li><strong>Specify Changes:</strong> Clearly describe modifications in "How to Vary This Prompt" field</li>
+                        <li><strong>Choose Mode:</strong> Toggle between Simple and Advanced remix modes</li>
+                        <li><strong>Be Specific:</strong> The more detailed your variation instructions, the more precise the output</li>
                     </ul>
                     
                     <h4>🔀 Simple vs Advanced Mode:</h4>
-                    <ul>
-                        <li><strong>Simple Mode:</strong> Only uses your variation text, keeps original structure</li>
-                        <li><strong>Advanced Mode:</strong> Combines variations with all technical parameters</li>
-                        <li><strong>Creative Conflicts:</strong> Simple mode won't auto-fix contradictions (creates surprising results!)</li>
-                    </ul>
+<ul>
+    <li><strong>Simple Mode:</strong> 
+        <ul>
+            <li>Uses only your variation instructions and the original prompt</li>
+            <li>Maintains original structure and style elements where possible</li>
+            <li>Best for quick character swaps, setting changes, or mood shifts</li>
+        </ul>
+    </li>
+    <li><strong>Advanced Mode:</strong>
+        <ul>
+            <li>Combines variation instructions with all technical parameters</li>
+            <li>Complete reconstruction using both original concept and new specifications</li>
+            <li>Best for comprehensive reimagining with technical precision</li>
+        </ul>
+    </li>
+</ul>
                     
-                    <h4>💡 Pro Tips:</h4>
-                    <ul>
-                        <li>Try remixing viral prompts from social media with your own twists</li>
-                        <li>Change just one element at a time for controlled variations</li>
-                        <li>Use remix to adapt prompts for different aspect ratios/platforms</li>
-                        <li>Experiment with mood changes (happy → horror, realistic → cartoon)</li>
-                    </ul>
+                    <h4>💡 Pro Remix Tips:</h4>
+<ul>
+    <li><strong>Viral Adaptation:</strong> Take trending prompts and add your unique twist</li>
+    <li><strong>Incremental Changes:</strong> Change one element at a time for controlled experimentation</li>
+    <li><strong>Genre Hopping:</strong> Transform realistic prompts to fantasy, horror to comedy, etc.</li>
+    <li><strong>Technical Enhancement:</strong> Use Advanced mode to add professional cinematography to simple prompts</li>
+    <li><strong>Dialogue Integration:</strong> Add character voices and specific lines to existing visual prompts</li>
+    <li><strong>Creative Conflicts:</strong> Intentionally mix contradictory elements for surprising artistic results</li>
+</ul>
                     
                     <div class="example">
-                        <strong>Example:</strong><br>
-                        Original: "A dragon flying over mountains at sunset"<br>
-                        Variation: "Make it a giant butterfly instead, underwater scene, morning light"<br><br>
-                        
-                        <strong>Result:</strong> The dragon becomes a butterfly, mountains become coral reefs, sunset becomes morning underwater lighting.
-                    </div>
+    <strong>Advanced Mode Example:</strong><br>
+    <strong>Original:</strong> "A towering creature resembling a pine tree with multiple glowing eyes stands still in the dense forest fog. The camera slowly zooms in from a handheld perspective behind the trees. Add light wind, distant bird cries, and subtle whisper-like sounds. Cold green-gray palette with fog particles and grain. 8 seconds, unsettling and meditative."<br>
+    <strong>Variation:</strong> "Change the creature to a towering spider with multiple eyes and sharp mandibles. Continuously sprouting web that traps nearby running people. People are screaming."<br>
+    <strong>Advanced Parameters:</strong> "Video Style: Analog/Film Grain, Time of Day: Dusk"<br>
+    <strong>Result:</strong> "The camera adopts a handheld perspective, weaving through densely packed trees in a fog-laden forest at dusk, capturing the unsettling sight of a towering spider-like creature. This arachnid behemoth, with multiple glowing eyes and sharp, menacing mandibles, stands ominously amidst the swirling mist, its bulk partially obscured by the drifting fog. As the lens zooms in slowly, the creature continuously spins vast webs from its abdomen, trapping nearby people desperately fleeing through..." 
+</div>
                 `;
             }
             
