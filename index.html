@@ -2282,147 +2282,154 @@
             }
         }
 
-        // Initialize on page load
-        document.addEventListener("DOMContentLoaded", () => {
-            // Collapse Advanced sections by default
-            document.getElementById("enhanceAdvanced").style.display = "none";
-            document.getElementById("remixAdvanced").style.display = "none";
-            document.getElementById("enhanceVideoGallery").style.display = "none";
-            document.getElementById("remixVideoGallery").style.display = "none";
+document.addEventListener("DOMContentLoaded", () => {
+  // Collapse Advanced sections by default
+  document.getElementById("enhanceAdvanced").style.display = "none";
+  document.getElementById("remixAdvanced").style.display = "none";
+  document.getElementById("enhanceVideoGallery").style.display = "none";
+  document.getElementById("remixVideoGallery").style.display = "none";
 
-	document.getElementById("redeemBtn").onclick = async () => {
-  const code = document.getElementById("redeemInput").value.trim();
-  const uid = window.currentUID;
+  // Firebase Auth
+  const firebaseConfig = {
+    apiKey: "AIzaSyAaj5OXxoFaWkv9potb0eAV75Zl8oV4Iu0",
+    authDomain: "veo3-generator-3aa92.firebaseapp.com",
+    projectId: "veo3-generator-3aa92",
+    storageBucket: "veo3-generator-3aa92.firebasestorage.app",
+    messagingSenderId: "96789033293",
+    appId: "1:96789033293:web:408853c3ce51c353458704"
+  };
 
-  if (!uid || !code) {
-    document.getElementById("redeemStatus").innerText = "❌ Please enter a code and sign in.";
-    return;
-  }
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const provider = new firebase.auth.GoogleAuthProvider();
 
-  try {
-    const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/redeem-code", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid, code })
-    });
+  const authPanel = document.getElementById("authPanel");
 
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById("redeemStatus").innerText = `✅ Code redeemed! +${data.added} prompts added.`;
+  // Sign-in Button
+  const loginBtn = document.createElement("button");
+  loginBtn.id = "loginBtn";
+  loginBtn.className = "copy-btn";
+  loginBtn.innerText = "🔐 Sign in with Google";
+  loginBtn.style.float = "right";
+  authPanel.appendChild(loginBtn);
+
+  // Quota Counter
+  const quotaCounter = document.createElement("div");
+  quotaCounter.id = "quotaCounter";
+  quotaCounter.style.fontSize = "13px";
+  quotaCounter.style.color = "#444";
+  quotaCounter.style.marginTop = "4px";
+  quotaCounter.style.float = "right";
+  quotaCounter.style.marginLeft = "10px";
+  authPanel.appendChild(quotaCounter);
+
+  // Redeem Code UI
+  const redeemContainer = document.createElement("div");
+  redeemContainer.style.marginTop = "8px";
+
+  const redeemInput = document.createElement("input");
+  redeemInput.type = "text";
+  redeemInput.id = "redeemInput";
+  redeemInput.placeholder = "Enter redeem code";
+  redeemInput.style.marginRight = "5px";
+
+  const redeemBtn = document.createElement("button");
+  redeemBtn.id = "redeemBtn";
+  redeemBtn.innerText = "Redeem";
+  redeemBtn.className = "copy-btn";
+
+  const redeemStatus = document.createElement("div");
+  redeemStatus.id = "redeemStatus";
+  redeemStatus.style.fontSize = "13px";
+  redeemStatus.style.marginTop = "4px";
+
+  redeemContainer.appendChild(redeemInput);
+  redeemContainer.appendChild(redeemBtn);
+  redeemContainer.appendChild(redeemStatus);
+  authPanel.appendChild(redeemContainer);
+
+  // User Info Display
+  const userInfo = document.createElement("div");
+  userInfo.id = "userInfo";
+  userInfo.style.fontSize = "12px";
+  userInfo.style.color = "#666";
+  userInfo.style.marginTop = "8px";
+  authPanel.appendChild(userInfo);
+
+  // Login button click handler
+  loginBtn.addEventListener("click", async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      try {
+        const result = await auth.signInWithPopup(provider);
+        const username = result.user.email.split("@")[0];
+        loginBtn.innerText = "🚪 Sign out";
+        userInfo.innerText = `Welcome, ${username}!`;
+        window.currentUID = result.user.uid;
+        await updateQuotaCounter();
+        console.log("User signed in:", result.user);
+      } catch (error) {
+        console.error("Login error:", error);
+        showPopupNotification(`Login failed: ${error.message}`);
+      }
+    } else {
+      try {
+        await auth.signOut();
+        loginBtn.innerText = "🔐 Sign in with Google";
+        userInfo.innerText = "";
+        window.currentUID = null;
+      } catch (error) {
+        console.error("Logout error:", error);
+        showPopupNotification(`Logout failed: ${error.message}`);
+      }
+    }
+  });
+
+  // Auth state change
+  auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      const username = user.email.split("@")[0];
+      loginBtn.innerText = "🚪 Sign out";
+      userInfo.innerText = `Welcome, ${username}!`;
+      window.currentUID = user.uid;
       await updateQuotaCounter();
     } else {
-      document.getElementById("redeemStatus").innerText = `❌ ${data.error}`;
+      loginBtn.innerText = "🔐 Sign in with Google";
+      userInfo.innerText = "";
+      window.currentUID = null;
     }
-  } catch (err) {
-    console.error("Redeem failed", err);
-    document.getElementById("redeemStatus").innerText = "⚠️ Network error";
-  }
-};
+  });
 
-            // Firebase Auth
-            const firebaseConfig = {
-                apiKey: "AIzaSyAaj5OXxoFaWkv9potb0eAV75Zl8oV4Iu0",
-                authDomain: "veo3-generator-3aa92.firebaseapp.com",
-                projectId: "veo3-generator-3aa92",
-                storageBucket: "veo3-generator-3aa92.firebasestorage.app",
-                messagingSenderId: "96789033293",
-                appId: "1:96789033293:web:408853c3ce51c353458704"
-            };
+  // Redeem button logic
+  redeemBtn.addEventListener("click", async () => {
+    const code = redeemInput.value.trim();
+    const uid = window.currentUID;
 
-            firebase.initializeApp(firebaseConfig);
-            const auth = firebase.auth();
-            const provider = new firebase.auth.GoogleAuthProvider();
+    if (!uid || !code) {
+      redeemStatus.innerText = "❌ Please enter a code and sign in.";
+      return;
+    }
 
-            const loginBtn = document.createElement('button');
-            loginBtn.id = "loginBtn";
-            loginBtn.className = "copy-btn";
-            loginBtn.innerText = "🔐 Sign in with Google";
-            loginBtn.style.float = "right";
-            document.getElementById("authPanel").appendChild(loginBtn);
+    try {
+      const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/redeem-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid, code })
+      });
 
-            const quotaCounter = document.createElement('div');
-            quotaCounter.id = "quotaCounter";
-            quotaCounter.style.fontSize = "13px";
-            quotaCounter.style.color = "#444";
-            quotaCounter.style.marginTop = "4px";
-            quotaCounter.style.float = "right";
-            quotaCounter.style.marginLeft = "10px";
-            document.getElementById("authPanel").appendChild(quotaCounter);
-
-// Create Redeem Code UI
-const redeemContainer = document.createElement('div');
-redeemContainer.style.marginTop = "8px";
-
-const redeemInput = document.createElement('input');
-redeemInput.type = "text";
-redeemInput.id = "redeemInput";
-redeemInput.placeholder = "Enter redeem code";
-redeemInput.style.marginRight = "5px";
-
-const redeemBtn = document.createElement('button');
-redeemBtn.id = "redeemBtn";
-redeemBtn.innerText = "Redeem";
-redeemBtn.className = "copy-btn";
-
-const redeemStatus = document.createElement('div');
-redeemStatus.id = "redeemStatus";
-redeemStatus.style.fontSize = "13px";
-redeemStatus.style.marginTop = "4px";
-
-redeemContainer.appendChild(redeemInput);
-redeemContainer.appendChild(redeemBtn);
-redeemContainer.appendChild(redeemStatus);
-
-document.getElementById("authPanel").appendChild(redeemContainer);
-
-            const userInfo = document.createElement('div');
-            userInfo.id = "userInfo";
-            userInfo.style.fontSize = "12px";
-            userInfo.style.color = "#666";
-            userInfo.style.marginTop = "8px";
-            document.getElementById("authPanel").appendChild(userInfo);
-
-            loginBtn.addEventListener("click", async () => {
-                const user = auth.currentUser;
-                if (!user) {
-                    try {
-                        const result = await auth.signInWithPopup(provider);
-                        loginBtn.innerText = "🚪 Sign out";
-                        userInfo.innerText = `Signed in as ${result.user.email}`;
-                        window.currentUID = result.user.uid;
-                        
-                        console.log("User signed in:", result.user);
-                    } catch (error) {
-                        console.error("Login error:", error);
-                        showPopupNotification(`Login failed: ${error.message}`);
-                    }
-                } else {
-                    try {
-                        await auth.signOut();
-                        loginBtn.innerText = "🔐 Sign in with Google";
-                        userInfo.innerText = "";
-                        window.currentUID = null;
-                    } catch (error) {
-                        console.error("Logout error:", error);
-                        showPopupNotification(`Logout failed: ${error.message}`);
-                    }
-                }
-            });
-
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    loginBtn.innerText = "🚪 Sign out";
-                    const username = user.email.split('@')[0];
-                    userInfo.innerText = `Welcome, ${username}!`;
-                    window.currentUID = user.uid;
-                    updateQuotaCounter();
-                } else {
-                    loginBtn.innerText = "🔐 Sign in with Google";
-                    userInfo.innerText = "";
-                    window.currentUID = null;
-                }
-            });
-        });
+      const data = await res.json();
+      if (data.success) {
+        redeemStatus.innerText = `✅ Code redeemed! +${data.added} prompts added.`;
+        await updateQuotaCounter();
+      } else {
+        redeemStatus.innerText = `❌ ${data.error}`;
+      }
+    } catch (err) {
+      console.error("Redeem failed", err);
+      redeemStatus.innerText = "⚠️ Network error";
+    }
+  });
+});
     </script>
 </body>
 </html>
