@@ -2290,6 +2290,35 @@
             document.getElementById("enhanceVideoGallery").style.display = "none";
             document.getElementById("remixVideoGallery").style.display = "none";
 
+	document.getElementById("redeemBtn").onclick = async () => {
+  const code = document.getElementById("redeemInput").value.trim();
+  const uid = window.currentUID;
+
+  if (!uid || !code) {
+    document.getElementById("redeemStatus").innerText = "❌ Please enter a code and sign in.";
+    return;
+  }
+
+  try {
+    const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/redeem-code", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid, code })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById("redeemStatus").innerText = `✅ Code redeemed! +${data.added} prompts added.`;
+      await updateQuotaCounter();
+    } else {
+      document.getElementById("redeemStatus").innerText = `❌ ${data.error}`;
+    }
+  } catch (err) {
+    console.error("Redeem failed", err);
+    document.getElementById("redeemStatus").innerText = "⚠️ Network error";
+  }
+};
+
             // Firebase Auth
             const firebaseConfig = {
                 apiKey: "AIzaSyAaj5OXxoFaWkv9potb0eAV75Zl8oV4Iu0",
@@ -2319,6 +2348,32 @@
             quotaCounter.style.float = "right";
             quotaCounter.style.marginLeft = "10px";
             document.getElementById("authPanel").appendChild(quotaCounter);
+
+// Create Redeem Code UI
+const redeemContainer = document.createElement('div');
+redeemContainer.style.marginTop = "8px";
+
+const redeemInput = document.createElement('input');
+redeemInput.type = "text";
+redeemInput.id = "redeemInput";
+redeemInput.placeholder = "Enter redeem code";
+redeemInput.style.marginRight = "5px";
+
+const redeemBtn = document.createElement('button');
+redeemBtn.id = "redeemBtn";
+redeemBtn.innerText = "Redeem";
+redeemBtn.className = "copy-btn";
+
+const redeemStatus = document.createElement('div');
+redeemStatus.id = "redeemStatus";
+redeemStatus.style.fontSize = "13px";
+redeemStatus.style.marginTop = "4px";
+
+redeemContainer.appendChild(redeemInput);
+redeemContainer.appendChild(redeemBtn);
+redeemContainer.appendChild(redeemStatus);
+
+document.getElementById("authPanel").appendChild(redeemContainer);
 
             const userInfo = document.createElement('div');
             userInfo.id = "userInfo";
