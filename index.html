@@ -688,10 +688,48 @@
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9));
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
+
+        /* Contact info section before footer */
+        .contact-info-footer {
+            text-align: center;
+            margin-top: 48px;
+            padding: 24px;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            background: rgba(30, 32, 42, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .contact-info-footer h3 {
+            color: #e2e8f0;
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .contact-info-footer p {
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+
+        .contact-email-footer {
+            color: #6366f1;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-email-footer:hover {
+            color: #8b5cf6;
+            text-decoration: underline;
+        }
         
         .footer {
             text-align: center;
-            margin-top: 48px;
+            margin-top: 24px;
             padding-top: 24px;
             border-top: 1px solid rgba(99, 102, 241, 0.2);
             color: #94a3b8;
@@ -1183,39 +1221,6 @@
             margin-bottom: 16px;
         }
 
-        /* Contact Form Styles */
-        .contact-info {
-            background: rgba(30, 32, 42, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 24px;
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .contact-info h3 {
-            color: #e2e8f0;
-            margin-bottom: 12px;
-        }
-
-        .contact-info p {
-            color: #94a3b8;
-            margin-bottom: 16px;
-        }
-
-        .contact-email {
-            color: #6366f1;
-            font-weight: 600;
-            font-size: 18px;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-email:hover {
-            color: #8b5cf6;
-        }
-
         .required-field {
             color: #ef4444;
         }
@@ -1309,7 +1314,7 @@
                 color: #1e293b;
             }
 
-            .section, .admin-card, .stats-card, .contact-info {
+            .section, .admin-card, .stats-card, .contact-info-footer {
                 background: rgba(255, 255, 255, 0.4);
                 border-color: rgba(99, 102, 241, 0.2);
             }
@@ -1415,19 +1420,23 @@
                 border-bottom-color: rgba(99, 102, 241, 0.2);
             }
 
-            .sign-in-prompt h3, .contact-info h3 {
+            .sign-in-prompt h3 {
                 color: #1e293b;
             }
 
-            .contact-info p {
+            .contact-info-footer h3 {
+                color: #1e293b;
+            }
+
+            .contact-info-footer p {
                 color: #64748b;
             }
 
-            .contact-email {
+            .contact-email-footer {
                 color: #6366f1;
             }
 
-            .contact-email:hover {
+            .contact-email-footer:hover {
                 color: #8b5cf6;
             }
         }
@@ -2496,13 +2505,6 @@
                 <h2 class="tab-title">Contact Us</h2>
             </div>
 
-            <!-- Contact Info -->
-            <div class="contact-info">
-                <h3>Get in Touch</h3>
-                <p>If you have any questions or suggestions, please reach out to us!</p>
-                <a href="mailto:cygryuu@gmail.com" class="contact-email">cygryuu@gmail.com</a>
-            </div>
-
             <!-- Contact Form -->
             <div class="section">
                 <h2>Send us a Message</h2>
@@ -2576,6 +2578,12 @@
                     <!-- Content will be populated by JavaScript -->
                 </div>
             </div>
+        </div>
+
+        <!-- Contact info section before footer -->
+        <div class="contact-info-footer">
+            <h3>You Can Also Reach Us Here</h3>
+            <p>Email: <a href="mailto:cygryuu@gmail.com" class="contact-email-footer">cygryuu@gmail.com</a></p>
         </div>
 
         <!-- Footer -->
