@@ -1675,6 +1675,9 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
     <script>
+        // Configuration - UPDATE THIS URL TO YOUR ACTUAL BACKEND URL
+        const API_BASE_URL = "https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev";
+
         // Dark mode detection
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
@@ -2048,6 +2051,8 @@
         }
 
         async function generatePrompt() {
+            console.log("Generate function called");
+            
             // Validate description field
             const description = document.getElementById("description").value.trim();
             if (!description) {
@@ -2055,12 +2060,22 @@
                 return;
             }
             
+            // Check if user is logged in
+            if (!window.currentUID) {
+                showError("Please sign in to use this feature.");
+                return;
+            }
+            
             // Remove any existing error messages
             const existingErrors = document.querySelectorAll('.error-message');
             existingErrors.forEach(error => error.remove());
 
+            const user = firebase.auth().currentUser;
+            const userEmail = user ? user.email : "";
+
             const payload = {
-                uid: window.currentUID || null,
+                uid: window.currentUID,
+                email: userEmail,
                 description: description,
                 subject: document.getElementById("subject").value,
                 action: document.getElementById("action").value,
@@ -2084,17 +2099,25 @@
                 dialogue: document.getElementById("dialogue").value
             };
 
+            console.log("Sending payload:", payload);
+
             document.getElementById("enhanceOutput").innerText = "⏳ Generating...";
             document.getElementById("enhanceOutputSection").classList.remove("hidden");
 
             try {
-                const response = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/generate", {
+                const response = await fetch(`${API_BASE_URL}/generate`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
                     body: JSON.stringify(payload)
                 });
 
+                console.log("Response status:", response.status);
+                
                 const data = await response.json();
+                console.log("Response data:", data);
                 
                 if (response.ok && data.prompt) {
                     document.getElementById("enhanceOutput").innerText = data.prompt;
@@ -2104,13 +2127,15 @@
                     document.getElementById("enhanceOutputSection").classList.add("hidden");
                 }
             } catch (error) {
-                showError("Error connecting to server. Please try again.");
+                console.error('Network error:', error);
+                showError("Error connecting to server. Please check your internet connection and try again.");
                 document.getElementById("enhanceOutputSection").classList.add("hidden");
-                console.error('Error:', error);
             }
         }
 
         async function remixPrompt() {
+            console.log("Remix function called");
+            
             // Validate required fields
             const originalPrompt = document.getElementById("originalPrompt").value.trim();
             const variationInstructions = document.getElementById("variationInstructions").value.trim();
@@ -2125,14 +2150,24 @@
                 return;
             }
             
+            // Check if user is logged in
+            if (!window.currentUID) {
+                showError("Please sign in to use this feature.");
+                return;
+            }
+            
             // Remove any existing error messages
             const existingErrors = document.querySelectorAll('.error-message');
             existingErrors.forEach(error => error.remove());
 
+            const user = firebase.auth().currentUser;
+            const userEmail = user ? user.email : "";
+
             const isAdvancedMode = document.getElementById('remixModeToggle').checked;
             
             const payload = {
-                uid: window.currentUID || null,
+                uid: window.currentUID,
+                email: userEmail,
                 originalPrompt: originalPrompt,
                 variationInstructions: variationInstructions,
                 remixMode: isAdvancedMode ? "advanced" : "simple"
@@ -2162,17 +2197,25 @@
                 payload.dialogue = document.getElementById("remixDialogue").value;
             }
 
+            console.log("Sending remix payload:", payload);
+
             document.getElementById("remixOutput").innerText = "⏳ Remixing...";
             document.getElementById("remixOutputSection").classList.remove("hidden");
 
             try {
-                const response = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/remix", {
+                const response = await fetch(`${API_BASE_URL}/remix`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
                     body: JSON.stringify(payload)
                 });
 
+                console.log("Remix response status:", response.status);
+
                 const data = await response.json();
+                console.log("Remix response data:", data);
                 
                 if (response.ok && data.prompt) {
                     document.getElementById("remixOutput").innerText = data.prompt;
@@ -2182,9 +2225,9 @@
                     document.getElementById("remixOutputSection").classList.add("hidden");
                 }
             } catch (error) {
-                showError("Error connecting to server. Please try again.");
+                console.error('Network error:', error);
+                showError("Error connecting to server. Please check your internet connection and try again.");
                 document.getElementById("remixOutputSection").classList.add("hidden");
-                console.error('Error:', error);
             }
         }
 
@@ -2276,7 +2319,7 @@
             if (!window.currentUID) return;
 
             try {
-                const response = await fetch('https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/get-quota', {
+                const response = await fetch(`${API_BASE_URL}/get-quota`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ uid: window.currentUID })
@@ -2396,6 +2439,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loginBtn.innerText = "🔐 Sign in with Google";
         userInfo.innerText = "";
         window.currentUID = null;
+        quotaCounter.innerText = "";
       } catch (error) {
         console.error("Logout error:", error);
         showPopupNotification(`Logout failed: ${error.message}`, 'error');
@@ -2431,12 +2475,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const expires = document.getElementById("expiryInput").value;
 
     if (!code || !quota || !expires) {
-      showPopupNotification("❌ All fields are required.");
+      showPopupNotification("❌ All fields are required.", 'error');
       return;
     }
 
     try {
-      const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/create-code", {
+      const res = await fetch(`${API_BASE_URL}/create-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, quota, expires, uid: window.currentUID })
@@ -2444,13 +2488,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
       if (data.success) {
-        showPopupNotification("✅ Code created!");
+        showPopupNotification("✅ Code created!", 'success');
       } else {
-        showPopupNotification("❌ " + data.error);
+        showPopupNotification("❌ " + data.error, 'error');
       }
     } catch (err) {
       console.error("Error creating code:", err);
-      showPopupNotification("⚠️ Network error.");
+      showPopupNotification("⚠️ Network error.", 'warning');
     }
   };
 
@@ -2471,13 +2515,13 @@ document.getElementById("lookupBtn").onclick = async () => {
   const historyResult = document.getElementById("historyResult");
 
   if (!email) {
-    showPopupNotification("⚠️ Please enter an email.");
+    showPopupNotification("⚠️ Please enter an email.", 'warning');
     return;
   }
 
   try {
     // First lookup UID by email
-    const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/email-to-uid", {
+    const res = await fetch(`${API_BASE_URL}/email-to-uid`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ uid: window.currentUID, email })
@@ -2491,7 +2535,7 @@ document.getElementById("lookupBtn").onclick = async () => {
     }
 
     // Now fetch user history by UID
-    const historyRes = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/user-history", {
+    const historyRes = await fetch(`${API_BASE_URL}/user-history`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ uid: window.currentUID, target: lookup.uid })
@@ -2502,12 +2546,18 @@ document.getElementById("lookupBtn").onclick = async () => {
     if (data.error) {
       historyResult.innerHTML = `<span style="color:red">❌ ${data.error}</span>`;
     } else {
+      const codesHtml = data.redeemedCodes && data.redeemedCodes.length > 0 
+        ? data.redeemedCodes.map(codeInfo => `<li>${codeInfo.code} (+${codeInfo.quota} quota, used: ${codeInfo.usedAt})</li>`).join("")
+        : '<li>No codes redeemed</li>';
+        
       historyResult.innerHTML = `
-        <b>Quota:</b> ${data.quota}<br>
+        <b>Email:</b> ${data.email}<br>
+        <b>Current Quota:</b> ${data.quota}<br>
         <b>Used Today:</b> ${data.usedToday}<br>
         <b>Last Use:</b> ${data.lastUseDate}<br>
+        <b>Premium:</b> ${data.isPremium ? 'Yes' : 'No'}<br>
         <b>Redeemed Codes:</b><br>
-        <ul>${(data.redeemedCodes || []).map(code => `<li>${code}</li>`).join("")}</ul>
+        <ul>${codesHtml}</ul>
       `;
     }
 
@@ -2516,46 +2566,22 @@ document.getElementById("lookupBtn").onclick = async () => {
     historyResult.innerHTML = `<span style="color:red">⚠️ Network error</span>`;
   }
 };
-
-document.getElementById("viewHistoryBtn").onclick = async () => {
-  const targetUID = document.getElementById("historyUserInput").value.trim();
-  const historyResult = document.getElementById("historyResult");
-
-  if (!targetUID) {
-    showPopupNotification("⚠️ Please enter a user UID.");
-    return;
-  }
-
-  try {
-    const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/user-history", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid: window.currentUID, target: targetUID })
-    });
-
-    const data = await res.json();
-
-    if (data.error) {
-      historyResult.innerHTML = `<span style="color:red">❌ ${data.error}</span>`;
-    } else {
-      historyResult.innerHTML = `
-        <b>Quota:</b> ${data.quota}<br>
-        <b>Used Today:</b> ${data.usedToday}<br>
-        <b>Last Use:</b> ${data.lastUseDate}<br>
-        <b>Redeemed Codes:</b><br>
-        <ul>${(data.redeemedCodes || []).map(code => `<li>${code}</li>`).join("")}</ul>
-      `;
-    }
-  } catch (err) {
-    console.error("Fetch failed:", err);
-    historyResult.innerHTML = `<span style="color:red">⚠️ Network error</span>`;
-  }
-};
 }
     } else {
       loginBtn.innerText = "🔐 Sign in with Google";
       userInfo.innerText = "";
       window.currentUID = null;
+      quotaCounter.innerText = "";
+      
+      // Remove admin panel if it exists
+      const adminPanel = document.getElementById("adminPanel");
+      if (adminPanel) {
+        adminPanel.remove();
+      }
+      const historyPanel = document.getElementById("historyPanel");
+      if (historyPanel) {
+        historyPanel.remove();
+      }
     }
   });
 
@@ -2577,15 +2603,16 @@ document.getElementById("viewHistoryBtn").onclick = async () => {
       email: user.email
     });
 
-    const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/redeem-code", {
+    const res = await fetch(`${API_BASE_URL}/redeem-code`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid, code, email: user.email })  // ✅ SAFE
+      body: JSON.stringify({ uid, code, email: user.email })
     });
 
     const data = await res.json();
     if (data.success) {
       showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
+      redeemInput.value = ""; // Clear input after successful redemption
       await updateQuotaCounter();
     } else {
       showPopupNotification(`❌ ${data.error}`, 'error');
