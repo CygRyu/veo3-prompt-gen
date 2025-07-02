@@ -340,7 +340,7 @@
             color: #94a3b8;
         }
         
-        textarea, select, input[type="text"], input[type="range"], input[type="email"], input[type="search"], input[type="number"] { 
+        textarea, select, input[type="text"], input[type="range"], input[type="email"], input[type="search"], input[type="number"], input[type="tel"] { 
             width: 100%;
             padding: 12px 16px;
             margin: 8px 0 16px;
@@ -353,7 +353,7 @@
             transition: all 0.3s ease;
         }
         
-        textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus {
+        textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus {
             outline: none;
             border-color: #6366f1;
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), 0 0 20px rgba(99, 102, 241, 0.2);
@@ -1183,6 +1183,43 @@
             margin-bottom: 16px;
         }
 
+        /* Contact Form Styles */
+        .contact-info {
+            background: rgba(30, 32, 42, 0.6);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+
+        .contact-info p {
+            color: #94a3b8;
+            margin-bottom: 16px;
+        }
+
+        .contact-email {
+            color: #6366f1;
+            font-weight: 600;
+            font-size: 18px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-email:hover {
+            color: #8b5cf6;
+        }
+
+        .required-field {
+            color: #ef4444;
+        }
+
         /* Light mode overrides (when user prefers light mode) */
         @media (prefers-color-scheme: light) {
             body {
@@ -1256,13 +1293,13 @@
                 color: #475569;
             }
 
-            textarea, select, input[type="text"], input[type="email"], input[type="search"], input[type="number"] {
+            textarea, select, input[type="text"], input[type="email"], input[type="search"], input[type="number"], input[type="tel"] {
                 background: rgba(255, 255, 255, 0.8);
                 border-color: rgba(99, 102, 241, 0.3);
                 color: #1e293b;
             }
 
-            textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus {
+            textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus {
                 background: rgba(255, 255, 255, 0.95);
             }
 
@@ -1272,7 +1309,7 @@
                 color: #1e293b;
             }
 
-            .section, .admin-card, .stats-card {
+            .section, .admin-card, .stats-card, .contact-info {
                 background: rgba(255, 255, 255, 0.4);
                 border-color: rgba(99, 102, 241, 0.2);
             }
@@ -1378,11 +1415,24 @@
                 border-bottom-color: rgba(99, 102, 241, 0.2);
             }
 
-            .sign-in-prompt h3 {
+            .sign-in-prompt h3, .contact-info h3 {
                 color: #1e293b;
+            }
+
+            .contact-info p {
+                color: #64748b;
+            }
+
+            .contact-email {
+                color: #6366f1;
+            }
+
+            .contact-email:hover {
+                color: #8b5cf6;
             }
         }
     </style>
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="Mid-client-2M6WJwQ0MmVfRkY5"></script>
 </head>
 <body>
     <!-- Header -->
@@ -1397,6 +1447,7 @@
                 <button class="tab-button" onclick="switchTab('remix')">🎛️ Remix</button>
                 <button class="tab-button" onclick="switchTab('menu')" id="menuTabBtn">📋 Menu</button>
                 <button class="tab-button hidden" onclick="switchTab('admin')" id="adminTabBtn">⚙️ Admin</button>
+                <button class="tab-button" onclick="switchTab('contact')">📞 Contact</button>
             </nav>
 
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
@@ -1450,6 +1501,10 @@
             <button class="mobile-tab-button hidden" onclick="switchTab('admin')" id="mobileAdminBtn">
                 <div>⚙️</div>
                 <div class="mobile-tab-label">Admin</div>
+            </button>
+            <button class="mobile-tab-button" onclick="switchTab('contact')" id="mobileContactBtn">
+                <div>📞</div>
+                <div class="mobile-tab-label">Contact</div>
             </button>
         </div>
     </nav>
@@ -2270,7 +2325,7 @@
                 <!-- Redeem Code Section -->
                 <div class="section">
                     <h2>🎟️ Redeem Code</h2>
-                    <p style="margin-bottom: 16px; color: #94a3b8;">Enter a redeem code to add more prompts to your account.</p>
+                    <p style="margin-bottom: 16px; color: #94a3b8;">Enter your redeem code here to add more prompts.</p>
                     
                     <div class="form-grid form-grid-2">
                         <div>
@@ -2286,6 +2341,18 @@
                     
                     <div id="redeemStatus" style="margin-top: 12px; font-size: 14px;"></div>
                 </div>
+
+                <!-- Payment UI Section -->
+                <div class="section">
+    <h2>💳 Buy More Prompts</h3>
+    <p>Purchase additional prompts to continue generating.</p>
+    <select id="quota-purchase">
+        <option value="10|50000">10 Prompts - IDR 50,000</option>
+        <option value="20|100000">20 Prompts - IDR 100,000</option>
+        <option value="50|200000">50 Prompts - IDR 200,000</option>
+    </select>
+    <button onclick="initiatePayment()">Buy Now</button>
+</div>
 
                 <!-- Recent Activity -->
                 <div class="section">
@@ -2423,6 +2490,81 @@
             </div>
         </div>
 
+        <!-- Contact Tab Content -->
+        <div id="contactTab" class="tab-content">
+            <div class="tab-header">
+                <h2 class="tab-title">Contact Us</h2>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p>If you have any questions or suggestions, please reach out to us!</p>
+                <a href="mailto:cygryuu@gmail.com" class="contact-email">cygryuu@gmail.com</a>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="section">
+                <h2>Send us a Message</h2>
+                
+                <form id="contactForm">
+                    <div class="form-grid form-grid-2">
+                        <div>
+                            <label for="contactName">Name <span class="required-field">*</span></label>
+                            <input type="text" id="contactName" placeholder="Your full name" required/>
+                        </div>
+                        
+                        <div>
+                            <label for="contactEmail">Email <span class="required-field">*</span></label>
+                            <input type="email" id="contactEmail" placeholder="your.email@example.com" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-grid form-grid-2">
+                        <div>
+                            <label for="contactPhone">Phone (Optional)</label>
+                            <input type="tel" id="contactPhone" placeholder="+1 (555) 123-4567"/>
+                        </div>
+                        
+                        <div>
+                            <label for="contactCategory">Category <span class="required-field">*</span></label>
+                            <select id="contactCategory" required>
+                                <option value="">Select a category</option>
+                                <option value="bug_report">Bug Report</option>
+                                <option value="feature_request">Feature Request</option>
+                                <option value="general_inquiry">General Inquiry</option>
+                                <option value="billing_support">Billing Support</option>
+                                <option value="technical_support">Technical Support</option>
+                                <option value="feedback">Feedback & Suggestions</option>
+                                <option value="partnership">Partnership Inquiry</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label for="contactSubject">Subject <span class="required-field">*</span></label>
+                    <input type="text" id="contactSubject" placeholder="Brief description of your message" required/>
+
+                    <label for="contactMessage">Message <span class="required-field">*</span></label>
+                    <textarea id="contactMessage" rows="6" placeholder="Please provide details about your inquiry, issue, or feedback..." required></textarea>
+
+                    <div class="action-buttons">
+                        <button type="button" class="clear-btn" onclick="clearContactForm()">🗑️ Clear Form</button>
+                        <button type="submit" class="generate-btn">📞 Send Message</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contact Success Message -->
+            <div id="contactSuccessMessage" class="hidden">
+                <div class="section" style="text-align: center; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+                    <h2 style="color: #10b981; margin-bottom: 16px;">✅ Message Sent Successfully!</h2>
+                    <p style="color: #94a3b8; margin-bottom: 20px;">Thank you for reaching out! We'll get back to you as soon as possible.</p>
+                    <button class="generate-btn" onclick="resetContactForm()">📞 Send Another Message</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Help Modals -->
         <div id="helpModal" class="help-modal">
             <div class="help-modal-content">
@@ -2545,6 +2687,9 @@
                 loadUserStats();
             } else if (tabName === 'admin' && isAdmin(currentUser?.uid)) {
                 loadAdminData();
+            } else if (tabName === 'contact' && currentUser) {
+                // Auto-fill user info in contact form
+                autoFillContactForm();
             }
         }
 
@@ -2552,6 +2697,61 @@
         function signIn() {
             const signInBtn = document.getElementById('signInBtn');
             signInBtn.click();
+        }
+
+        // Contact form functions
+        function autoFillContactForm() {
+            if (currentUser) {
+                const userName = currentUser.email ? currentUser.email.split('@')[0] : '';
+                document.getElementById('contactName').value = userName;
+                document.getElementById('contactEmail').value = currentUser.email || '';
+            }
+        }
+
+        function clearContactForm() {
+            if (confirm('Are you sure you want to clear the form?')) {
+                document.getElementById('contactForm').reset();
+                // Re-auto-fill if user is signed in
+                if (currentUser) {
+                    autoFillContactForm();
+                }
+            }
+        }
+
+        function resetContactForm() {
+            document.getElementById('contactSuccessMessage').classList.add('hidden');
+            document.getElementById('contactForm').classList.remove('hidden');
+            document.getElementById('contactForm').reset();
+            // Re-auto-fill if user is signed in
+            if (currentUser) {
+                autoFillContactForm();
+            }
+        }
+
+        async function submitContactForm(formData) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/contact`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById('contactForm').classList.add('hidden');
+                    document.getElementById('contactSuccessMessage').classList.remove('hidden');
+                    showPopupNotification('✅ Message sent successfully!', 'success');
+                } else {
+                    throw new Error(result.error || 'Failed to send message');
+                }
+            } catch (error) {
+                console.error('Contact form error:', error);
+                showPopupNotification('❌ Failed to send message. Please try again.', 'error');
+            }
         }
 
         // Remix Mode Toggle
@@ -3480,6 +3680,83 @@ document.addEventListener("DOMContentLoaded", () => {
   const auth = firebase.auth();
   const provider = new firebase.auth.GoogleAuthProvider();
 
+// Function to initiate payment
+async function initiatePayment() {
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Please sign in to purchase prompts.");
+        return;
+    }
+
+    const quotaSelect = document.getElementById("quota-purchase").value.split("|");
+    const quota = parseInt(quotaSelect[0]);
+    const amount = parseInt(quotaSelect[1]);
+
+    try {
+        const response = await fetch("/create-payment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                uid: user.uid,
+                email: user.email,
+                amount: amount,
+                quota: quota
+            })
+        });
+
+        const data = await response.json();
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+
+        // Launch Midtrans Snap popup
+        window.snap.pay(data.snap_token, {
+            onSuccess: function (result) {
+                console.log("Payment success:", result);
+                alert("Payment successful! Your prompts have been added.");
+                updateQuotaDisplay();
+            },
+            onPending: function (result) {
+                console.log("Payment pending:", result);
+                alert("Payment is pending. You'll receive your prompts once confirmed.");
+            },
+            onError: function (result) {
+                console.log("Payment error:", result);
+                alert("Payment failed. Please try again.");
+            },
+            onClose: function () {
+                console.log("Payment popup closed");
+                alert("Payment was not completed.");
+            }
+        });
+    } catch (error) {
+        console.error("Error initiating payment:", error);
+        alert("An error occurred. Please try again.");
+    }
+}
+
+// Function to update quota display
+async function updateQuotaDisplay() {
+    const user = auth.currentUser;
+    if (user) {
+        const response = await fetch("/get-quota", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ uid: user.uid })
+        });
+        const data = await response.json();
+        document.querySelector(".prompts-remaining").textContent = `${data.quota} Prompts Remaining`;
+    }
+}
+
+// Call updateQuotaDisplay on page load
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        updateQuotaDisplay();
+    }
+});
+
   // Elements
   const guestAuth = document.getElementById("guestAuth");
   const userDropdown = document.getElementById("userDropdown");
@@ -3489,6 +3766,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuUserContent = document.getElementById("menuUserContent");
   const adminTabBtn = document.getElementById("adminTabBtn");
   const mobileAdminBtn = document.getElementById("mobileAdminBtn");
+
+  // Contact form handler
+  const contactForm = document.getElementById("contactForm");
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = {
+      name: document.getElementById('contactName').value.trim(),
+      email: document.getElementById('contactEmail').value.trim(),
+      phone: document.getElementById('contactPhone').value.trim() || null,
+      category: document.getElementById('contactCategory').value,
+      subject: document.getElementById('contactSubject').value.trim(),
+      message: document.getElementById('contactMessage').value.trim(),
+      userUid: window.currentUID || null,
+      timestamp: new Date().toISOString()
+    };
+
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.category || !formData.subject || !formData.message) {
+      showPopupNotification('❌ Please fill in all required fields.', 'error');
+      return;
+    }
+
+    // Submit the form
+    await submitContactForm(formData);
+  });
 
   // Sign in handler
   signInBtn.addEventListener("click", async () => {
@@ -3541,6 +3844,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Load user data
       await updateQuotaCounter();
       console.log("Your UID:", user.uid);
+      
+      // Auto-fill contact form if on contact tab
+      if (document.getElementById('contactTab').classList.contains('active')) {
+        autoFillContactForm();
+      }
       
     } else {
       // User signed out
