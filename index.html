@@ -2561,33 +2561,40 @@ document.getElementById("viewHistoryBtn").onclick = async () => {
 
   // Redeem button logic
   redeemBtn.addEventListener("click", async () => {
-    const code = redeemInput.value.trim();
-    const uid = window.currentUID;
+  const code = redeemInput.value.trim();
+  const uid = window.currentUID;
+  const user = auth.currentUser;
 
-    if (!uid || !code) {
-      showPopupNotification("❌ Please enter a code and sign in.", 'error');
-      return;
+  if (!uid || !code || !user || !user.email) {
+    showPopupNotification("❌ Please enter a code and sign in.", 'error');
+    return;
+  }
+
+  try {
+    console.log("Sending redeem request with:", {
+      uid,
+      code,
+      email: user.email
+    });
+
+    const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/redeem-code", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid, code, email: user.email })  // ✅ SAFE
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
+      await updateQuotaCounter();
+    } else {
+      showPopupNotification(`❌ ${data.error}`, 'error');
     }
-
-    try {
-      const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/redeem-code", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid, code, email: auth.currentUser.email })
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
-        await updateQuotaCounter();
-      } else {
-        showPopupNotification(`❌ ${data.error}`, 'error');
-      }
-    } catch (err) {
-      console.error("Redeem failed", err);
-      showPopupNotification("⚠️ Network error", 'warning');
-    }
-  });
+  } catch (err) {
+    console.error("Redeem failed", err);
+    showPopupNotification("⚠️ Network error", 'warning');
+  }
+});
 });
     </script>
 </body>
