@@ -2404,152 +2404,155 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Auth state change
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      const username = user.email.split("@")[0];
-      loginBtn.innerText = "🚪 Sign out";
-      userInfo.innerText = `Welcome, ${username}!`;
-      window.currentUID = user.uid;
-      // Save email to Firestore for later lookup
-	firebase.firestore()
-  	.collection("users")
-  	.doc(user.uid)
-  	.set({ email: user.email }, { merge: true });
-      await updateQuotaCounter();
-      if (isAdmin(user.uid)) {
-  const adminPanel = document.createElement("div");
-  adminPanel.id = "adminPanel";
-  adminPanel.style.marginTop = "16px";
-  adminPanel.innerHTML = `
-    <h4>🎛️ Admin Code Generator</h4>
-    <input type="text" id="codeInput" placeholder="Enter code (e.g., TEST50)" style="margin-bottom:4px" /><br>
-    <input type="number" id="quotaInput" placeholder="Quota (e.g., 50)" /><br>
-    <input type="date" id="expiryInput" placeholder="Expiry Date (YYYY-MM-DD)" /><br>
-    <button class="copy-btn" id="generateCodeBtn">Generate Code</button>
-    <div id="adminFeedback" style="margin-top:4px; font-size:13px;"></div>
-  `;
-  document.getElementById("authPanel").appendChild(adminPanel);
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    const username = user.email.split("@")[0];
+    loginBtn.innerText = "🚪 Sign out";
+    userInfo.innerText = `Welcome, ${username}!`;
+    window.currentUID = user.uid;
+    await updateQuotaCounter();
 
-  document.getElementById("generateCodeBtn").onclick = async () => {
-    const code = document.getElementById("codeInput").value.trim().toUpperCase();
-    const quota = parseInt(document.getElementById("quotaInput").value.trim());
-    const expires = document.getElementById("expiryInput").value;
-
-    if (!code || !quota || !expires) {
-      showPopupNotification("❌ All fields are required.");
-      return;
-    }
-
-    try {
-      const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/create-code", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, quota, expires, uid: window.currentUID })
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        showPopupNotification("✅ Code created!");
-      } else {
-        showPopupNotification("❌ " + data.error);
-      }
-    } catch (err) {
-      console.error("Error creating code:", err);
-      showPopupNotification("⚠️ Network error.");
-    }
-  };
-
-// Admin: View User Quota & Redeemed Codes
-const historyPanel = document.createElement("div");
-historyPanel.id = "historyPanel";
-historyPanel.style.marginTop = "24px";
-historyPanel.innerHTML = `
-  <h4>🧾 View User Redemption History</h4>
-  <input type="text" id="historyUserInput" placeholder="Enter user UID" style="margin-bottom:4px" /><br>
-  <button class="copy-btn" id="viewHistoryBtn">View History</button>
-  <div id="historyResult" style="margin-top:8px; font-size:13px;"></div>
-`;
-authPanel.appendChild(historyPanel);
-
-document.getElementById("viewHistoryBtn").onclick = async () => {
-  const targetUID = document.getElementById("historyUserInput").value.trim();
-  const historyResult = document.getElementById("historyResult");
-
-  if (!targetUID) {
-    showPopupNotification("⚠️ Please enter a user UID.");
-    return;
-  }
-
-  try {
-    const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/user-history", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid: window.currentUID, target: targetUID })
-    });
-
-    const data = await res.json();
-
-    if (data.error) {
-      historyResult.innerHTML = `<span style="color:red">❌ ${data.error}</span>`;
-    } else {
-      historyResult.innerHTML = `
-        <b>Quota:</b> ${data.quota}<br>
-        <b>Used Today:</b> ${data.usedToday}<br>
-        <b>Last Use:</b> ${data.lastUseDate}<br>
-        <b>Redeemed Codes:</b><br>
-        <ul>${(data.redeemedCodes || []).map(code => `<li>${code}</li>`).join("")}</ul>
-      `;
-    }
-  } catch (err) {
-    console.error("Fetch failed:", err);
-    historyResult.innerHTML = `<span style="color:red">⚠️ Network error</span>`;
-  }
-};
-// Admin: Lookup UID by email
-const emailLookupPanel = document.createElement("div");
-emailLookupPanel.style.marginTop = "24px";
-emailLookupPanel.innerHTML = `
-  <h4>📧 Find UID by Email</h4>
-  <input type="text" id="emailSearchInput" placeholder="Enter email..." /><br>
-  <button class="copy-btn" id="lookupUIDBtn">Lookup UID</button>
-  <div id="emailSearchResult" style="margin-top: 6px; font-size: 13px;"></div>
-`;
-document.getElementById("authPanel").appendChild(emailLookupPanel);
-
-document.getElementById("lookupUIDBtn").onclick = async () => {
-  const email = document.getElementById("emailSearchInput").value.trim().toLowerCase();
-  const resultBox = document.getElementById("emailSearchResult");
-
-  if (!email) {
-    showPopupNotification("⚠️ Enter a valid email");
-    return;
-  }
-
-  try {
-    const snap = await firebase.firestore()
+    // 🔐 Save email to Firestore
+    firebase.firestore()
       .collection("users")
-      .where("email", "==", email)
-      .limit(1)
-      .get();
+      .doc(user.uid)
+      .set({ email: user.email }, { merge: true });
 
-    if (snap.empty) {
-      resultBox.innerHTML = `<span style="color:red">❌ No matching user</span>`;
-    } else {
-      const doc = snap.docs[0];
-      resultBox.innerHTML = `✅ UID: <code>${doc.id}</code>`;
+    if (isAdmin(user.uid)) {
+      // 🎛️ Admin Code Generator
+      const adminPanel = document.createElement("div");
+      adminPanel.id = "adminPanel";
+      adminPanel.style.marginTop = "16px";
+      adminPanel.innerHTML = `
+        <h4>🎛️ Admin Code Generator</h4>
+        <input type="text" id="codeInput" placeholder="Enter code (e.g., TEST50)" style="margin-bottom:4px" /><br>
+        <input type="number" id="quotaInput" placeholder="Quota (e.g., 50)" /><br>
+        <input type="date" id="expiryInput" placeholder="Expiry Date (YYYY-MM-DD)" /><br>
+        <button class="copy-btn" id="generateCodeBtn">Generate Code</button>
+        <div id="adminFeedback" style="margin-top:4px; font-size:13px;"></div>
+      `;
+      document.getElementById("authPanel").appendChild(adminPanel);
+
+      document.getElementById("generateCodeBtn").onclick = async () => {
+        const code = document.getElementById("codeInput").value.trim().toUpperCase();
+        const quota = parseInt(document.getElementById("quotaInput").value.trim());
+        const expires = document.getElementById("expiryInput").value;
+
+        if (!code || !quota || !expires) {
+          showPopupNotification("❌ All fields are required.");
+          return;
+        }
+
+        try {
+          const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/create-code", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code, quota, expires, uid: window.currentUID })
+          });
+
+          const data = await res.json();
+          if (data.success) {
+            showPopupNotification("✅ Code created!");
+          } else {
+            showPopupNotification("❌ " + data.error);
+          }
+        } catch (err) {
+          console.error("Error creating code:", err);
+          showPopupNotification("⚠️ Network error.");
+        }
+      };
+
+      // 🧾 View Redemption History
+      const historyPanel = document.createElement("div");
+      historyPanel.style.marginTop = "24px";
+      historyPanel.innerHTML = `
+        <h4>🧾 View User Redemption History</h4>
+        <input type="text" id="historyUserInput" placeholder="Enter user UID" style="margin-bottom:4px" /><br>
+        <button class="copy-btn" id="viewHistoryBtn">View History</button>
+        <div id="historyResult" style="margin-top:8px; font-size:13px;"></div>
+      `;
+      document.getElementById("authPanel").appendChild(historyPanel);
+
+      document.getElementById("viewHistoryBtn").onclick = async () => {
+        const targetUID = document.getElementById("historyUserInput").value.trim();
+        const historyResult = document.getElementById("historyResult");
+
+        if (!targetUID) {
+          showPopupNotification("⚠️ Please enter a user UID.");
+          return;
+        }
+
+        try {
+          const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/user-history", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ uid: window.currentUID, target: targetUID })
+          });
+
+          const data = await res.json();
+
+          if (data.error) {
+            historyResult.innerHTML = `<span style="color:red">❌ ${data.error}</span>`;
+          } else {
+            historyResult.innerHTML = `
+              <b>Quota:</b> ${data.quota}<br>
+              <b>Used Today:</b> ${data.usedToday}<br>
+              <b>Last Use:</b> ${data.lastUseDate}<br>
+              <b>Redeemed Codes:</b><br>
+              <ul>${(data.redeemedCodes || []).map(code => `<li>${code}</li>`).join("") || "<li><i>None</i></li>"}</ul>
+            `;
+          }
+        } catch (err) {
+          console.error("Fetch failed:", err);
+          historyResult.innerHTML = `<span style="color:red">⚠️ Network error</span>`;
+        }
+      };
+
+      // 📧 Search by Email
+      const emailLookupPanel = document.createElement("div");
+      emailLookupPanel.style.marginTop = "24px";
+      emailLookupPanel.innerHTML = `
+        <h4>📧 Find UID by Email</h4>
+        <input type="text" id="emailSearchInput" placeholder="Enter email..." /><br>
+        <button class="copy-btn" id="lookupUIDBtn">Lookup UID</button>
+        <div id="emailSearchResult" style="margin-top: 6px; font-size: 13px;"></div>
+      `;
+      document.getElementById("authPanel").appendChild(emailLookupPanel);
+
+      document.getElementById("lookupUIDBtn").onclick = async () => {
+        const email = document.getElementById("emailSearchInput").value.trim().toLowerCase();
+        const resultBox = document.getElementById("emailSearchResult");
+
+        if (!email) {
+          showPopupNotification("⚠️ Enter a valid email");
+          return;
+        }
+
+        try {
+          const snap = await firebase.firestore()
+            .collection("users")
+            .where("email", "==", email)
+            .limit(1)
+            .get();
+
+          if (snap.empty) {
+            resultBox.innerHTML = `<span style="color:red">❌ No matching user</span>`;
+          } else {
+            const doc = snap.docs[0];
+            resultBox.innerHTML = `✅ UID: <code>${doc.id}</code>`;
+          }
+        } catch (err) {
+          console.error("Email lookup error", err);
+          resultBox.innerHTML = `<span style="color:red">⚠️ Error during search</span>`;
+        }
+      };
     }
-  } catch (err) {
-    console.error("Email lookup error", err);
-    resultBox.innerHTML = `<span style="color:red">⚠️ Error during search</span>`;
+  } else {
+    loginBtn.innerText = "🔐 Sign in with Google";
+    userInfo.innerText = "";
+    window.currentUID = null;
   }
-};
-}
-    } else {
-      loginBtn.innerText = "🔐 Sign in with Google";
-      userInfo.innerText = "";
-      window.currentUID = null;
-    }
-  });
+});
 
   // Redeem button logic
   redeemBtn.addEventListener("click", async () => {
