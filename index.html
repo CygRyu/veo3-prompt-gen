@@ -2344,15 +2344,15 @@
 
                 <!-- Payment UI Section -->
                 <div class="section">
-    <h2>💳 Buy More Prompts</h3>
-    <p>Purchase additional prompts to continue generating.</p>
-    <select id="quota-purchase">
-        <option value="10|50000">10 Prompts - IDR 50,000</option>
-        <option value="20|100000">20 Prompts - IDR 100,000</option>
-        <option value="50|200000">50 Prompts - IDR 200,000</option>
-    </select>
-    <button onclick="initiatePayment()">Buy Now</button>
-</div>
+                    <h2>💳 Buy More Prompts</h2>
+                    <p>Purchase additional prompts to continue generating.</p>
+                    <select id="quota-purchase">
+                        <option value="10|50000">10 Prompts - IDR 50,000</option>
+                        <option value="20|100000">20 Prompts - IDR 100,000</option>
+                        <option value="50|200000">50 Prompts - IDR 200,000</option>
+                    </select>
+                    <button onclick="initiatePayment()">Buy Now</button>
+                </div>
 
                 <!-- Recent Activity -->
                 <div class="section">
@@ -2600,6 +2600,90 @@
         let currentUser = null;
         let userStats = {};
         let adminData = {};
+
+        // Function to initiate payment - MOVED OUTSIDE DOMContentLoaded
+        async function initiatePayment() {
+            const user = firebase.auth().currentUser;
+            if (!user) {
+                showPopupNotification("❌ Please sign in to purchase prompts.", 'error');
+                return;
+            }
+
+            const quotaSelect = document.getElementById("quota-purchase").value.split("|");
+            const quota = parseInt(quotaSelect[0]);
+            const amount = parseInt(quotaSelect[1]);
+
+            console.log("Initiating payment:", { quota, amount, uid: user.uid }); // Debug log
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/create-payment`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        uid: user.uid,
+                        email: user.email,
+                        amount: amount,
+                        quota: quota
+                    })
+                });
+
+                console.log("Payment response status:", response.status); // Debug log
+
+                const data = await response.json();
+                console.log("Payment response data:", data); // Debug log
+
+                if (data.error) {
+                    showPopupNotification(`❌ ${data.error}`, 'error');
+                    return;
+                }
+
+                if (!data.snap_token) {
+                    showPopupNotification("❌ Payment token not received", 'error');
+                    return;
+                }
+
+                // Check if Snap is loaded
+                if (typeof window.snap === 'undefined') {
+                    showPopupNotification("❌ Payment system not loaded. Please refresh the page.", 'error');
+                    return;
+                }
+
+                // Launch Midtrans Snap popup
+                window.snap.pay(data.snap_token, {
+                    onSuccess: function (result) {
+                        console.log("Payment success:", result);
+                        showPopupNotification("✅ Payment successful! Your prompts have been added.", 'success');
+                        updateQuotaCounter();
+                        if (currentUser) {
+                            loadUserStats(); // Refresh stats
+                        }
+                    },
+                    onPending: function (result) {
+                        console.log("Payment pending:", result);
+                        showPopupNotification("⏳ Payment is pending. You'll receive your prompts once confirmed.", 'warning');
+                    },
+                    onError: function (result) {
+                        console.log("Payment error:", result);
+                        showPopupNotification("❌ Payment failed. Please try again.", 'error');
+                    },
+                    onClose: function () {
+                        console.log("Payment popup closed");
+                        showPopupNotification("⚠️ Payment was not completed.", 'warning');
+                    }
+                });
+            } catch (error) {
+                console.error("Error initiating payment:", error);
+                showPopupNotification("❌ Network error. Please check your connection and try again.", 'error');
+            }
+        }
+
+        // Function to update quota display - MOVED OUTSIDE DOMContentLoaded
+        async function updateQuotaDisplay() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                await updateQuotaCounter();
+            }
+        }
 
         // Tone options mapping
         const toneOptions = {
@@ -3679,83 +3763,6 @@ document.addEventListener("DOMContentLoaded", () => {
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const provider = new firebase.auth.GoogleAuthProvider();
-
-// Function to initiate payment
-async function initiatePayment() {
-    const user = auth.currentUser;
-    if (!user) {
-        alert("Please sign in to purchase prompts.");
-        return;
-    }
-
-    const quotaSelect = document.getElementById("quota-purchase").value.split("|");
-    const quota = parseInt(quotaSelect[0]);
-    const amount = parseInt(quotaSelect[1]);
-
-    try {
-        const response = await fetch("/create-payment", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                uid: user.uid,
-                email: user.email,
-                amount: amount,
-                quota: quota
-            })
-        });
-
-        const data = await response.json();
-        if (data.error) {
-            alert(data.error);
-            return;
-        }
-
-        // Launch Midtrans Snap popup
-        window.snap.pay(data.snap_token, {
-            onSuccess: function (result) {
-                console.log("Payment success:", result);
-                alert("Payment successful! Your prompts have been added.");
-                updateQuotaDisplay();
-            },
-            onPending: function (result) {
-                console.log("Payment pending:", result);
-                alert("Payment is pending. You'll receive your prompts once confirmed.");
-            },
-            onError: function (result) {
-                console.log("Payment error:", result);
-                alert("Payment failed. Please try again.");
-            },
-            onClose: function () {
-                console.log("Payment popup closed");
-                alert("Payment was not completed.");
-            }
-        });
-    } catch (error) {
-        console.error("Error initiating payment:", error);
-        alert("An error occurred. Please try again.");
-    }
-}
-
-// Function to update quota display
-async function updateQuotaDisplay() {
-    const user = auth.currentUser;
-    if (user) {
-        const response = await fetch("/get-quota", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ uid: user.uid })
-        });
-        const data = await response.json();
-        document.querySelector(".prompts-remaining").textContent = `${data.quota} Prompts Remaining`;
-    }
-}
-
-// Call updateQuotaDisplay on page load
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        updateQuotaDisplay();
-    }
-});
 
   // Elements
   const guestAuth = document.getElementById("guestAuth");
