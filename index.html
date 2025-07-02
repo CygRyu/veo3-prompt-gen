@@ -2418,43 +2418,6 @@ document.addEventListener("DOMContentLoaded", () => {
       await updateQuotaCounter();
       if (isAdmin(user.uid)) {
   // Admin: Lookup UID by email
-const emailLookupPanel = document.createElement("div");
-emailLookupPanel.style.marginTop = "24px";
-emailLookupPanel.innerHTML = `
-  <h4>📧 Find UID by Email</h4>
-  <input type="text" id="emailSearchInput" placeholder="Enter email..." /><br>
-  <button class="copy-btn" id="lookupUIDBtn">Lookup UID</button>
-  <div id="emailSearchResult" style="margin-top: 6px; font-size: 13px;"></div>
-`;
-document.getElementById("authPanel").appendChild(emailLookupPanel);
-
-document.getElementById("lookupUIDBtn").onclick = async () => {
-  const email = document.getElementById("emailSearchInput").value.trim().toLowerCase();
-  const resultBox = document.getElementById("emailSearchResult");
-
-  if (!email) {
-    showPopupNotification("⚠️ Enter a valid email");
-    return;
-  }
-
-  try {
-    const snap = await firebase.firestore()
-      .collection("users")
-      .where("email", "==", email)
-      .limit(1)
-      .get();
-
-    if (snap.empty) {
-      resultBox.innerHTML = `<span style="color:red">❌ No matching user</span>`;
-    } else {
-      const doc = snap.docs[0];
-      resultBox.innerHTML = `✅ UID: <code>${doc.id}</code>`;
-    }
-  } catch (err) {
-    console.error("Email lookup error", err);
-    resultBox.innerHTML = `<span style="color:red">⚠️ Error during search</span>`;
-  }
-};
   const adminPanel = document.createElement("div");
   adminPanel.id = "adminPanel";
   adminPanel.style.marginTop = "16px";
@@ -2550,7 +2513,43 @@ document.getElementById("viewHistoryBtn").onclick = async () => {
       window.currentUID = null;
     }
   });
+const emailLookupPanel = document.createElement("div");
+emailLookupPanel.style.marginTop = "24px";
+emailLookupPanel.innerHTML = `
+  <h4>📧 Find UID by Email</h4>
+  <input type="text" id="emailSearchInput" placeholder="Enter email..." /><br>
+  <button class="copy-btn" id="lookupUIDBtn">Lookup UID</button>
+  <div id="emailSearchResult" style="margin-top: 6px; font-size: 13px;"></div>
+`;
+document.getElementById("authPanel").appendChild(emailLookupPanel);
 
+document.getElementById("lookupUIDBtn").onclick = async () => {
+  const email = document.getElementById("emailSearchInput").value.trim().toLowerCase();
+  const resultBox = document.getElementById("emailSearchResult");
+
+  if (!email) {
+    showPopupNotification("⚠️ Enter a valid email");
+    return;
+  }
+
+  try {
+    const snap = await firebase.firestore()
+      .collection("users")
+      .where("email", "==", email)
+      .limit(1)
+      .get();
+
+    if (snap.empty) {
+      resultBox.innerHTML = `<span style="color:red">❌ No matching user</span>`;
+    } else {
+      const doc = snap.docs[0];
+      resultBox.innerHTML = `✅ UID: <code>${doc.id}</code>`;
+    }
+  } catch (err) {
+    console.error("Email lookup error", err);
+    resultBox.innerHTML = `<span style="color:red">⚠️ Error during search</span>`;
+  }
+};
   // Redeem button logic
   redeemBtn.addEventListener("click", async () => {
     const code = redeemInput.value.trim();
