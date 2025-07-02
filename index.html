@@ -2417,49 +2417,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .set({ email: user.email }, { merge: true });
       await updateQuotaCounter();
       if (isAdmin(user.uid)) {
-  // Admin: Lookup UID by email
-  const adminPanel = document.createElement("div");
-  adminPanel.id = "adminPanel";
-  adminPanel.style.marginTop = "16px";
-  adminPanel.innerHTML = `
-    <h4>🎛️ Admin Code Generator</h4>
-    <input type="text" id="codeInput" placeholder="Enter code (e.g., TEST50)" style="margin-bottom:4px" /><br>
-    <input type="number" id="quotaInput" placeholder="Quota (e.g., 50)" /><br>
-    <input type="date" id="expiryInput" placeholder="Expiry Date (YYYY-MM-DD)" /><br>
-    <button class="copy-btn" id="generateCodeBtn">Generate Code</button>
-    <div id="adminFeedback" style="margin-top:4px; font-size:13px;"></div>
-  `;
-  document.getElementById("authPanel").appendChild(adminPanel);
-
-  document.getElementById("generateCodeBtn").onclick = async () => {
-    const code = document.getElementById("codeInput").value.trim().toUpperCase();
-    const quota = parseInt(document.getElementById("quotaInput").value.trim());
-    const expires = document.getElementById("expiryInput").value;
-
-    if (!code || !quota || !expires) {
-      showPopupNotification("❌ All fields are required.");
-      return;
-    }
-
-    try {
-      const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/create-code", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, quota, expires, uid: window.currentUID })
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        showPopupNotification("✅ Code created!");
-      } else {
-        showPopupNotification("❌ " + data.error);
-      }
-    } catch (err) {
-      console.error("Error creating code:", err);
-      showPopupNotification("⚠️ Network error.");
-    }
-  };
-
 // Admin: View User Quota & Redeemed Codes
 const historyPanel = document.createElement("div");
 historyPanel.id = "historyPanel";
@@ -2506,13 +2463,7 @@ document.getElementById("viewHistoryBtn").onclick = async () => {
     historyResult.innerHTML = `<span style="color:red">⚠️ Network error</span>`;
   }
 };
-}
-    } else {
-      loginBtn.innerText = "🔐 Sign in with Google";
-      userInfo.innerText = "";
-      window.currentUID = null;
-    }
-  });
+// Admin: Lookup UID by email
 const emailLookupPanel = document.createElement("div");
 emailLookupPanel.style.marginTop = "24px";
 emailLookupPanel.innerHTML = `
@@ -2550,6 +2501,13 @@ document.getElementById("lookupUIDBtn").onclick = async () => {
     resultBox.innerHTML = `<span style="color:red">⚠️ Error during search</span>`;
   }
 };
+}
+    } else {
+      loginBtn.innerText = "🔐 Sign in with Google";
+      userInfo.innerText = "";
+      window.currentUID = null;
+    }
+  });
   // Redeem button logic
   redeemBtn.addEventListener("click", async () => {
     const code = redeemInput.value.trim();
