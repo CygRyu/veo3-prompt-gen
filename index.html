@@ -49,16 +49,201 @@
         
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
-            padding: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 0;
+            margin: 0;
             line-height: 1.5;
             background-color: #ffffff;
             color: #1f2328;
         }
-        
+
+        /* Header Styles */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #d1d9e0;
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2328;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .guest-auth {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            background: #ffffff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.15s ease-in-out;
+        }
+
+        .user-button:hover {
+            background: #f6f8fa;
+            border-color: #0969da;
+        }
+
+        .user-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #0969da;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .dropdown-arrow {
+            font-size: 12px;
+            transition: transform 0.15s ease-in-out;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+            margin-top: 4px;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #d1d9e0;
+            font-size: 13px;
+            color: #656d76;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #1f2328;
+            font-size: 14px;
+            transition: background 0.15s ease-in-out;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item:hover {
+            background: #f6f8fa;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #d1d9e0;
+            margin: 4px 0;
+        }
+
+        /* Mobile Header */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            color: #1f2328;
+        }
+
         @media (max-width: 768px) {
-            body {
+            .header-content {
+                padding: 0;
+            }
+
+            .nav-tabs {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                border-top: 1px solid #d1d9e0;
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .nav-tabs.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
                 padding: 16px;
             }
         }
@@ -90,7 +275,7 @@
             color: #656d76;
         }
         
-        textarea, select, input[type="text"], input[type="range"] { 
+        textarea, select, input[type="text"], input[type="range"], input[type="email"], input[type="search"], input[type="number"] { 
             width: 100%;
             padding: 8px 12px;
             margin: 8px 0 16px;
@@ -103,7 +288,7 @@
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
         
-        textarea:focus, select:focus, input[type="text"]:focus {
+        textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus {
             outline: none;
             border-color: #0969da;
             box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
@@ -474,6 +659,7 @@
             display: flex;
             border-bottom: 1px solid #d1d9e0;
             margin-bottom: 0;
+            overflow-x: auto;
         }
         
         .tab-button {
@@ -486,6 +672,7 @@
             cursor: pointer;
             border-bottom: 2px solid transparent;
             transition: all 0.15s ease-in-out;
+            white-space: nowrap;
         }
         
         .tab-button.active {
@@ -707,11 +894,155 @@
             font-size: 13px;
         }
 
+        /* Menu Tab Styles */
+        .stats-card {
+            background: #f6f8fa;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #0969da;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #656d76;
+            margin-top: 4px;
+        }
+
+        /* Admin Panel Styles */
+        .admin-card {
+            background: #ffffff;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #d1d9e0;
+        }
+
+        .data-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .data-table td {
+            font-size: 13px;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            max-width: 300px;
+            margin: 0;
+        }
+
+        .filter-select {
+            max-width: 200px;
+            margin: 0;
+        }
+
+        .sign-in-prompt {
+            text-align: center;
+            padding: 48px 24px;
+            background: #f6f8fa;
+            border: 1px solid #d1d9e0;
+            border-radius: 6px;
+            color: #656d76;
+        }
+
+        .sign-in-prompt h3 {
+            color: #1f2328;
+            margin-bottom: 16px;
+        }
+
         /* Dark mode support */
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: #0d1117;
                 color: #e6edf3;
+            }
+
+            .header {
+                background-color: #0d1117;
+                border-bottom-color: #30363d;
+            }
+
+            .logo {
+                color: #e6edf3;
+            }
+
+            .user-button {
+                background: #21262d;
+                border-color: #30363d;
+                color: #e6edf3;
+            }
+
+            .user-button:hover {
+                background: #30363d;
+                border-color: #1f6feb;
+            }
+
+            .dropdown-menu {
+                background: #21262d;
+                border-color: #30363d;
+            }
+
+            .dropdown-header {
+                border-bottom-color: #30363d;
+                color: #8d96a0;
+            }
+
+            .dropdown-item {
+                color: #e6edf3;
+            }
+
+            .dropdown-item:hover {
+                background: #30363d;
+            }
+
+            .dropdown-divider {
+                background: #30363d;
             }
             
             h1, h2, .tab-title {
@@ -723,13 +1054,13 @@
                 color: #8d96a0;
             }
             
-            textarea, select, input[type="text"] {
+            textarea, select, input[type="text"], input[type="email"], input[type="search"], input[type="number"] {
                 background-color: #21262d;
                 border-color: #30363d;
                 color: #e6edf3;
             }
             
-            textarea:focus, select:focus, input[type="text"]:focus {
+            textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus {
                 border-color: #1f6feb;
                 box-shadow: 0 0 0 3px rgba(31, 111, 235, 0.1);
             }
@@ -740,7 +1071,7 @@
                 color: #e6edf3;
             }
             
-            .section {
+            .section, .admin-card, .stats-card {
                 background: #0d1117;
                 border-color: #30363d;
             }
@@ -761,7 +1092,7 @@
                 box-shadow: 0 0 0 1px rgba(31, 111, 235, 0.2);
             }
             
-            .gallery-placeholder {
+            .gallery-placeholder, .sign-in-prompt {
                 background: #161b22;
                 color: #8d96a0;
                 border-color: #30363d;
@@ -866,439 +1197,104 @@
                 background-color: #161b22;
                 border-left-color: #58a6ff;
             }
+
+            .data-table th {
+                background: #161b22;
+                color: #e6edf3;
+            }
+
+            .data-table td {
+                color: #e6edf3;
+            }
+
+            .data-table th,
+            .data-table td {
+                border-bottom-color: #30363d;
+            }
+
+            .mobile-menu-btn {
+                color: #e6edf3;
+            }
+
+            .sign-in-prompt h3 {
+                color: #e6edf3;
+            }
         }
     </style>
 </head>
 <body>
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-        <h1 style="margin-bottom: 0;">🎬 Veo 3 Prompt Generator</h1>
-        <div id="authPanel"></div>
-    </div>
-
-    <!-- Tab Navigation -->
-    <div class="tab-container">
-        <div class="tab-nav">
-            <button class="tab-button active" onclick="switchTab('enhance')">✨ Enhance</button>
-            <button class="tab-button" onclick="switchTab('remix')">🎛️ Remix</button>
-        </div>
-    </div>
-
-    <!-- Enhance Tab Content -->
-    <div id="enhanceTab" class="tab-content active">
-        <div class="tab-header">
-            <h2 class="tab-title">Enhance Your Prompt</h2>
-            <button class="help-btn" onclick="showHelp('enhance')">❓ Help</button>
-        </div>
-
-        <!-- Basic Settings -->
-        <div class="section">
-            <h2>Basic Settings</h2>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                🎬 Veo 3 Generator
+            </a>
             
-            <label for="description">Your Prompt *</label>
-            <textarea id="description" rows="4" placeholder="e.g. A cat flying through a futuristic city during a thunderstorm..."></textarea>
+            <nav class="nav-tabs" id="navTabs">
+                <button class="tab-button active" onclick="switchTab('enhance')">✨ Enhance</button>
+                <button class="tab-button" onclick="switchTab('remix')">🎛️ Remix</button>
+                <button class="tab-button" onclick="switchTab('menu')" id="menuTabBtn">📋 Menu</button>
+                <button class="tab-button hidden" onclick="switchTab('admin')" id="adminTabBtn">⚙️ Admin</button>
+            </nav>
 
-            <div class="form-grid form-grid-2">
-                <div>
-                    <label for="subject">Subject / Character Focus</label>
-                    <input id="subject" type="text" placeholder="e.g. Cat, Robot, Samurai, Cloud, etc."/>
-                </div>
-                
-                <div>
-                    <label for="action">Action / Movement Type</label>
-                    <select id="action">
-                        <option value="">Auto Detect</option>
-                        <option>Walking</option>
-                        <option>Dancing</option>
-                        <option>Flying</option>
-                        <option>Transformation</option>
-                        <option>Interaction</option>
-                        <option>Running</option>
-                        <option>Jumping</option>
-                        <option>Swimming</option>
-                        <option>Climbing</option>
-                    </select>
-                </div>
-            </div>
-
-            <label for="style">Video Style</label>
-            <select id="style">
-                <option>Auto Detect (AI chooses best style)</option>
-                <option>Cinematic / Hollywood Film</option>
-                <option>Realistic Live Action</option>
-                <option>Aerial Cinematic Drone Shot</option>
-                <option>Time-lapse / Slow Motion</option>
-                <option>Film Noir / Black-and-White</option>
-                <option>Analog / Film Grain</option>
-                <option>IMAX Look</option>
-                <option>Documentary Style</option>
-                <option>Natural History / Wildlife</option>
-                <option>Found Footage / Handheld Cam</option>
-                <option>News Report Style</option>
-                <option>Surveillance Footage Look</option>
-                <option>Dreamscape / Surreal</option>
-                <option>Fantasy / Magic Realism</option>
-                <option>Oil Painting / Watercolor</option>
-                <option>Sketch / Ink Drawing</option>
-                <option>Abstract / Experimental</option>
-                <option>Double Exposure / Visual Metaphor</option>
-                <option>Stylized 2D Animation / Anime-like</option>
-                <option>Cartoon 2D</option>
-                <option>Cute Cartoon / Kawaii Style</option>
-                <option>Cartoon 3D / Pixar-like</option>
-                <option>Stop Motion Look</option>
-                <option>Claymation Style</option>
-                <option>Motion Graphic / Minimal Vector</option>
-                <option>Retro 80s / VHS Look</option>
-                <option>Cyberpunk / Futuristic</option>
-                <option>Noir Detective Style</option>
-                <option>Western / Cowboy Film</option>
-                <option>Horror (grainy, eerie lighting)</option>
-                <option>Tiny World / Tilt Shift</option>
-                <option>Microscopic View / Science-Lab Look</option>
-                <option>Macro Lens Simulation</option>
-                <option>Cinematic Portrait Mode</option>
-                <option>Bokeh-Focused Depth-of-Field</option>
-                <option>Overexposed / Underexposed Look</option>
-                <option>Infrared or Thermal Cam Simulation</option>
-                <option>Isometric / Diorama</option>
-                <option>Fantasy Landscapes</option>
-                <option>Post-Apocalyptic World</option>
-                <option>Urban Street Aesthetic</option>
-                <option>Studio Look (ASMR/Product Videos)</option>
-                <option>Video Game Gameplay</option>
-            </select>
-        </div>
-
-        <!-- Video Tone/Genre -->
-        <div class="section">
-            <h2>Video Tone/Genre</h2>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             
-            <div class="form-grid form-grid-2">
-                <div>
-                    <label for="generalTone">General Tone</label>
-                    <select id="generalTone" onchange="updateSubTones('enhance')">
-                        <option value="">Auto Detect</option>
-                        <option value="emotional">Emotional Tones</option>
-                        <option value="suspense">Suspense & Thriller Tones</option>
-                        <option value="action">Action & Adventure Tones</option>
-                        <option value="artistic">Artistic & Creative Tones</option>
-                        <option value="documentary">Documentary & Realistic Tones</option>
-                        <option value="fantasy">Fantasy & Sci-Fi Tones</option>
-                        <option value="social">Social & Cultural Tones</option>
-                        <option value="unique">Unique/Niche Tones</option>
-                    </select>
+            <div class="user-section">
+                <!-- Guest State -->
+                <div class="guest-auth" id="guestAuth">
+                    <button class="copy-btn" id="signInBtn">🔐 Sign in with Google</button>
                 </div>
 
-                <div>
-                    <label for="subTone">Specific Tone</label>
-                    <select id="subTone">
-                        <option value="">Auto Detect</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <!-- Technical Settings -->
-        <div class="section">
-            <h2>Technical Settings</h2>
-            
-            <div class="form-grid form-grid-2">
-                <div>
-                    <label for="aspectRatio">Aspect Ratio</label>
-                    <select id="aspectRatio">
-                        <option value="16:9">16:9 (Widescreen)</option>
-                        <option value="9:16">9:16 (Vertical)</option>
-                        <option value="1:1">1:1 (Square)</option>
-                        <option value="4:3">4:3 (Standard)</option>
-                        <option value="21:9">21:9 (Ultra-wide)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="duration">Duration</label>
-                    <input id="duration" type="text" value="8 seconds" readonly style="background-color: #f6f8fa; color: #656d76;"/>
+                <!-- User State -->
+                <div class="user-dropdown hidden" id="userDropdown">
+                    <button class="user-button" onclick="toggleUserDropdown()">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span id="userName">User</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-header">
+                            <div id="userEmail">user@example.com</div>
+                            <div id="quotaDisplay">🎟️ 0 prompts left</div>
+                        </div>
+                        <button class="dropdown-item" onclick="switchTab('menu')">
+                            📋 Menu & Redeem
+                        </button>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item" id="signOutBtn">
+                            🚪 Sign Out
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+    </header>
 
-        <!-- Advanced Parameters -->
-        <button class="collapsible" onclick="toggleAdvanced('enhance')">+ Advanced Parameters (Optional)</button>
-        <div id="enhanceAdvanced" class="advanced-section">
-            <div class="section">
-                <!-- Camera Settings -->
-                <h3>Camera Settings</h3>
-                <div class="form-grid form-grid-3">
-                    <div>
-                        <label for="cameraMovement">Camera Movement</label>
-                        <select id="cameraMovement">
-                            <option>Auto Detect</option>
-                            <option>Static</option>
-                            <option>Pan Left/Right</option>
-                            <option>Zoom In/Out</option>
-                            <option>Dolly Forward/Back</option>
-                            <option>Steadycam</option>
-                            <option>Handheld</option>
-                            <option>Orbital</option>
-                            <option>Tracking Shot</option>
-                            <option>Crane</option>
-                            <option>Drone</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="cameraLevel">Camera Level</label>
-                        <select id="cameraLevel">
-                            <option>Auto Detect</option>
-                            <option>Eye Level</option>
-                            <option>Low Angle</option>
-                            <option>High Angle</option>
-                            <option>Dutch Angle</option>
-                            <option>Overhead</option>
-                            <option>Point of View</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="lensType">Lens Type</label>
-                        <select id="lensType">
-                            <option>Auto Detect</option>
-                            <option>Standard (50mm)</option>
-                            <option>Wide Angle (24mm)</option>
-                            <option>Telephoto (85mm+)</option>
-                            <option>Fisheye</option>
-                            <option>Anamorphic</option>
-                            <option>Macro</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Visual Settings -->
-                <h3>Visual Settings</h3>
-                <div class="form-grid form-grid-2">
-                    <div>
-                        <label for="depthOfField">Depth of Field</label>
-                        <select id="depthOfField">
-                            <option>Auto Detect</option>
-                            <option>Shallow</option>
-                            <option>Medium</option>
-                            <option>Deep</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="lighting">Lighting Preference</label>
-                        <select id="lighting">
-                            <option>Auto Detect</option>
-                            <option>Natural</option>
-                            <option>Dramatic</option>
-                            <option>Soft</option>
-                            <option>Harsh</option>
-                            <option>Golden Hour</option>
-                            <option>Blue Hour</option>
-                            <option>Neon</option>
-                            <option>Candlelit</option>
-                            <option>Studio Lighting</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Visual Effects Sliders -->
-                <h3>Visual Effects</h3>
-                <div class="slider-container">
-                    <div class="slider-label">
-                        <label for="filmGrain">Film Grain</label>
-                        <span class="slider-value" id="filmGrainValue">0%</span>
-                    </div>
-                    <input type="range" id="filmGrain" min="0" max="100" value="0" oninput="updateSliderValue('filmGrain')">
-                </div>
-
-                <div class="slider-container">
-                    <div class="slider-label">
-                        <label for="chromaticAberration">Chromatic Aberration</label>
-                        <span class="slider-value" id="chromaticAberrationValue">0%</span>
-                    </div>
-                    <input type="range" id="chromaticAberration" min="0" max="100" value="0" oninput="updateSliderValue('chromaticAberration')">
-                </div>
-
-                <!-- Environment & Atmosphere -->
-                <h3>Environment & Atmosphere</h3>
-                <div class="form-grid form-grid-3">
-                    <div>
-                        <label for="environment">Environment/Setting</label>
-                        <select id="environment">
-                            <option>Auto Detect</option>
-                            <option>Indoor</option>
-                            <option>Outdoor</option>
-                            <option>Urban</option>
-                            <option>Rural</option>
-                            <option>Fantasy World</option>
-                            <option>Space</option>
-                            <option>Underwater</option>
-                            <option>Desert</option>
-                            <option>Forest</option>
-                            <option>City</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="colorPalette">Color Palette</label>
-                        <select id="colorPalette">
-                            <option>Auto Detect</option>
-                            <option>Warm Tones</option>
-                            <option>Cool Tones</option>
-                            <option>Monochrome</option>
-                            <option>Vibrant</option>
-                            <option>Muted</option>
-                            <option>Neon</option>
-                            <option>Pastel</option>
-                            <option>High Contrast</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="weather">Weather/Atmosphere</label>
-                        <select id="weather">
-                            <option>Auto Detect</option>
-                            <option>Sunny</option>
-                            <option>Cloudy</option>
-                            <option>Rainy</option>
-                            <option>Foggy</option>
-                            <option>Stormy</option>
-                            <option>Snowy</option>
-                            <option>Windy</option>
-                            <option>Misty</option>
-                            <option>Clear</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="timeOfDay">Time of Day</label>
-                        <select id="timeOfDay">
-                            <option>Auto Detect</option>
-                            <option>Dawn</option>
-                            <option>Morning</option>
-                            <option>Midday</option>
-                            <option>Afternoon</option>
-                            <option>Dusk</option>
-                            <option>Night</option>
-                            <option>Midnight</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="motionIntensity">Motion Intensity</label>
-                        <select id="motionIntensity">
-                            <option>Auto Detect</option>
-                            <option>Subtle</option>
-                            <option>Moderate</option>
-                            <option>Dynamic</option>
-                            <option>Explosive</option>
-                            <option>Graceful</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="moodEmotion">Mood/Emotion</label>
-                        <select id="moodEmotion">
-                            <option>Auto Detect</option>
-                            <option>Happy</option>
-                            <option>Mysterious</option>
-                            <option>Tense</option>
-                            <option>Peaceful</option>
-                            <option>Energetic</option>
-                            <option>Melancholic</option>
-                            <option>Triumphant</option>
-                            <option>Romantic</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Dialogue/Text Overlay -->
-                <label for="dialogue">Dialogue/Text Overlay (Optional)</label>
-                <textarea id="dialogue" rows="2" placeholder="Enter any dialogue or text elements to include..."></textarea>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Enhance Tab Content -->
+        <div id="enhanceTab" class="tab-content active">
+            <div class="tab-header">
+                <h2 class="tab-title">Enhance Your Prompt</h2>
+                <button class="help-btn" onclick="showHelp('enhance')">❓ Help</button>
             </div>
-        </div>
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <button class="clear-btn" onclick="clearForm('enhance')">🗑️ Clear All</button>
-            <button class="generate-btn" onclick="generatePrompt()">✨ Enhance Prompt</button>
-        </div>
-
-        <!-- Output Section -->
-        <div id="enhanceOutputSection" class="hidden">
-            <div class="output-header">
-                <h2>Enhanced Prompt</h2>
-                <button class="copy-btn" onclick="copyPrompt('enhanceOutput')">📋 Copy Prompt</button>
-            </div>
-            <div id="enhanceOutput"></div>
-        </div>
-
-        <!-- Sample Gallery -->
-        <div class="section">
-            <button class="collapsible" onclick="toggleGallery('enhance')">+ Sample Gallery</button>
-            <div id="enhanceVideoGallery" class="video-gallery">
-                <div class="video-container">
-                    <div class="video-title" id="enhanceVideoTitle">Sample Video 1</div>
-                    <iframe id="enhanceVideoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
-                </div>
-                <div class="video-navigation">
-                    <button class="video-nav-btn" id="enhancePrevBtn" onclick="previousVideo('enhance')">← Previous</button>
-                    <span class="video-counter" id="enhanceVideoCounter">1 / 3</span>
-                    <button class="video-nav-btn" id="enhanceNextBtn" onclick="nextVideo('enhance')">Next →</button>
-                </div>
-            </div>
-            <div id="enhanceGalleryPlaceholder" class="gallery-placeholder">
-                Click on expand button above to view sample videos
-            </div>
-        </div>
-    </div>
-
-    <!-- Remix Tab Content -->
-    <div id="remixTab" class="tab-content">
-        <div class="tab-header">
-            <h2 class="tab-title">Remix Existing Prompt</h2>
-            <button class="help-btn" onclick="showHelp('remix')">❓ Help</button>
-        </div>
-
-        <!-- Remix Input Section -->
-        <div class="section">
-            <h2>Original Prompt & Variations</h2>
-            
-            <label for="originalPrompt">Original Prompt *</label>
-            <textarea id="originalPrompt" rows="6" placeholder="Paste your existing prompt here... (can be any length from simple to detailed)"></textarea>
-
-            <label for="variationInstructions">How to Vary This Prompt *</label>
-            <textarea id="variationInstructions" rows="4" placeholder="e.g. Make the creature a giant lobster instead, and the view is from a drone, the time of day is dusk, the tone is chilling and gritty. And there is a deep old man voice narrating that says 'Earth is facing her end of time..'"></textarea>
-
-            <!-- Simple/Advanced Toggle -->
-            <div class="toggle-container">
-                <span class="toggle-labels">
-                    <span class="toggle-label active" id="simpleLabel">Simple</span>
-                    <span class="toggle-label inactive" id="advancedLabel">Advanced</span>
-                </span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="remixModeToggle" onchange="toggleRemixMode()">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Advanced Remix Parameters (Hidden by default) -->
-        <div id="remixAdvancedSection" class="hidden">
             <!-- Basic Settings -->
             <div class="section">
                 <h2>Basic Settings</h2>
                 
+                <label for="description">Your Prompt *</label>
+                <textarea id="description" rows="4" placeholder="e.g. A cat flying through a futuristic city during a thunderstorm..."></textarea>
+
                 <div class="form-grid form-grid-2">
                     <div>
-                        <label for="remixSubject">Subject / Character Focus</label>
-                        <input id="remixSubject" type="text" placeholder="e.g. Cat, Robot, Samurai, Cloud, etc."/>
+                        <label for="subject">Subject / Character Focus</label>
+                        <input id="subject" type="text" placeholder="e.g. Cat, Robot, Samurai, Cloud, etc."/>
                     </div>
                     
                     <div>
-                        <label for="remixAction">Action / Movement Type</label>
-                        <select id="remixAction">
+                        <label for="action">Action / Movement Type</label>
+                        <select id="action">
                             <option value="">Auto Detect</option>
                             <option>Walking</option>
                             <option>Dancing</option>
@@ -1313,8 +1309,8 @@
                     </div>
                 </div>
 
-                <label for="remixStyle">Video Style</label>
-                <select id="remixStyle">
+                <label for="style">Video Style</label>
+                <select id="style">
                     <option>Auto Detect (AI chooses best style)</option>
                     <option>Cinematic / Hollywood Film</option>
                     <option>Realistic Live Action</option>
@@ -1368,8 +1364,8 @@
                 
                 <div class="form-grid form-grid-2">
                     <div>
-                        <label for="remixGeneralTone">General Tone</label>
-                        <select id="remixGeneralTone" onchange="updateSubTones('remix')">
+                        <label for="generalTone">General Tone</label>
+                        <select id="generalTone" onchange="updateSubTones('enhance')">
                             <option value="">Auto Detect</option>
                             <option value="emotional">Emotional Tones</option>
                             <option value="suspense">Suspense & Thriller Tones</option>
@@ -1383,8 +1379,8 @@
                     </div>
 
                     <div>
-                        <label for="remixSubTone">Specific Tone</label>
-                        <select id="remixSubTone">
+                        <label for="subTone">Specific Tone</label>
+                        <select id="subTone">
                             <option value="">Auto Detect</option>
                         </select>
                     </div>
@@ -1397,8 +1393,8 @@
                 
                 <div class="form-grid form-grid-2">
                     <div>
-                        <label for="remixAspectRatio">Aspect Ratio</label>
-                        <select id="remixAspectRatio">
+                        <label for="aspectRatio">Aspect Ratio</label>
+                        <select id="aspectRatio">
                             <option value="16:9">16:9 (Widescreen)</option>
                             <option value="9:16">9:16 (Vertical)</option>
                             <option value="1:1">1:1 (Square)</option>
@@ -1408,22 +1404,22 @@
                     </div>
 
                     <div>
-                        <label for="remixDuration">Duration</label>
-                        <input id="remixDuration" type="text" value="8 seconds" readonly style="background-color: #f6f8fa; color: #656d76;"/>
+                        <label for="duration">Duration</label>
+                        <input id="duration" type="text" value="8 seconds" readonly style="background-color: #f6f8fa; color: #656d76;"/>
                     </div>
                 </div>
             </div>
 
             <!-- Advanced Parameters -->
-            <button class="collapsible" onclick="toggleAdvanced('remix')">+ Advanced Parameters (Optional)</button>
-            <div id="remixAdvanced" class="advanced-section">
+            <button class="collapsible" onclick="toggleAdvanced('enhance')">+ Advanced Parameters (Optional)</button>
+            <div id="enhanceAdvanced" class="advanced-section">
                 <div class="section">
                     <!-- Camera Settings -->
                     <h3>Camera Settings</h3>
                     <div class="form-grid form-grid-3">
                         <div>
-                            <label for="remixCameraMovement">Camera Movement</label>
-                            <select id="remixCameraMovement">
+                            <label for="cameraMovement">Camera Movement</label>
+                            <select id="cameraMovement">
                                 <option>Auto Detect</option>
                                 <option>Static</option>
                                 <option>Pan Left/Right</option>
@@ -1439,8 +1435,8 @@
                         </div>
 
                         <div>
-                            <label for="remixCameraLevel">Camera Level</label>
-                            <select id="remixCameraLevel">
+                            <label for="cameraLevel">Camera Level</label>
+                            <select id="cameraLevel">
                                 <option>Auto Detect</option>
                                 <option>Eye Level</option>
                                 <option>Low Angle</option>
@@ -1452,8 +1448,8 @@
                         </div>
 
                         <div>
-                            <label for="remixLensType">Lens Type</label>
-                            <select id="remixLensType">
+                            <label for="lensType">Lens Type</label>
+                            <select id="lensType">
                                 <option>Auto Detect</option>
                                 <option>Standard (50mm)</option>
                                 <option>Wide Angle (24mm)</option>
@@ -1469,8 +1465,8 @@
                     <h3>Visual Settings</h3>
                     <div class="form-grid form-grid-2">
                         <div>
-                            <label for="remixDepthOfField">Depth of Field</label>
-                            <select id="remixDepthOfField">
+                            <label for="depthOfField">Depth of Field</label>
+                            <select id="depthOfField">
                                 <option>Auto Detect</option>
                                 <option>Shallow</option>
                                 <option>Medium</option>
@@ -1479,8 +1475,8 @@
                         </div>
 
                         <div>
-                            <label for="remixLighting">Lighting Preference</label>
-                            <select id="remixLighting">
+                            <label for="lighting">Lighting Preference</label>
+                            <select id="lighting">
                                 <option>Auto Detect</option>
                                 <option>Natural</option>
                                 <option>Dramatic</option>
@@ -1499,26 +1495,26 @@
                     <h3>Visual Effects</h3>
                     <div class="slider-container">
                         <div class="slider-label">
-                            <label for="remixFilmGrain">Film Grain</label>
-                            <span class="slider-value" id="remixFilmGrainValue">0%</span>
+                            <label for="filmGrain">Film Grain</label>
+                            <span class="slider-value" id="filmGrainValue">0%</span>
                         </div>
-                        <input type="range" id="remixFilmGrain" min="0" max="100" value="0" oninput="updateSliderValue('remixFilmGrain')">
+                        <input type="range" id="filmGrain" min="0" max="100" value="0" oninput="updateSliderValue('filmGrain')">
                     </div>
 
                     <div class="slider-container">
                         <div class="slider-label">
-                            <label for="remixChromaticAberration">Chromatic Aberration</label>
-                            <span class="slider-value" id="remixChromaticAberrationValue">0%</span>
+                            <label for="chromaticAberration">Chromatic Aberration</label>
+                            <span class="slider-value" id="chromaticAberrationValue">0%</span>
                         </div>
-                        <input type="range" id="remixChromaticAberration" min="0" max="100" value="0" oninput="updateSliderValue('remixChromaticAberration')">
+                        <input type="range" id="chromaticAberration" min="0" max="100" value="0" oninput="updateSliderValue('chromaticAberration')">
                     </div>
 
                     <!-- Environment & Atmosphere -->
                     <h3>Environment & Atmosphere</h3>
                     <div class="form-grid form-grid-3">
                         <div>
-                            <label for="remixEnvironment">Environment/Setting</label>
-                            <select id="remixEnvironment">
+                            <label for="environment">Environment/Setting</label>
+                            <select id="environment">
                                 <option>Auto Detect</option>
                                 <option>Indoor</option>
                                 <option>Outdoor</option>
@@ -1534,8 +1530,8 @@
                         </div>
 
                         <div>
-                            <label for="remixColorPalette">Color Palette</label>
-                            <select id="remixColorPalette">
+                            <label for="colorPalette">Color Palette</label>
+                            <select id="colorPalette">
                                 <option>Auto Detect</option>
                                 <option>Warm Tones</option>
                                 <option>Cool Tones</option>
@@ -1549,8 +1545,8 @@
                         </div>
 
                         <div>
-                            <label for="remixWeather">Weather/Atmosphere</label>
-                            <select id="remixWeather">
+                            <label for="weather">Weather/Atmosphere</label>
+                            <select id="weather">
                                 <option>Auto Detect</option>
                                 <option>Sunny</option>
                                 <option>Cloudy</option>
@@ -1565,8 +1561,8 @@
                         </div>
 
                         <div>
-                            <label for="remixTimeOfDay">Time of Day</label>
-                            <select id="remixTimeOfDay">
+                            <label for="timeOfDay">Time of Day</label>
+                            <select id="timeOfDay">
                                 <option>Auto Detect</option>
                                 <option>Dawn</option>
                                 <option>Morning</option>
@@ -1579,8 +1575,8 @@
                         </div>
 
                         <div>
-                            <label for="remixMotionIntensity">Motion Intensity</label>
-                            <select id="remixMotionIntensity">
+                            <label for="motionIntensity">Motion Intensity</label>
+                            <select id="motionIntensity">
                                 <option>Auto Detect</option>
                                 <option>Subtle</option>
                                 <option>Moderate</option>
@@ -1591,8 +1587,8 @@
                         </div>
 
                         <div>
-                            <label for="remixMoodEmotion">Mood/Emotion</label>
-                            <select id="remixMoodEmotion">
+                            <label for="moodEmotion">Mood/Emotion</label>
+                            <select id="moodEmotion">
                                 <option>Auto Detect</option>
                                 <option>Happy</option>
                                 <option>Mysterious</option>
@@ -1607,68 +1603,664 @@
                     </div>
 
                     <!-- Dialogue/Text Overlay -->
-                    <label for="remixDialogue">Dialogue/Text Overlay (Optional)</label>
-                    <textarea id="remixDialogue" rows="2" placeholder="Enter any dialogue or text elements to include..."></textarea>
+                    <label for="dialogue">Dialogue/Text Overlay (Optional)</label>
+                    <textarea id="dialogue" rows="2" placeholder="Enter any dialogue or text elements to include..."></textarea>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="clear-btn" onclick="clearForm('enhance')">🗑️ Clear All</button>
+                <button class="generate-btn" onclick="generatePrompt()">✨ Enhance Prompt</button>
+            </div>
+
+            <!-- Output Section -->
+            <div id="enhanceOutputSection" class="hidden">
+                <div class="output-header">
+                    <h2>Enhanced Prompt</h2>
+                    <button class="copy-btn" onclick="copyPrompt('enhanceOutput')">📋 Copy Prompt</button>
+                </div>
+                <div id="enhanceOutput"></div>
+            </div>
+
+            <!-- Sample Gallery -->
+            <div class="section">
+                <button class="collapsible" onclick="toggleGallery('enhance')">+ Sample Gallery</button>
+                <div id="enhanceVideoGallery" class="video-gallery">
+                    <div class="video-container">
+                        <div class="video-title" id="enhanceVideoTitle">Sample Video 1</div>
+                        <iframe id="enhanceVideoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-navigation">
+                        <button class="video-nav-btn" id="enhancePrevBtn" onclick="previousVideo('enhance')">← Previous</button>
+                        <span class="video-counter" id="enhanceVideoCounter">1 / 3</span>
+                        <button class="video-nav-btn" id="enhanceNextBtn" onclick="nextVideo('enhance')">Next →</button>
+                    </div>
+                </div>
+                <div id="enhanceGalleryPlaceholder" class="gallery-placeholder">
+                    Click on expand button above to view sample videos
                 </div>
             </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <button class="clear-btn" onclick="clearForm('remix')">🗑️ Clear All</button>
-            <button class="generate-btn" onclick="remixPrompt()">🎛️ Remix Prompt</button>
-        </div>
-
-        <!-- Output Section -->
-        <div id="remixOutputSection" class="hidden">
-            <div class="output-header">
-                <h2>Remixed Prompt</h2>
-                <button class="copy-btn" onclick="copyPrompt('remixOutput')">📋 Copy Prompt</button>
+        <!-- Remix Tab Content -->
+        <div id="remixTab" class="tab-content">
+            <div class="tab-header">
+                <h2 class="tab-title">Remix Existing Prompt</h2>
+                <button class="help-btn" onclick="showHelp('remix')">❓ Help</button>
             </div>
-            <div id="remixOutput"></div>
-        </div>
 
-        <!-- Sample Gallery -->
-        <div class="section">
-            <button class="collapsible" onclick="toggleGallery('remix')">+ Sample Gallery</button>
-            <div id="remixVideoGallery" class="video-gallery">
-                <div class="video-container">
-                    <div class="video-title" id="remixVideoTitle">Sample Video 1</div>
-                    <iframe id="remixVideoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
+            <!-- Remix Input Section -->
+            <div class="section">
+                <h2>Original Prompt & Variations</h2>
+                
+                <label for="originalPrompt">Original Prompt *</label>
+                <textarea id="originalPrompt" rows="6" placeholder="Paste your existing prompt here... (can be any length from simple to detailed)"></textarea>
+
+                <label for="variationInstructions">How to Vary This Prompt *</label>
+                <textarea id="variationInstructions" rows="4" placeholder="e.g. Make the creature a giant lobster instead, and the view is from a drone, the time of day is dusk, the tone is chilling and gritty. And there is a deep old man voice narrating that says 'Earth is facing her end of time..'"></textarea>
+
+                <!-- Simple/Advanced Toggle -->
+                <div class="toggle-container">
+                    <span class="toggle-labels">
+                        <span class="toggle-label active" id="simpleLabel">Simple</span>
+                        <span class="toggle-label inactive" id="advancedLabel">Advanced</span>
+                    </span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="remixModeToggle" onchange="toggleRemixMode()">
+                        <span class="toggle-slider"></span>
+                    </label>
                 </div>
-                <div class="video-navigation">
-                    <button class="video-nav-btn" id="remixPrevBtn" onclick="previousVideo('remix')">← Previous</button>
-                    <span class="video-counter" id="remixVideoCounter">1 / 3</span>
-                    <button class="video-nav-btn" id="remixNextBtn" onclick="nextVideo('remix')">Next →</button>
+            </div>
+
+            <!-- Advanced Remix Parameters (Hidden by default) -->
+            <div id="remixAdvancedSection" class="hidden">
+                <!-- Basic Settings -->
+                <div class="section">
+                    <h2>Basic Settings</h2>
+                    
+                    <div class="form-grid form-grid-2">
+                        <div>
+                            <label for="remixSubject">Subject / Character Focus</label>
+                            <input id="remixSubject" type="text" placeholder="e.g. Cat, Robot, Samurai, Cloud, etc."/>
+                        </div>
+                        
+                        <div>
+                            <label for="remixAction">Action / Movement Type</label>
+                            <select id="remixAction">
+                                <option value="">Auto Detect</option>
+                                <option>Walking</option>
+                                <option>Dancing</option>
+                                <option>Flying</option>
+                                <option>Transformation</option>
+                                <option>Interaction</option>
+                                <option>Running</option>
+                                <option>Jumping</option>
+                                <option>Swimming</option>
+                                <option>Climbing</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label for="remixStyle">Video Style</label>
+                    <select id="remixStyle">
+                        <option>Auto Detect (AI chooses best style)</option>
+                        <option>Cinematic / Hollywood Film</option>
+                        <option>Realistic Live Action</option>
+                        <option>Aerial Cinematic Drone Shot</option>
+                        <option>Time-lapse / Slow Motion</option>
+                        <option>Film Noir / Black-and-White</option>
+                        <option>Analog / Film Grain</option>
+                        <option>IMAX Look</option>
+                        <option>Documentary Style</option>
+                        <option>Natural History / Wildlife</option>
+                        <option>Found Footage / Handheld Cam</option>
+                        <option>News Report Style</option>
+                        <option>Surveillance Footage Look</option>
+                        <option>Dreamscape / Surreal</option>
+                        <option>Fantasy / Magic Realism</option>
+                        <option>Oil Painting / Watercolor</option>
+                        <option>Sketch / Ink Drawing</option>
+                        <option>Abstract / Experimental</option>
+                        <option>Double Exposure / Visual Metaphor</option>
+                        <option>Stylized 2D Animation / Anime-like</option>
+                        <option>Cartoon 2D</option>
+                        <option>Cute Cartoon / Kawaii Style</option>
+                        <option>Cartoon 3D / Pixar-like</option>
+                        <option>Stop Motion Look</option>
+                        <option>Claymation Style</option>
+                        <option>Motion Graphic / Minimal Vector</option>
+                        <option>Retro 80s / VHS Look</option>
+                        <option>Cyberpunk / Futuristic</option>
+                        <option>Noir Detective Style</option>
+                        <option>Western / Cowboy Film</option>
+                        <option>Horror (grainy, eerie lighting)</option>
+                        <option>Tiny World / Tilt Shift</option>
+                        <option>Microscopic View / Science-Lab Look</option>
+                        <option>Macro Lens Simulation</option>
+                        <option>Cinematic Portrait Mode</option>
+                        <option>Bokeh-Focused Depth-of-Field</option>
+                        <option>Overexposed / Underexposed Look</option>
+                        <option>Infrared or Thermal Cam Simulation</option>
+                        <option>Isometric / Diorama</option>
+                        <option>Fantasy Landscapes</option>
+                        <option>Post-Apocalyptic World</option>
+                        <option>Urban Street Aesthetic</option>
+                        <option>Studio Look (ASMR/Product Videos)</option>
+                        <option>Video Game Gameplay</option>
+                    </select>
+                </div>
+
+                <!-- Video Tone/Genre -->
+                <div class="section">
+                    <h2>Video Tone/Genre</h2>
+                    
+                    <div class="form-grid form-grid-2">
+                        <div>
+                            <label for="remixGeneralTone">General Tone</label>
+                            <select id="remixGeneralTone" onchange="updateSubTones('remix')">
+                                <option value="">Auto Detect</option>
+                                <option value="emotional">Emotional Tones</option>
+                                <option value="suspense">Suspense & Thriller Tones</option>
+                                <option value="action">Action & Adventure Tones</option>
+                                <option value="artistic">Artistic & Creative Tones</option>
+                                <option value="documentary">Documentary & Realistic Tones</option>
+                                <option value="fantasy">Fantasy & Sci-Fi Tones</option>
+                                <option value="social">Social & Cultural Tones</option>
+                                <option value="unique">Unique/Niche Tones</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="remixSubTone">Specific Tone</label>
+                            <select id="remixSubTone">
+                                <option value="">Auto Detect</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Settings -->
+                <div class="section">
+                    <h2>Technical Settings</h2>
+                    
+                    <div class="form-grid form-grid-2">
+                        <div>
+                            <label for="remixAspectRatio">Aspect Ratio</label>
+                            <select id="remixAspectRatio">
+                                <option value="16:9">16:9 (Widescreen)</option>
+                                <option value="9:16">9:16 (Vertical)</option>
+                                <option value="1:1">1:1 (Square)</option>
+                                <option value="4:3">4:3 (Standard)</option>
+                                <option value="21:9">21:9 (Ultra-wide)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="remixDuration">Duration</label>
+                            <input id="remixDuration" type="text" value="8 seconds" readonly style="background-color: #f6f8fa; color: #656d76;"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Parameters -->
+                <button class="collapsible" onclick="toggleAdvanced('remix')">+ Advanced Parameters (Optional)</button>
+                <div id="remixAdvanced" class="advanced-section">
+                    <div class="section">
+                        <!-- Camera Settings -->
+                        <h3>Camera Settings</h3>
+                        <div class="form-grid form-grid-3">
+                            <div>
+                                <label for="remixCameraMovement">Camera Movement</label>
+                                <select id="remixCameraMovement">
+                                    <option>Auto Detect</option>
+                                    <option>Static</option>
+                                    <option>Pan Left/Right</option>
+                                    <option>Zoom In/Out</option>
+                                    <option>Dolly Forward/Back</option>
+                                    <option>Steadycam</option>
+                                    <option>Handheld</option>
+                                    <option>Orbital</option>
+                                    <option>Tracking Shot</option>
+                                    <option>Crane</option>
+                                    <option>Drone</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="remixCameraLevel">Camera Level</label>
+                                <select id="remixCameraLevel">
+                                    <option>Auto Detect</option>
+                                    <option>Eye Level</option>
+                                    <option>Low Angle</option>
+                                    <option>High Angle</option>
+                                    <option>Dutch Angle</option>
+                                    <option>Overhead</option>
+                                    <option>Point of View</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="remixLensType">Lens Type</label>
+                                <select id="remixLensType">
+                                    <option>Auto Detect</option>
+                                    <option>Standard (50mm)</option>
+                                    <option>Wide Angle (24mm)</option>
+                                    <option>Telephoto (85mm+)</option>
+                                    <option>Fisheye</option>
+                                    <option>Anamorphic</option>
+                                    <option>Macro</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Visual Settings -->
+                        <h3>Visual Settings</h3>
+                        <div class="form-grid form-grid-2">
+                            <div>
+                                <label for="remixDepthOfField">Depth of Field</label>
+                                <select id="remixDepthOfField">
+                                    <option>Auto Detect</option>
+                                    <option>Shallow</option>
+                                    <option>Medium</option>
+                                    <option>Deep</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="remixLighting">Lighting Preference</label>
+                                <select id="remixLighting">
+                                    <option>Auto Detect</option>
+                                    <option>Natural</option>
+                                    <option>Dramatic</option>
+                                    <option>Soft</option>
+                                    <option>Harsh</option>
+                                    <option>Golden Hour</option>
+                                    <option>Blue Hour</option>
+                                    <option>Neon</option>
+                                    <option>Candlelit</option>
+                                    <option>Studio Lighting</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Visual Effects Sliders -->
+                        <h3>Visual Effects</h3>
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <label for="remixFilmGrain">Film Grain</label>
+                                <span class="slider-value" id="remixFilmGrainValue">0%</span>
+                            </div>
+                            <input type="range" id="remixFilmGrain" min="0" max="100" value="0" oninput="updateSliderValue('remixFilmGrain')">
+                        </div>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <label for="remixChromaticAberration">Chromatic Aberration</label>
+                                <span class="slider-value" id="remixChromaticAberrationValue">0%</span>
+                            </div>
+                            <input type="range" id="remixChromaticAberration" min="0" max="100" value="0" oninput="updateSliderValue('remixChromaticAberration')">
+                        </div>
+
+                        <!-- Environment & Atmosphere -->
+                        <h3>Environment & Atmosphere</h3>
+                        <div class="form-grid form-grid-3">
+                            <div>
+                                <label for="remixEnvironment">Environment/Setting</label>
+                                <select id="remixEnvironment">
+                                    <option>Auto Detect</option>
+                                    <option>Indoor</option>
+                                    <option>Outdoor</option>
+                                    <option>Urban</option>
+                                    <option>Rural</option>
+                                    <option>Fantasy World</option>
+                                    <option>Space</option>
+                                    <option>Underwater</option>
+                                    <option>Desert</option>
+                                    <option>Forest</option>
+                                    <option>City</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="remixColorPalette">Color Palette</label>
+                                <select id="remixColorPalette">
+                                    <option>Auto Detect</option>
+                                    <option>Warm Tones</option>
+                                    <option>Cool Tones</option>
+                                    <option>Monochrome</option>
+                                    <option>Vibrant</option>
+                                    <option>Muted</option>
+                                    <option>Neon</option>
+                                    <option>Pastel</option>
+                                    <option>High Contrast</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="remixWeather">Weather/Atmosphere</label>
+                                <select id="remixWeather">
+                                    <option>Auto Detect</option>
+                                    <option>Sunny</option>
+                                    <option>Cloudy</option>
+                                    <option>Rainy</option>
+                                    <option>Foggy</option>
+                                    <option>Stormy</option>
+                                    <option>Snowy</option>
+                                    <option>Windy</option>
+                                    <option>Misty</option>
+                                    <option>Clear</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="remixTimeOfDay">Time of Day</label>
+                                <select id="remixTimeOfDay">
+                                    <option>Auto Detect</option>
+                                    <option>Dawn</option>
+                                    <option>Morning</option>
+                                    <option>Midday</option>
+                                    <option>Afternoon</option>
+                                    <option>Dusk</option>
+                                    <option>Night</option>
+                                    <option>Midnight</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="remixMotionIntensity">Motion Intensity</label>
+                                <select id="remixMotionIntensity">
+                                    <option>Auto Detect</option>
+                                    <option>Subtle</option>
+                                    <option>Moderate</option>
+                                    <option>Dynamic</option>
+                                    <option>Explosive</option>
+                                    <option>Graceful</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="remixMoodEmotion">Mood/Emotion</label>
+                                <select id="remixMoodEmotion">
+                                    <option>Auto Detect</option>
+                                    <option>Happy</option>
+                                    <option>Mysterious</option>
+                                    <option>Tense</option>
+                                    <option>Peaceful</option>
+                                    <option>Energetic</option>
+                                    <option>Melancholic</option>
+                                    <option>Triumphant</option>
+                                    <option>Romantic</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Dialogue/Text Overlay -->
+                        <label for="remixDialogue">Dialogue/Text Overlay (Optional)</label>
+                        <textarea id="remixDialogue" rows="2" placeholder="Enter any dialogue or text elements to include..."></textarea>
+                    </div>
                 </div>
             </div>
-            <div id="remixGalleryPlaceholder" class="gallery-placeholder">
-                Click on expand button above to view sample videos
-            </div>
-        </div>
-    </div>
 
-    <!-- Help Modals -->
-    <div id="helpModal" class="help-modal">
-        <div class="help-modal-content">
-            <div class="help-modal-header">
-                <h3 class="help-modal-title" id="helpModalTitle">Help</h3>
-                <button class="help-close" onclick="closeHelp()">&times;</button>
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="clear-btn" onclick="clearForm('remix')">🗑️ Clear All</button>
+                <button class="generate-btn" onclick="remixPrompt()">🎛️ Remix Prompt</button>
             </div>
-            <div class="help-content" id="helpModalContent">
-                <!-- Content will be populated by JavaScript -->
-            </div>
-        </div>
-    </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>Developed by <strong>CygRyu</strong></p>
-        <div>
-            <a href="https://ko-fi.com/cygryu" target="_blank">☕ Ko-Fi</a>
-            <a href="https://www.paypal.com/paypalme/sofiansu?country.x=ID&locale.x=en_US" target="_blank">💳 PayPal</a>
+            <!-- Output Section -->
+            <div id="remixOutputSection" class="hidden">
+                <div class="output-header">
+                    <h2>Remixed Prompt</h2>
+                    <button class="copy-btn" onclick="copyPrompt('remixOutput')">📋 Copy Prompt</button>
+                </div>
+                <div id="remixOutput"></div>
+            </div>
+
+            <!-- Sample Gallery -->
+            <div class="section">
+                <button class="collapsible" onclick="toggleGallery('remix')">+ Sample Gallery</button>
+                <div id="remixVideoGallery" class="video-gallery">
+                    <div class="video-container">
+                        <div class="video-title" id="remixVideoTitle">Sample Video 1</div>
+                        <iframe id="remixVideoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-navigation">
+                        <button class="video-nav-btn" id="remixPrevBtn" onclick="previousVideo('remix')">← Previous</button>
+                        <span class="video-counter" id="remixVideoCounter">1 / 3</span>
+                        <button class="video-nav-btn" id="remixNextBtn" onclick="nextVideo('remix')">Next →</button>
+                    </div>
+                </div>
+                <div id="remixGalleryPlaceholder" class="gallery-placeholder">
+                    Click on expand button above to view sample videos
+                </div>
+            </div>
         </div>
-    </div>
+
+        <!-- Menu Tab Content -->
+        <div id="menuTab" class="tab-content">
+            <div class="tab-header">
+                <h2 class="tab-title">Menu & Account</h2>
+            </div>
+
+            <!-- Sign In Prompt (for guests) -->
+            <div id="menuSignInPrompt" class="sign-in-prompt">
+                <h3>Sign In Required</h3>
+                <p>Please sign in to access your account menu, redeem codes, and view your usage statistics.</p>
+                <button class="generate-btn" onclick="signIn()" style="margin-top: 16px;">🔐 Sign in with Google</button>
+            </div>
+
+            <!-- User Menu Content (for signed-in users) -->
+            <div id="menuUserContent" class="hidden">
+                <!-- Personal Statistics -->
+                <div class="section">
+                    <h2>📊 Your Statistics</h2>
+                    <div class="stats-grid">
+                        <div class="stats-card">
+                            <div class="stat-item">
+                                <div class="stat-value" id="userTotalGenerated">0</div>
+                                <div class="stat-label">Total Prompts Generated</div>
+                            </div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="stat-item">
+                                <div class="stat-value" id="userEnhanceCount">0</div>
+                                <div class="stat-label">Enhance Used</div>
+                            </div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="stat-item">
+                                <div class="stat-value" id="userRemixCount">0</div>
+                                <div class="stat-label">Remix Used</div>
+                            </div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="stat-item">
+                                <div class="stat-value" id="userQuotaRemaining">0</div>
+                                <div class="stat-label">Prompts Remaining</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Redeem Code Section -->
+                <div class="section">
+                    <h2>🎟️ Redeem Code</h2>
+                    <p style="margin-bottom: 16px; color: #656d76;">Enter a redeem code to add more prompts to your account.</p>
+                    
+                    <div class="form-grid form-grid-2">
+                        <div>
+                            <label for="redeemCodeInput">Redeem Code</label>
+                            <input type="text" id="redeemCodeInput" placeholder="Enter your code here" style="text-transform: uppercase;"/>
+                        </div>
+                        <div style="display: flex; align-items: end;">
+                            <button class="generate-btn" onclick="redeemCode()" style="margin: 0; width: 100%;">
+                                🎁 Redeem Code
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="redeemStatus" style="margin-top: 12px; font-size: 14px;"></div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="section">
+                    <h2>📝 Recent Activity</h2>
+                    <div id="recentActivity">
+                        <p style="color: #656d76; font-style: italic;">Loading recent activity...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Tab Content -->
+        <div id="adminTab" class="tab-content">
+            <div class="tab-header">
+                <h2 class="tab-title">Admin Dashboard</h2>
+            </div>
+
+            <!-- Dashboard Overview -->
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3>📊 Platform Statistics</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalUsers">0</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalPrompts">0</div>
+                            <div class="stat-label">Total Prompts</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalEnhance">0</div>
+                            <div class="stat-label">Enhance Used</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalRemix">0</div>
+                            <div class="stat-label">Remix Used</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3>⚡ Today's Activity</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="todayUsers">0</div>
+                            <div class="stat-label">Active Users</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="todayPrompts">0</div>
+                            <div class="stat-label">Prompts Generated</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Management -->
+            <div class="admin-card">
+                <h3>🎟️ Create Redeem Code</h3>
+                <div class="form-grid form-grid-3">
+                    <div>
+                        <label for="adminCodeInput">Code</label>
+                        <input type="text" id="adminCodeInput" placeholder="e.g., WELCOME50" style="text-transform: uppercase;"/>
+                    </div>
+                    <div>
+                        <label for="adminQuotaInput">Quota</label>
+                        <input type="number" id="adminQuotaInput" placeholder="50" min="1"/>
+                    </div>
+                    <div>
+                        <label for="adminExpiryInput">Expiry Date</label>
+                        <input type="date" id="adminExpiryInput"/>
+                    </div>
+                </div>
+                <button class="generate-btn" onclick="createCode()" style="margin-top: 16px;">
+                    ✨ Create Code
+                </button>
+                <div id="adminCodeFeedback" style="margin-top: 12px; font-size: 14px;"></div>
+            </div>
+
+            <!-- User Management -->
+            <div class="admin-card">
+                <h3>👥 User Management</h3>
+                
+                <div class="table-actions">
+                    <input type="search" id="userSearchInput" class="search-input" placeholder="Search by email or UID..." onkeyup="filterUsers()">
+                    <select id="userFilterSelect" class="filter-select" onchange="filterUsers()">
+                        <option value="all">All Users</option>
+                        <option value="active">Active Users</option>
+                        <option value="premium">Premium Users</option>
+                        <option value="high-usage">High Usage</option>
+                        <option value="low-quota">Low Quota</option>
+                    </select>
+                    <button class="copy-btn" onclick="refreshUsers()">🔄 Refresh</button>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="data-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>UID</th>
+                                <th>Quota</th>
+                                <th>Used Today</th>
+                                <th>Last Active</th>
+                                <th>Total Generated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 32px; color: #656d76;">
+                                    Loading users...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- User Lookup -->
+            <div class="admin-card">
+                <h3>🔍 User Lookup</h3>
+                <div class="form-grid form-grid-2">
+                    <div>
+                        <label for="lookupEmailInput">User Email</label>
+                        <input type="email" id="lookupEmailInput" placeholder="user@example.com"/>
+                    </div>
+                    <div style="display: flex; align-items: end;">
+                        <button class="generate-btn" onclick="lookupUser()" style="margin: 0; width: 100%;">
+                            🔍 Find User
+                        </button>
+                    </div>
+                </div>
+                <div id="lookupResult" style="margin-top: 16px;"></div>
+            </div>
+        </div>
+
+        <!-- Help Modals -->
+        <div id="helpModal" class="help-modal">
+            <div class="help-modal-content">
+                <div class="help-modal-header">
+                    <h3 class="help-modal-title" id="helpModalTitle">Help</h3>
+                    <button class="help-close" onclick="closeHelp()">&times;</button>
+                </div>
+                <div class="help-content" id="helpModalContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Developed by <strong>CygRyu</strong></p>
+            <div>
+                <a href="https://ko-fi.com/cygryu" target="_blank">☕ Ko-Fi</a>
+                <a href="https://www.paypal.com/paypalme/sofiansu?country.x=ID&locale.x=en_US" target="_blank">💳 PayPal</a>
+            </div>
+        </div>
+    </main>
 
 <!-- Firebase Core SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -1689,6 +2281,11 @@
                 document.documentElement.classList.remove('dark');
             }
         });
+
+        // Global state
+        let currentUser = null;
+        let userStats = {};
+        let adminData = {};
 
         // Tone options mapping
         const toneOptions = {
@@ -1723,6 +2320,28 @@
             remix: 0
         };
 
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navTabs = document.getElementById('navTabs');
+            navTabs.classList.toggle('show');
+        }
+
+        // User dropdown toggle
+        function toggleUserDropdown() {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            dropdownMenu.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userDropdown = document.querySelector('.user-dropdown');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            
+            if (userDropdown && !userDropdown.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+
         // Tab Management
         function switchTab(tabName) {
             // Hide all tab contents
@@ -1739,7 +2358,23 @@
             document.getElementById(tabName + 'Tab').classList.add('active');
             
             // Add active class to selected tab button
-            event.target.classList.add('active');
+            document.querySelector(`.tab-button[onclick="switchTab('${tabName}')"]`).classList.add('active');
+
+            // Close mobile menu
+            document.getElementById('navTabs').classList.remove('show');
+
+            // Load tab-specific data
+            if (tabName === 'menu' && currentUser) {
+                loadUserStats();
+            } else if (tabName === 'admin' && isAdmin(currentUser?.uid)) {
+                loadAdminData();
+            }
+        }
+
+        // Authentication functions
+        function signIn() {
+            const signInBtn = document.getElementById('signInBtn');
+            signInBtn.click();
         }
 
         // Remix Mode Toggle
@@ -2122,6 +2757,9 @@
                 if (response.ok && data.prompt) {
                     document.getElementById("enhanceOutput").innerText = data.prompt;
                     await updateQuotaCounter();
+                    if (currentUser) {
+                        loadUserStats(); // Refresh stats
+                    }
                 } else {
                     showError(data.error || "Server error occurred.");
                     document.getElementById("enhanceOutputSection").classList.add("hidden");
@@ -2220,6 +2858,9 @@
                 if (response.ok && data.prompt) {
                     document.getElementById("remixOutput").innerText = data.prompt;
                     await updateQuotaCounter();
+                    if (currentUser) {
+                        loadUserStats(); // Refresh stats
+                    }
                 } else {
                     showError(data.error || "Server error occurred.");
                     document.getElementById("remixOutputSection").classList.add("hidden");
@@ -2327,14 +2968,318 @@
 
                 const data = await response.json();
                 if (data.quota !== undefined) {
-                    document.getElementById("quotaCounter").innerText = `🎟️ You have ${data.quota} prompts left`;
-                } else {
-                    document.getElementById("quotaCounter").innerText = `❌ Could not retrieve quota`;
+                    const quotaDisplay = document.getElementById("quotaDisplay");
+                    if (quotaDisplay) {
+                        quotaDisplay.textContent = `🎟️ ${data.quota} prompts left`;
+                    }
+                    
+                    // Update menu stats if visible
+                    const userQuotaRemaining = document.getElementById("userQuotaRemaining");
+                    if (userQuotaRemaining) {
+                        userQuotaRemaining.textContent = data.quota;
+                    }
                 }
             } catch (e) {
                 console.error("Quota fetch failed:", e);
-                document.getElementById("quotaCounter").innerText = `⚠️ Error loading quota`;
             }
+        }
+
+        // Menu tab functions
+        async function loadUserStats() {
+            if (!window.currentUID) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/user-stats`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uid: window.currentUID })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    userStats = data;
+                    
+                    // Update stats display
+                    document.getElementById("userTotalGenerated").textContent = data.totalGenerated || 0;
+                    document.getElementById("userEnhanceCount").textContent = data.enhanceCount || 0;
+                    document.getElementById("userRemixCount").textContent = data.remixCount || 0;
+                    document.getElementById("userQuotaRemaining").textContent = data.quota || 0;
+                    
+                    // Update recent activity
+                    const recentActivity = document.getElementById("recentActivity");
+                    if (data.recentActivity && data.recentActivity.length > 0) {
+                        recentActivity.innerHTML = data.recentActivity.map(activity => `
+                            <div style="padding: 8px; border-bottom: 1px solid #d1d9e0;">
+                                <strong>${activity.type}</strong> - ${activity.date}
+                            </div>
+                        `).join('');
+                    } else {
+                        recentActivity.innerHTML = '<p style="color: #656d76; font-style: italic;">No recent activity</p>';
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to load user stats:", error);
+            }
+        }
+
+        // Redeem code function
+        async function redeemCode() {
+            const code = document.getElementById('redeemCodeInput').value.trim();
+            const uid = window.currentUID;
+            const user = firebase.auth().currentUser;
+
+            if (!uid || !code || !user || !user.email) {
+                showPopupNotification("❌ Please enter a code and sign in.", 'error');
+                return;
+            }
+
+            const redeemStatus = document.getElementById('redeemStatus');
+            redeemStatus.innerHTML = '⏳ Redeeming code...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/redeem-code`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uid, code, email: user.email })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
+                    document.getElementById('redeemCodeInput').value = '';
+                    redeemStatus.innerHTML = `<span style="color: #1f883d;">✅ Successfully redeemed! +${data.added} prompts added.</span>`;
+                    await updateQuotaCounter();
+                    loadUserStats(); // Refresh stats
+                } else {
+                    showPopupNotification(`❌ ${data.error}`, 'error');
+                    redeemStatus.innerHTML = `<span style="color: #cf222e;">❌ ${data.error}</span>`;
+                }
+            } catch (err) {
+                console.error("Redeem failed", err);
+                showPopupNotification("⚠️ Network error", 'warning');
+                redeemStatus.innerHTML = '<span style="color: #fb8500;">⚠️ Network error. Please try again.</span>';
+            }
+        }
+
+        // Admin functions
+        function isAdmin(uid) {
+            const ADMIN_UIDS = ["9n0qDAZ5xYOYmoBpcpbdvgv13I42"];
+            return ADMIN_UIDS.includes(uid);
+        }
+
+        async function loadAdminData() {
+            if (!window.currentUID || !isAdmin(window.currentUID)) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin-stats`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uid: window.currentUID })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    adminData = data;
+                    
+                    // Update admin stats display
+                    document.getElementById("totalUsers").textContent = data.totalUsers || 0;
+                    document.getElementById("totalPrompts").textContent = data.totalPrompts || 0;
+                    document.getElementById("totalEnhance").textContent = data.totalEnhance || 0;
+                    document.getElementById("totalRemix").textContent = data.totalRemix || 0;
+                    document.getElementById("todayUsers").textContent = data.todayUsers || 0;
+                    document.getElementById("todayPrompts").textContent = data.todayPrompts || 0;
+                    
+                    // Load users table
+                    loadUsersTable();
+                }
+            } catch (error) {
+                console.error("Failed to load admin data:", error);
+            }
+        }
+
+        async function loadUsersTable() {
+            if (!window.currentUID || !isAdmin(window.currentUID)) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin-users`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uid: window.currentUID })
+                });
+
+                const data = await response.json();
+                if (response.ok && data.users) {
+                    const tbody = document.getElementById('usersTableBody');
+                    tbody.innerHTML = data.users.map(user => `
+                        <tr>
+                            <td>${user.email || 'N/A'}</td>
+                            <td style="font-family: monospace; font-size: 12px;">${user.uid}</td>
+                            <td>${user.quota || 0}</td>
+                            <td>${user.usedToday || 0}</td>
+                            <td>${user.lastUseDate || 'Never'}</td>
+                            <td>${user.totalGenerated || 0}</td>
+                            <td>
+                                <button class="copy-btn" onclick="viewUserDetails('${user.uid}')" style="margin: 0;">View</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error("Failed to load users table:", error);
+            }
+        }
+
+        function filterUsers() {
+            // Simple client-side filtering - could be enhanced with server-side filtering
+            const searchTerm = document.getElementById('userSearchInput').value.toLowerCase();
+            const filterType = document.getElementById('userFilterSelect').value;
+            const rows = document.querySelectorAll('#usersTableBody tr');
+
+            rows.forEach(row => {
+                const email = row.children[0].textContent.toLowerCase();
+                const uid = row.children[1].textContent.toLowerCase();
+                const quota = parseInt(row.children[2].textContent);
+                const usedToday = parseInt(row.children[3].textContent);
+
+                let showRow = true;
+
+                // Text search
+                if (searchTerm && !email.includes(searchTerm) && !uid.includes(searchTerm)) {
+                    showRow = false;
+                }
+
+                // Filter by type
+                if (filterType !== 'all') {
+                    switch (filterType) {
+                        case 'active':
+                            if (usedToday === 0) showRow = false;
+                            break;
+                        case 'premium':
+                            // Assuming premium users have > 50 quota
+                            if (quota <= 50) showRow = false;
+                            break;
+                        case 'high-usage':
+                            if (usedToday < 5) showRow = false;
+                            break;
+                        case 'low-quota':
+                            if (quota > 10) showRow = false;
+                            break;
+                    }
+                }
+
+                row.style.display = showRow ? '' : 'none';
+            });
+        }
+
+        function refreshUsers() {
+            loadUsersTable();
+        }
+
+        async function createCode() {
+            const code = document.getElementById('adminCodeInput').value.trim().toUpperCase();
+            const quota = parseInt(document.getElementById('adminQuotaInput').value.trim());
+            const expires = document.getElementById('adminExpiryInput').value;
+
+            if (!code || !quota || !expires) {
+                showPopupNotification("❌ All fields are required.", 'error');
+                return;
+            }
+
+            const feedback = document.getElementById('adminCodeFeedback');
+            feedback.innerHTML = '⏳ Creating code...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/create-code`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ code, quota, expires, uid: window.currentUID })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    showPopupNotification("✅ Code created successfully!", 'success');
+                    feedback.innerHTML = `<span style="color: #1f883d;">✅ Code "${code}" created successfully!</span>`;
+                    
+                    // Clear form
+                    document.getElementById('adminCodeInput').value = '';
+                    document.getElementById('adminQuotaInput').value = '';
+                    document.getElementById('adminExpiryInput').value = '';
+                } else {
+                    showPopupNotification("❌ " + data.error, 'error');
+                    feedback.innerHTML = `<span style="color: #cf222e;">❌ ${data.error}</span>`;
+                }
+            } catch (err) {
+                console.error("Error creating code:", err);
+                showPopupNotification("⚠️ Network error.", 'warning');
+                feedback.innerHTML = '<span style="color: #fb8500;">⚠️ Network error. Please try again.</span>';
+            }
+        }
+
+        async function lookupUser() {
+            const email = document.getElementById('lookupEmailInput').value.trim().toLowerCase();
+            const resultDiv = document.getElementById('lookupResult');
+
+            if (!email) {
+                showPopupNotification("⚠️ Please enter an email.", 'warning');
+                return;
+            }
+
+            resultDiv.innerHTML = '⏳ Looking up user...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/email-to-uid`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uid: window.currentUID, email })
+                });
+
+                const lookup = await response.json();
+
+                if (!lookup.found) {
+                    resultDiv.innerHTML = `<span style="color: #cf222e;">❌ No user found for email: ${email}</span>`;
+                    return;
+                }
+
+                // Now fetch user details
+                const historyResponse = await fetch(`${API_BASE_URL}/user-history`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uid: window.currentUID, target: lookup.uid })
+                });
+
+                const data = await historyResponse.json();
+
+                if (data.error) {
+                    resultDiv.innerHTML = `<span style="color: #cf222e;">❌ ${data.error}</span>`;
+                } else {
+                    const codesHtml = data.redeemedCodes && data.redeemedCodes.length > 0 
+                        ? data.redeemedCodes.map(codeInfo => `<li>${codeInfo.code} (+${codeInfo.quota} quota, used: ${codeInfo.usedAt})</li>`).join("")
+                        : '<li>No codes redeemed</li>';
+                        
+                    resultDiv.innerHTML = `
+                        <div style="background: #f6f8fa; padding: 16px; border-radius: 6px; border: 1px solid #d1d9e0;">
+                            <h4 style="margin-top: 0;">User Details</h4>
+                            <p><strong>Email:</strong> ${data.email}</p>
+                            <p><strong>UID:</strong> <code style="font-size: 12px;">${lookup.uid}</code></p>
+                            <p><strong>Current Quota:</strong> ${data.quota}</p>
+                            <p><strong>Used Today:</strong> ${data.usedToday}</p>
+                            <p><strong>Last Use:</strong> ${data.lastUseDate}</p>
+                            <p><strong>Premium:</strong> ${data.isPremium ? 'Yes' : 'No'}</p>
+                            <p><strong>Redeemed Codes:</strong></p>
+                            <ul style="margin-left: 20px;">${codesHtml}</ul>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                console.error("User lookup failed:", err);
+                resultDiv.innerHTML = `<span style="color: #cf222e;">⚠️ Network error</span>`;
+            }
+        }
+
+        function viewUserDetails(uid) {
+            // Could open a modal or navigate to detailed user view
+            console.log("View details for user:", uid);
+            showPopupNotification("Feature coming soon!", 'warning');
         }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -2357,271 +3302,105 @@ document.addEventListener("DOMContentLoaded", () => {
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const provider = new firebase.auth.GoogleAuthProvider();
-  const ADMIN_UIDS = ["9n0qDAZ5xYOYmoBpcpbdvgv13I42"]; // 👈 Replace with your actual UID
 
-  function isAdmin(uid) {
-     return ADMIN_UIDS.includes(uid);
-  }
+  // Elements
+  const guestAuth = document.getElementById("guestAuth");
+  const userDropdown = document.getElementById("userDropdown");
+  const signInBtn = document.getElementById("signInBtn");
+  const signOutBtn = document.getElementById("signOutBtn");
+  const menuSignInPrompt = document.getElementById("menuSignInPrompt");
+  const menuUserContent = document.getElementById("menuUserContent");
+  const adminTabBtn = document.getElementById("adminTabBtn");
 
-  const authPanel = document.getElementById("authPanel");
-
-  // Sign-in Button
-  const loginBtn = document.createElement("button");
-  loginBtn.id = "loginBtn";
-  loginBtn.className = "copy-btn";
-  loginBtn.innerText = "🔐 Sign in with Google";
-  loginBtn.style.float = "right";
-  authPanel.appendChild(loginBtn);
-
-  // Quota Counter
-  const quotaCounter = document.createElement("div");
-  quotaCounter.id = "quotaCounter";
-  quotaCounter.style.fontSize = "13px";
-  quotaCounter.style.color = "#444";
-  quotaCounter.style.marginTop = "4px";
-  quotaCounter.style.float = "right";
-  quotaCounter.style.marginLeft = "10px";
-  authPanel.appendChild(quotaCounter);
-
-  // Redeem Code UI
-  const redeemContainer = document.createElement("div");
-  redeemContainer.style.marginTop = "8px";
-
-  const redeemInput = document.createElement("input");
-  redeemInput.type = "text";
-  redeemInput.id = "redeemInput";
-  redeemInput.placeholder = "Enter redeem code";
-  redeemInput.style.marginRight = "5px";
-
-  const redeemBtn = document.createElement("button");
-  redeemBtn.id = "redeemBtn";
-  redeemBtn.innerText = "Redeem";
-  redeemBtn.className = "copy-btn";
-
-  const redeemStatus = document.createElement("div");
-  redeemStatus.id = "redeemStatus";
-  redeemStatus.style.fontSize = "13px";
-  redeemStatus.style.marginTop = "4px";
-
-  redeemContainer.appendChild(redeemInput);
-  redeemContainer.appendChild(redeemBtn);
-  redeemContainer.appendChild(redeemStatus);
-  authPanel.appendChild(redeemContainer);
-
-  // User Info Display
-  const userInfo = document.createElement("div");
-  userInfo.id = "userInfo";
-  userInfo.style.fontSize = "12px";
-  userInfo.style.color = "#666";
-  userInfo.style.marginTop = "8px";
-  authPanel.appendChild(userInfo);
-
-  // Login button click handler
-  loginBtn.addEventListener("click", async () => {
-    const user = auth.currentUser;
-    if (!user) {
-      try {
-        const result = await auth.signInWithPopup(provider);
-        const username = result.user.email.split("@")[0];
-        loginBtn.innerText = "🚪 Sign out";
-        userInfo.innerText = `Welcome, ${username}!`;
-        window.currentUID = result.user.uid;
-        console.log("Your UID:", result.user.uid); // ✅ Print your UID in browser console
-        await updateQuotaCounter();
-        console.log("User signed in:", result.user);
-      } catch (error) {
-        console.error("Login error:", error);
-        showPopupNotification(`Login failed: ${error.message}`, 'error');
-      }
-    } else {
-      try {
-        await auth.signOut();
-        loginBtn.innerText = "🔐 Sign in with Google";
-        userInfo.innerText = "";
-        window.currentUID = null;
-        quotaCounter.innerText = "";
-      } catch (error) {
-        console.error("Logout error:", error);
-        showPopupNotification(`Logout failed: ${error.message}`, 'error');
-      }
-    }
-  });
-
-  // Auth state change
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      const username = user.email.split("@")[0];
-      loginBtn.innerText = "🚪 Sign out";
-      userInfo.innerText = `Welcome, ${username}!`;
-      window.currentUID = user.uid;
-      await updateQuotaCounter();
-      if (isAdmin(user.uid)) {
-  const adminPanel = document.createElement("div");
-  adminPanel.id = "adminPanel";
-  adminPanel.style.marginTop = "16px";
-  adminPanel.innerHTML = `
-    <h4>🎛️ Admin Code Generator</h4>
-    <input type="text" id="codeInput" placeholder="Enter code (e.g., TEST50)" style="margin-bottom:4px" /><br>
-    <input type="number" id="quotaInput" placeholder="Quota (e.g., 50)" /><br>
-    <input type="date" id="expiryInput" placeholder="Expiry Date (YYYY-MM-DD)" /><br>
-    <button class="copy-btn" id="generateCodeBtn">Generate Code</button>
-    <div id="adminFeedback" style="margin-top:4px; font-size:13px;"></div>
-  `;
-  document.getElementById("authPanel").appendChild(adminPanel);
-
-  document.getElementById("generateCodeBtn").onclick = async () => {
-    const code = document.getElementById("codeInput").value.trim().toUpperCase();
-    const quota = parseInt(document.getElementById("quotaInput").value.trim());
-    const expires = document.getElementById("expiryInput").value;
-
-    if (!code || !quota || !expires) {
-      showPopupNotification("❌ All fields are required.", 'error');
-      return;
-    }
-
+  // Sign in handler
+  signInBtn.addEventListener("click", async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/create-code`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, quota, expires, uid: window.currentUID })
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        showPopupNotification("✅ Code created!", 'success');
-      } else {
-        showPopupNotification("❌ " + data.error, 'error');
-      }
-    } catch (err) {
-      console.error("Error creating code:", err);
-      showPopupNotification("⚠️ Network error.", 'warning');
+      const result = await auth.signInWithPopup(provider);
+      console.log("User signed in:", result.user);
+    } catch (error) {
+      console.error("Login error:", error);
+      showPopupNotification(`Login failed: ${error.message}`, 'error');
     }
-  };
+  });
 
-// Admin: View User Quota & Redeemed Codes
-const historyPanel = document.createElement("div");
-historyPanel.id = "historyPanel";
-historyPanel.style.marginTop = "24px";
-historyPanel.innerHTML = `
-  <h4>🧾 View User Redemption History</h4>
-  <input type="text" id="emailInput" placeholder="Enter user email" style="margin-bottom:4px" /><br>
-  <button class="copy-btn" id="lookupBtn">🔍 Find History</button>
-  <div id="historyResult" style="margin-top:8px; font-size:13px;"></div>
-`;
-authPanel.appendChild(historyPanel);
-
-document.getElementById("lookupBtn").onclick = async () => {
-  const email = document.getElementById("emailInput").value.trim().toLowerCase();
-  const historyResult = document.getElementById("historyResult");
-
-  if (!email) {
-    showPopupNotification("⚠️ Please enter an email.", 'warning');
-    return;
-  }
-
-  try {
-    // First lookup UID by email
-    const res = await fetch(`${API_BASE_URL}/email-to-uid`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid: window.currentUID, email })
-    });
-
-    const lookup = await res.json();
-
-    if (!lookup.found) {
-      historyResult.innerHTML = `<span style="color:red">❌ No user found for email: ${email}</span>`;
-      return;
+  // Sign out handler
+  signOutBtn.addEventListener("click", async () => {
+    try {
+      await auth.signOut();
+      console.log("User signed out");
+    } catch (error) {
+      console.error("Logout error:", error);
+      showPopupNotification(`Logout failed: ${error.message}`, 'error');
     }
+  });
 
-    // Now fetch user history by UID
-    const historyRes = await fetch(`${API_BASE_URL}/user-history`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid: window.currentUID, target: lookup.uid })
-    });
-
-    const data = await historyRes.json();
-
-    if (data.error) {
-      historyResult.innerHTML = `<span style="color:red">❌ ${data.error}</span>`;
-    } else {
-      const codesHtml = data.redeemedCodes && data.redeemedCodes.length > 0 
-        ? data.redeemedCodes.map(codeInfo => `<li>${codeInfo.code} (+${codeInfo.quota} quota, used: ${codeInfo.usedAt})</li>`).join("")
-        : '<li>No codes redeemed</li>';
-        
-      historyResult.innerHTML = `
-        <b>Email:</b> ${data.email}<br>
-        <b>Current Quota:</b> ${data.quota}<br>
-        <b>Used Today:</b> ${data.usedToday}<br>
-        <b>Last Use:</b> ${data.lastUseDate}<br>
-        <b>Premium:</b> ${data.isPremium ? 'Yes' : 'No'}<br>
-        <b>Redeemed Codes:</b><br>
-        <ul>${codesHtml}</ul>
-      `;
-    }
-
-  } catch (err) {
-    console.error("Email lookup failed:", err);
-    historyResult.innerHTML = `<span style="color:red">⚠️ Network error</span>`;
-  }
-};
-}
-    } else {
-      loginBtn.innerText = "🔐 Sign in with Google";
-      userInfo.innerText = "";
-      window.currentUID = null;
-      quotaCounter.innerText = "";
+  // Auth state observer
+  auth.onAuthStateChanged(async (user) => {
+    currentUser = user;
+    
+    if (user) {
+      // User signed in
+      window.currentUID = user.uid;
       
-      // Remove admin panel if it exists
-      const adminPanel = document.getElementById("adminPanel");
-      if (adminPanel) {
-        adminPanel.remove();
+      // Update UI for signed-in state
+      guestAuth.classList.add('hidden');
+      userDropdown.classList.remove('hidden');
+      menuSignInPrompt.classList.add('hidden');
+      menuUserContent.classList.remove('hidden');
+      
+      // Update user info
+      const username = user.email.split("@")[0];
+      document.getElementById("userName").textContent = username;
+      document.getElementById("userEmail").textContent = user.email;
+      document.getElementById("userAvatar").textContent = username.charAt(0).toUpperCase();
+      
+      // Show admin tab if admin
+      if (isAdmin(user.uid)) {
+        adminTabBtn.classList.remove('hidden');
       }
-      const historyPanel = document.getElementById("historyPanel");
-      if (historyPanel) {
-        historyPanel.remove();
+      
+      // Load user data
+      await updateQuotaCounter();
+      console.log("Your UID:", user.uid);
+      
+    } else {
+      // User signed out
+      window.currentUID = null;
+      currentUser = null;
+      
+      // Update UI for guest state
+      guestAuth.classList.remove('hidden');
+      userDropdown.classList.add('hidden');
+      menuSignInPrompt.classList.remove('hidden');
+      menuUserContent.classList.add('hidden');
+      adminTabBtn.classList.add('hidden');
+      
+      // Close dropdown if open
+      document.getElementById('dropdownMenu').classList.remove('show');
+      
+      // Switch to enhance tab if on restricted tabs
+      const activeTab = document.querySelector('.tab-content.active');
+      if (activeTab && (activeTab.id === 'menuTab' || activeTab.id === 'adminTab')) {
+        switchTab('enhance');
       }
     }
   });
 
-  // Redeem button logic
-  redeemBtn.addEventListener("click", async () => {
-  const code = redeemInput.value.trim();
-  const uid = window.currentUID;
-  const user = auth.currentUser;
-
-  if (!uid || !code || !user || !user.email) {
-    showPopupNotification("❌ Please enter a code and sign in.", 'error');
-    return;
-  }
-
-  try {
-    console.log("Sending redeem request with:", {
-      uid,
-      code,
-      email: user.email
+  // Allow uppercase input for redeem codes
+  const redeemCodeInput = document.getElementById('redeemCodeInput');
+  const adminCodeInput = document.getElementById('adminCodeInput');
+  
+  if (redeemCodeInput) {
+    redeemCodeInput.addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
     });
-
-    const res = await fetch(`${API_BASE_URL}/redeem-code`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid, code, email: user.email })
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
-      redeemInput.value = ""; // Clear input after successful redemption
-      await updateQuotaCounter();
-    } else {
-      showPopupNotification(`❌ ${data.error}`, 'error');
-    }
-  } catch (err) {
-    console.error("Redeem failed", err);
-    showPopupNotification("⚠️ Network error", 'warning');
   }
-});
+  
+  if (adminCodeInput) {
+    adminCodeInput.addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+    });
+  }
 });
     </script>
 </body>
