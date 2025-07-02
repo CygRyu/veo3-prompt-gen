@@ -2573,7 +2573,7 @@ document.getElementById("viewHistoryBtn").onclick = async () => {
       const res = await fetch("https://66f9e544-efaf-4086-a849-aefdefa94a7e-00-1ya2qyok05zo.sisko.replit.dev/redeem-code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid, code })
+        body: JSON.stringify({ uid, code, email: auth.currentUser.email })
       });
 
       const data = await res.json();
