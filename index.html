@@ -2242,6 +2242,18 @@
                 <h2 class="tab-title" data-id="Menu & Akun" data-en="Menu & Account">Menu & Akun</h2>
             </div>
 
+            <!-- Payment UI Section - Always Visible -->
+            <div class="section">
+                <h2>💳 <span data-id="Beli Lebih Banyak Prompt (Segera Hadir!)" data-en="Buy More Prompts (Coming Soon!)">Beli Lebih Banyak Prompt (Segera Hadir!)</span></h2>
+                <p data-id="Beli prompt tambahan untuk terus menghasilkan." data-en="Purchase additional prompts to continue generating.">Beli prompt tambahan untuk terus menghasilkan.</p>
+                <select id="quota-purchase">
+                    <option value="10|50000">10 Prompt - IDR 50,000</option>
+                    <option value="25|100000">25 Prompt - IDR 100,000</option>
+                    <option value="60|200000">60 Prompt - IDR 200,000</option>
+                </select>
+                <button onclick="initiatePayment()"><span data-id="Beli Sekarang" data-en="Buy Now">Beli Sekarang</span></button>
+            </div>
+
             <!-- Sign In Prompt (for guests) -->
             <div id="menuSignInPrompt" class="sign-in-prompt">
                 <h3 data-id="Perlu Masuk" data-en="Sign In Required">Perlu Masuk</h3>
@@ -2319,18 +2331,6 @@
                     </div>
                     
                     <div id="redeemStatus" style="margin-top: 12px; font-size: 14px;"></div>
-                </div>
-
-                <!-- Payment UI Section -->
-                <div class="section">
-                    <h2>💳 <span data-id="Beli Lebih Banyak Prompt (Segera Hadir!)" data-en="Buy More Prompts (Coming Soon!)">Beli Lebih Banyak Prompt (Segera Hadir!)</span></h2>
-                    <p data-id="Beli prompt tambahan untuk terus menghasilkan." data-en="Purchase additional prompts to continue generating.">Beli prompt tambahan untuk terus menghasilkan.</p>
-                    <select id="quota-purchase">
-                        <option value="10|50000">10 Prompt - IDR 50,000</option>
-                        <option value="25|100000">25 Prompt - IDR 100,000</option>
-                        <option value="60|200000">60 Prompt - IDR 200,000</option>
-                    </select>
-                    <button onclick="initiatePayment()"><span data-id="Beli Sekarang" data-en="Buy Now">Beli Sekarang</span></button>
                 </div>
 
                 <!-- Recent Activity -->
