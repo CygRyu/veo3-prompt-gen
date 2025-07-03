@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,7 +40,64 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Veo 3 Gen">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            /* Dark mode colors (default) */
+            --bg-primary: linear-gradient(135deg, #0f1019 0%, #1a1b23 50%, #2d1b69 100%);
+            --bg-secondary: rgba(30, 32, 42, 0.6);
+            --bg-tertiary: rgba(15, 16, 25, 0.8);
+            --bg-card: rgba(30, 32, 42, 0.6);
+            --bg-input: rgba(30, 32, 42, 0.8);
+            --bg-header: rgba(15, 16, 25, 0.95);
+            --bg-mobile-nav: linear-gradient(135deg, rgba(15, 16, 25, 0.95) 0%, rgba(45, 27, 105, 0.95) 100%);
+            
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --border-primary: rgba(99, 102, 241, 0.2);
+            --border-secondary: rgba(99, 102, 241, 0.3);
+            
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #ec4899;
+            
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            
+            --shadow-primary: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-secondary: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-accent: 0 8px 32px rgba(99, 102, 241, 0.2);
+            
+            --backdrop-blur: blur(10px);
+        }
+
+        .light-mode {
+            /* Light mode colors */
+            --bg-primary: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            --bg-secondary: rgba(255, 255, 255, 0.6);
+            --bg-tertiary: rgba(248, 250, 252, 0.8);
+            --bg-card: rgba(255, 255, 255, 0.6);
+            --bg-input: rgba(255, 255, 255, 0.8);
+            --bg-header: rgba(248, 250, 252, 0.95);
+            --bg-mobile-nav: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(226, 232, 240, 0.95) 100%);
+            
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            
+            --border-primary: rgba(99, 102, 241, 0.2);
+            --border-secondary: rgba(99, 102, 241, 0.3);
+            
+            --shadow-primary: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-secondary: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --shadow-accent: 0 8px 32px rgba(99, 102, 241, 0.1);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -48,13 +105,14 @@
         }
         
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
             padding: 0;
             margin: 0;
-            line-height: 1.5;
-            background: linear-gradient(135deg, #0f1019 0%, #1a1b23 50%, #2d1b69 100%);
-            color: #e2e8f0;
+            line-height: 1.6;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
+            transition: all 0.3s ease;
         }
 
         /* Animated Background */
@@ -71,18 +129,28 @@
                 radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
             pointer-events: none;
             z-index: -1;
+            opacity: 0.8;
+        }
+
+        .light-mode body::before {
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            opacity: 0.6;
         }
 
         /* Header Styles */
         .header {
-            background: rgba(15, 16, 25, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            background: var(--bg-header);
+            backdrop-filter: var(--backdrop-blur);
+            border-bottom: 1px solid var(--border-primary);
             padding: 16px 24px;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-secondary);
+            transition: all 0.3s ease;
         }
 
         .header-content {
@@ -96,15 +164,16 @@
         .logo {
             font-size: 24px;
             font-weight: 700;
-            color: #e2e8f0;
+            color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            transition: all 0.3s ease;
         }
 
         .nav-tabs {
@@ -117,6 +186,39 @@
             align-items: center;
             gap: 12px;
             position: relative;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border: 1px solid var(--border-secondary);
+            border-radius: 8px;
+            background: var(--bg-input);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .language-toggle:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        .lang-option {
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .lang-option.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
         }
 
         .guest-auth {
@@ -134,18 +236,18 @@
             align-items: center;
             gap: 8px;
             padding: 8px 12px;
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            border: 1px solid var(--border-secondary);
             border-radius: 8px;
-            background: rgba(30, 32, 42, 0.8);
+            background: var(--bg-input);
             cursor: pointer;
             font-size: 14px;
             transition: all 0.3s ease;
-            color: #e2e8f0;
+            color: var(--text-primary);
         }
 
         .user-button:hover {
             background: rgba(99, 102, 241, 0.1);
-            border-color: #6366f1;
+            border-color: var(--accent-primary);
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
         }
 
@@ -153,7 +255,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
             display: flex;
             align-items: center;
@@ -171,9 +273,9 @@
             position: absolute;
             top: 100%;
             right: 0;
-            background: rgba(30, 32, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: var(--bg-card);
+            backdrop-filter: var(--backdrop-blur);
+            border: 1px solid var(--border-secondary);
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             min-width: 200px;
@@ -188,9 +290,9 @@
 
         .dropdown-header {
             padding: 12px 16px;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            border-bottom: 1px solid var(--border-primary);
             font-size: 13px;
-            color: #94a3b8;
+            color: var(--text-secondary);
         }
 
         .dropdown-item {
@@ -199,7 +301,7 @@
             gap: 8px;
             padding: 8px 16px;
             text-decoration: none;
-            color: #e2e8f0;
+            color: var(--text-primary);
             font-size: 14px;
             transition: background 0.3s ease;
             cursor: pointer;
@@ -215,7 +317,7 @@
 
         .dropdown-divider {
             height: 1px;
-            background: rgba(99, 102, 241, 0.2);
+            background: var(--border-primary);
             margin: 4px 0;
         }
 
@@ -226,9 +328,9 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(135deg, rgba(15, 16, 25, 0.95) 0%, rgba(45, 27, 105, 0.95) 100%);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(99, 102, 241, 0.3);
+            background: var(--bg-mobile-nav);
+            backdrop-filter: var(--backdrop-blur);
+            border-top: 1px solid var(--border-secondary);
             z-index: 100;
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
         }
@@ -243,7 +345,7 @@
         .mobile-tab-button {
             background: none;
             border: none;
-            color: #64748b;
+            color: var(--text-muted);
             font-size: 24px;
             padding: 12px;
             cursor: pointer;
@@ -257,13 +359,13 @@
         }
 
         .mobile-tab-button.active {
-            color: #6366f1;
+            color: var(--accent-primary);
             background: rgba(99, 102, 241, 0.1);
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
         }
 
         .mobile-tab-button:hover {
-            color: #6366f1;
+            color: var(--accent-primary);
             background: rgba(99, 102, 241, 0.05);
         }
 
@@ -298,6 +400,11 @@
             .main-content {
                 padding-bottom: 100px; /* Space for mobile nav */
             }
+
+            .language-toggle {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
         }
 
         /* Main Content */
@@ -318,8 +425,8 @@
             font-weight: 700;
             text-align: center;
             margin-bottom: 32px;
-            color: #e2e8f0;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-primary);
             padding-bottom: 16px;
         }
         
@@ -327,9 +434,9 @@
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 16px;
-            color: #e2e8f0;
+            color: var(--text-primary);
             padding-bottom: 8px;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            border-bottom: 1px solid var(--border-primary);
         }
         
         h3 {
@@ -337,27 +444,28 @@
             font-weight: 600;
             margin-top: 24px;
             margin-bottom: 12px;
-            color: #94a3b8;
+            color: var(--text-secondary);
         }
         
-        textarea, select, input[type="text"], input[type="range"], input[type="email"], input[type="search"], input[type="number"], input[type="tel"] { 
+        textarea, select, input[type="text"], input[type="range"], input[type="email"], input[type="search"], input[type="number"], input[type="tel"], input[type="date"] { 
             width: 100%;
             padding: 12px 16px;
             margin: 8px 0 16px;
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 8px;
+            border: 1px solid var(--border-secondary);
+            border-radius: 12px;
             font-size: 16px;
             font-family: inherit;
-            background: rgba(30, 32, 42, 0.8);
-            color: #e2e8f0;
+            background: var(--bg-input);
+            color: var(--text-primary);
             transition: all 0.3s ease;
+            backdrop-filter: var(--backdrop-blur);
         }
         
-        textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus {
+        textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="date"]:focus {
             outline: none;
-            border-color: #6366f1;
+            border-color: var(--accent-primary);
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), 0 0 20px rgba(99, 102, 241, 0.2);
-            background: rgba(30, 32, 42, 0.95);
+            background: var(--bg-input);
         }
         
         textarea {
@@ -371,22 +479,23 @@
             font-size: 14px;
             margin-bottom: 6px;
             display: block;
-            color: #e2e8f0;
+            color: var(--text-primary);
         }
         
         button { 
             padding: 12px 20px;
             font-size: 14px;
             font-weight: 600;
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: linear-gradient(135deg, var(--success), #059669);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: inherit;
             position: relative;
             overflow: hidden;
+            backdrop-filter: var(--backdrop-blur);
         }
 
         button::before {
@@ -419,7 +528,7 @@
             margin: 32px auto;
             font-size: 16px;
             padding: 16px 32px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             border-radius: 12px;
             position: relative;
             overflow: hidden;
@@ -452,7 +561,7 @@
             font-size: 12px;
             padding: 8px 16px;
             margin-left: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
         }
         
         .copy-btn:hover {
@@ -461,7 +570,7 @@
         }
         
         .clear-btn {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(135deg, var(--error), #dc2626);
             font-size: 14px;
             padding: 12px 24px;
             margin-right: 16px;
@@ -474,11 +583,11 @@
         }
         
         .help-btn {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            background: linear-gradient(135deg, var(--accent-secondary), #7c3aed);
             font-size: 12px;
             padding: 8px 16px;
             margin-left: 8px;
-            border-radius: 6px;
+            border-radius: 8px;
         }
         
         .help-btn:hover {
@@ -488,16 +597,17 @@
         
         #output { 
             margin-top: 16px;
-            background: rgba(30, 32, 42, 0.8);
+            background: var(--bg-input);
             padding: 20px;
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            border: 1px solid var(--border-secondary);
             white-space: pre-wrap;
             border-radius: 12px;
             font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 13px;
             line-height: 1.45;
-            color: #e2e8f0;
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+            color: var(--text-primary);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: var(--backdrop-blur);
         }
         
         .output-header {
@@ -521,7 +631,7 @@
         
         .collapsible { 
             cursor: pointer;
-            color: #6366f1;
+            color: var(--accent-primary);
             text-decoration: none;
             margin-bottom: 16px;
             padding: 16px 0;
@@ -538,7 +648,7 @@
         
         .collapsible:hover {
             background: rgba(99, 102, 241, 0.05);
-            color: #8b5cf6;
+            color: var(--accent-secondary);
             padding-left: 16px;
         }
         
@@ -575,7 +685,7 @@
         
         .slider-value {
             font-weight: 500;
-            color: #6366f1;
+            color: var(--accent-primary);
             font-size: 12px;
             background: rgba(99, 102, 241, 0.1);
             padding: 4px 8px;
@@ -598,9 +708,9 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             cursor: pointer;
-            border: 2px solid rgba(15, 16, 25, 0.8);
+            border: 2px solid var(--bg-tertiary);
             box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3), 0 4px 12px rgba(99, 102, 241, 0.2);
         }
         
@@ -608,22 +718,23 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             cursor: pointer;
-            border: 2px solid rgba(15, 16, 25, 0.8);
+            border: 2px solid var(--bg-tertiary);
             box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3), 0 4px 12px rgba(99, 102, 241, 0.2);
         }
         
         .section {
-            background: rgba(30, 32, 42, 0.4);
-            backdrop-filter: blur(10px);
+            background: var(--bg-card);
+            backdrop-filter: var(--backdrop-blur);
             padding: 24px;
             margin: 24px 0;
             border-radius: 16px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-primary);
+            box-shadow: var(--shadow-primary);
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .section::before {
@@ -635,6 +746,11 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
         }
+
+        .section:hover {
+            border-color: var(--border-secondary);
+            box-shadow: var(--shadow-accent);
+        }
         
         .hidden {
             display: none;
@@ -643,12 +759,12 @@
         .error-message {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 12px 16px;
             margin: 16px 0;
             color: #fca5a5;
             font-size: 14px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: var(--backdrop-blur);
         }
         
         .popup-notification {
@@ -666,7 +782,7 @@
             transition: all 0.4s ease-in-out;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             min-width: 200px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: var(--backdrop-blur);
         }
         
         .popup-notification.show {
@@ -694,28 +810,28 @@
             text-align: center;
             margin-top: 48px;
             padding: 24px;
-            border-top: 1px solid rgba(99, 102, 241, 0.2);
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
-            background: rgba(30, 32, 42, 0.4);
-            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-primary);
+            border-bottom: 1px solid var(--border-primary);
+            background: var(--bg-card);
+            backdrop-filter: var(--backdrop-blur);
             border-radius: 12px;
             margin-bottom: 24px;
         }
 
         .contact-info-footer h3 {
-            color: #e2e8f0;
+            color: var(--text-primary);
             margin-bottom: 16px;
             font-size: 18px;
             font-weight: 600;
         }
 
         .contact-info-footer p {
-            color: #94a3b8;
+            color: var(--text-secondary);
             margin-bottom: 8px;
         }
 
         .contact-email-footer {
-            color: #6366f1;
+            color: var(--accent-primary);
             font-weight: 600;
             font-size: 16px;
             text-decoration: none;
@@ -723,7 +839,7 @@
         }
 
         .contact-email-footer:hover {
-            color: #8b5cf6;
+            color: var(--accent-secondary);
             text-decoration: underline;
         }
         
@@ -731,32 +847,32 @@
             text-align: center;
             margin-top: 24px;
             padding-top: 24px;
-            border-top: 1px solid rgba(99, 102, 241, 0.2);
-            color: #94a3b8;
+            border-top: 1px solid var(--border-primary);
+            color: var(--text-secondary);
             font-size: 14px;
         }
         
         .footer a {
-            color: #6366f1;
+            color: var(--accent-primary);
             text-decoration: none;
             margin: 0 12px;
             transition: color 0.3s ease;
         }
         
         .footer a:hover {
-            color: #8b5cf6;
+            color: var(--accent-secondary);
             text-decoration: underline;
         }
         
         .gallery-placeholder {
-            background: rgba(30, 32, 42, 0.6);
+            background: var(--bg-secondary);
             padding: 48px 24px;
             text-align: center;
-            color: #94a3b8;
+            color: var(--text-secondary);
             font-style: italic;
             border-radius: 12px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-primary);
+            backdrop-filter: var(--backdrop-blur);
         }
         
         .video-gallery {
@@ -774,7 +890,7 @@
             height: 315px;
             border: none;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-primary);
         }
         
         /* Enhanced 16:9 aspect ratio for video frames */
@@ -792,7 +908,7 @@
         }
         
         .video-nav-btn {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
             border: none;
             border-radius: 8px;
@@ -816,7 +932,7 @@
         
         .video-counter {
             font-size: 14px;
-            color: #94a3b8;
+            color: var(--text-secondary);
             font-weight: 500;
         }
         
@@ -824,7 +940,7 @@
             margin-bottom: 12px;
             font-size: 16px;
             font-weight: 600;
-            color: #e2e8f0;
+            color: var(--text-primary);
         }
 
         /* Tab Navigation */
@@ -834,12 +950,12 @@
         
         .tab-nav {
             display: flex;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            border-bottom: 1px solid var(--border-primary);
             margin-bottom: 0;
             overflow-x: auto;
-            background: rgba(30, 32, 42, 0.4);
+            background: var(--bg-card);
             border-radius: 12px 12px 0 0;
-            backdrop-filter: blur(10px);
+            backdrop-filter: var(--backdrop-blur);
         }
         
         .tab-button {
@@ -848,7 +964,7 @@
             padding: 16px 24px;
             font-size: 16px;
             font-weight: 600;
-            color: #64748b;
+            color: var(--text-muted);
             cursor: pointer;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
@@ -874,13 +990,13 @@
         }
         
         .tab-button.active {
-            color: #6366f1;
-            border-bottom-color: #6366f1;
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
             background: rgba(99, 102, 241, 0.1);
         }
         
         .tab-button:hover {
-            color: #6366f1;
+            color: var(--accent-primary);
         }
         
         .tab-content {
@@ -901,9 +1017,9 @@
         .tab-title {
             font-size: 28px;
             font-weight: 700;
-            color: #e2e8f0;
+            color: var(--text-primary);
             margin: 0;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -955,7 +1071,7 @@
         }
         
         input:checked + .toggle-slider {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
         }
         
         input:checked + .toggle-slider:before {
@@ -976,12 +1092,12 @@
         }
         
         .toggle-label.active {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
         }
         
         .toggle-label.inactive {
-            color: #94a3b8;
+            color: var(--text-secondary);
         }
         
         /* Action Buttons Container */
@@ -1019,8 +1135,8 @@
         }
         
         .help-modal-content {
-            background: rgba(30, 32, 42, 0.95);
-            backdrop-filter: blur(10px);
+            background: var(--bg-card);
+            backdrop-filter: var(--backdrop-blur);
             margin: 5% auto;
             padding: 24px;
             border-radius: 16px;
@@ -1028,7 +1144,7 @@
             max-width: 600px;
             max-height: 80vh;
             overflow-y: auto;
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            border: 1px solid var(--border-secondary);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
         
@@ -1038,13 +1154,13 @@
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            border-bottom: 1px solid var(--border-primary);
         }
         
         .help-modal-title {
             font-size: 20px;
             font-weight: 600;
-            color: #e2e8f0;
+            color: var(--text-primary);
             margin: 0;
         }
         
@@ -1053,7 +1169,7 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
-            color: #94a3b8;
+            color: var(--text-secondary);
             padding: 0;
             width: 30px;
             height: 30px;
@@ -1065,17 +1181,17 @@
         }
         
         .help-close:hover {
-            color: #e2e8f0;
+            color: var(--text-primary);
             background: rgba(99, 102, 241, 0.1);
         }
         
         .help-content {
-            color: #e2e8f0;
+            color: var(--text-primary);
             line-height: 1.6;
         }
         
         .help-content h4 {
-            color: #6366f1;
+            color: var(--accent-primary);
             margin-top: 20px;
             margin-bottom: 8px;
             font-size: 16px;
@@ -1092,10 +1208,10 @@
         }
         
         .help-content .example {
-            background: rgba(15, 16, 25, 0.6);
+            background: var(--bg-tertiary);
             padding: 16px;
             border-radius: 8px;
-            border-left: 4px solid #6366f1;
+            border-left: 4px solid var(--accent-primary);
             margin: 12px 0;
             font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
             font-size: 13px;
@@ -1103,18 +1219,18 @@
 
         /* Menu Tab Styles */
         .stats-card {
-            background: rgba(30, 32, 42, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 16px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: var(--backdrop-blur);
             transition: all 0.3s ease;
         }
 
         .stats-card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.1);
+            border-color: var(--border-secondary);
+            box-shadow: var(--shadow-accent);
         }
 
         .stats-grid {
@@ -1131,7 +1247,7 @@
         .stat-value {
             font-size: 28px;
             font-weight: 700;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -1139,7 +1255,7 @@
 
         .stat-label {
             font-size: 12px;
-            color: #94a3b8;
+            color: var(--text-secondary);
             margin-top: 4px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -1147,12 +1263,12 @@
 
         /* Admin Panel Styles */
         .admin-card {
-            background: rgba(30, 32, 42, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 24px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: var(--backdrop-blur);
         }
 
         .admin-grid {
@@ -1174,19 +1290,19 @@
         .data-table td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            border-bottom: 1px solid var(--border-primary);
         }
 
         .data-table th {
             background: rgba(99, 102, 241, 0.1);
             font-weight: 600;
             font-size: 14px;
-            color: #e2e8f0;
+            color: var(--text-primary);
         }
 
         .data-table td {
             font-size: 13px;
-            color: #e2e8f0;
+            color: var(--text-primary);
         }
 
         .table-actions {
@@ -1209,236 +1325,65 @@
         .sign-in-prompt {
             text-align: center;
             padding: 48px 24px;
-            background: rgba(30, 32, 42, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
             border-radius: 16px;
-            color: #94a3b8;
-            backdrop-filter: blur(10px);
+            color: var(--text-secondary);
+            backdrop-filter: var(--backdrop-blur);
         }
 
         .sign-in-prompt h3 {
-            color: #e2e8f0;
+            color: var(--text-primary);
             margin-bottom: 16px;
         }
 
         .required-field {
-            color: #ef4444;
+            color: var(--error);
         }
 
-        /* Light mode overrides (when user prefers light mode) */
-        @media (prefers-color-scheme: light) {
-            body {
-                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
-                color: #1e293b;
-            }
+        /* Theme Toggle Styles */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: 12px;
+            backdrop-filter: var(--backdrop-blur);
+        }
 
-            body::before {
-                background: 
-                    radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
-            }
+        .theme-options {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+        }
 
-            .header {
-                background: rgba(248, 250, 252, 0.95);
-                border-bottom-color: rgba(99, 102, 241, 0.2);
-            }
+        .theme-option {
+            padding: 8px 16px;
+            border: 1px solid var(--border-secondary);
+            border-radius: 8px;
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-            .logo {
-                color: #1e293b;
-            }
+        .theme-option.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-color: var(--accent-primary);
+        }
 
-            .user-button {
-                background: rgba(255, 255, 255, 0.8);
-                border-color: rgba(99, 102, 241, 0.3);
-                color: #1e293b;
-            }
-
-            .user-button:hover {
-                background: rgba(99, 102, 241, 0.1);
-            }
-
-            .dropdown-menu {
-                background: rgba(255, 255, 255, 0.95);
-                border-color: rgba(99, 102, 241, 0.3);
-            }
-
-            .dropdown-header {
-                border-bottom-color: rgba(99, 102, 241, 0.2);
-                color: #64748b;
-            }
-
-            .dropdown-item {
-                color: #1e293b;
-            }
-
-            .dropdown-item:hover {
-                background: rgba(99, 102, 241, 0.1);
-            }
-
-            .mobile-nav {
-                background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(226, 232, 240, 0.95) 100%);
-                border-top-color: rgba(99, 102, 241, 0.3);
-            }
-
-            .mobile-tab-button {
-                color: #64748b;
-            }
-
-            .mobile-tab-button.active {
-                color: #6366f1;
-            }
-
-            h1, h2, .tab-title {
-                color: #1e293b;
-                border-bottom-color: rgba(99, 102, 241, 0.2);
-            }
-
-            h3, label {
-                color: #475569;
-            }
-
-            textarea, select, input[type="text"], input[type="email"], input[type="search"], input[type="number"], input[type="tel"] {
-                background: rgba(255, 255, 255, 0.8);
-                border-color: rgba(99, 102, 241, 0.3);
-                color: #1e293b;
-            }
-
-            textarea:focus, select:focus, input[type="text"]:focus, input[type="email"]:focus, input[type="search"]:focus, input[type="number"]:focus, input[type="tel"]:focus {
-                background: rgba(255, 255, 255, 0.95);
-            }
-
-            #output {
-                background: rgba(255, 255, 255, 0.8);
-                border-color: rgba(99, 102, 241, 0.3);
-                color: #1e293b;
-            }
-
-            .section, .admin-card, .stats-card, .contact-info-footer {
-                background: rgba(255, 255, 255, 0.4);
-                border-color: rgba(99, 102, 241, 0.2);
-            }
-
-            .gallery-placeholder, .sign-in-prompt {
-                background: rgba(255, 255, 255, 0.6);
-                color: #64748b;
-                border-color: rgba(99, 102, 241, 0.2);
-            }
-
-            .footer {
-                border-top-color: rgba(99, 102, 241, 0.2);
-                color: #64748b;
-            }
-
-            .collapsible {
-                color: #6366f1;
-            }
-
-            .collapsible:hover {
-                background: rgba(99, 102, 241, 0.05);
-            }
-
-            .slider-value {
-                color: #6366f1;
-                background: rgba(99, 102, 241, 0.1);
-            }
-
-            .error-message {
-                background: rgba(239, 68, 68, 0.1);
-                border-color: rgba(239, 68, 68, 0.3);
-                color: #dc2626;
-            }
-
-            .video-title {
-                color: #1e293b;
-            }
-
-            .video-counter {
-                color: #64748b;
-            }
-
-            .tab-nav {
-                border-bottom-color: rgba(99, 102, 241, 0.2);
-                background: rgba(255, 255, 255, 0.4);
-            }
-
-            .tab-button {
-                color: #64748b;
-            }
-
-            .tab-button.active {
-                color: #6366f1;
-                background: rgba(99, 102, 241, 0.1);
-            }
-
-            .help-modal-content {
-                background: rgba(255, 255, 255, 0.95);
-                border-color: rgba(99, 102, 241, 0.3);
-            }
-
-            .help-modal-header {
-                border-bottom-color: rgba(99, 102, 241, 0.2);
-            }
-
-            .help-modal-title {
-                color: #1e293b;
-            }
-
-            .help-close {
-                color: #64748b;
-            }
-
-            .help-close:hover {
-                color: #1e293b;
-                background: rgba(99, 102, 241, 0.1);
-            }
-
-            .help-content {
-                color: #1e293b;
-            }
-
-            .help-content h4 {
-                color: #6366f1;
-            }
-
-            .help-content .example {
-                background: rgba(248, 250, 252, 0.6);
-                border-left-color: #6366f1;
-            }
-
-            .data-table th {
-                background: rgba(99, 102, 241, 0.1);
-                color: #1e293b;
-            }
-
-            .data-table td {
-                color: #1e293b;
-            }
-
-            .data-table th,
-            .data-table td {
-                border-bottom-color: rgba(99, 102, 241, 0.2);
-            }
-
-            .sign-in-prompt h3 {
-                color: #1e293b;
-            }
-
-            .contact-info-footer h3 {
-                color: #1e293b;
-            }
-
-            .contact-info-footer p {
-                color: #64748b;
-            }
-
-            .contact-email-footer {
-                color: #6366f1;
-            }
-
-            .contact-email-footer:hover {
-                color: #8b5cf6;
-            }
+        .theme-option:hover:not(.active) {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--accent-primary);
         }
     </style>
 <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="Mid-client-2M6WJwQ0MmVfRkY5"></script>
@@ -1462,9 +1407,15 @@
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             
             <div class="user-section">
+                <!-- Language Toggle -->
+                <div class="language-toggle">
+                    <span class="lang-option active" onclick="setLanguage('id')">ID</span>
+                    <span class="lang-option" onclick="setLanguage('en')">EN</span>
+                </div>
+
                 <!-- Guest State -->
                 <div class="guest-auth" id="guestAuth">
-                    <button class="copy-btn" id="signInBtn">🔐 Sign in with Google</button>
+                    <button class="copy-btn" id="signInBtn">🔐 <span data-id="Masuk dengan Google" data-en="Sign in with Google">Masuk dengan Google</span></button>
                 </div>
 
                 <!-- User State -->
@@ -1477,14 +1428,14 @@
                     <div class="dropdown-menu" id="dropdownMenu">
                         <div class="dropdown-header">
                             <div id="userEmail">user@example.com</div>
-                            <div id="quotaDisplay">🎟️ 0 prompts left</div>
+                            <div id="quotaDisplay">🎟️ 0 <span data-id="prompt tersisa" data-en="prompts left">prompt tersisa</span></div>
                         </div>
                         <button class="dropdown-item" onclick="switchTab('menu')">
-                            📋 Menu & Redeem
+                            📋 <span data-id="Menu & Redeem" data-en="Menu & Redeem">Menu & Redeem</span>
                         </button>
                         <div class="dropdown-divider"></div>
                         <button class="dropdown-item" id="signOutBtn">
-                            🚪 Sign Out
+                            🚪 <span data-id="Keluar" data-en="Sign Out">Keluar</span>
                         </button>
                     </div>
                 </div>
@@ -1523,25 +1474,25 @@
         <!-- Enhance Tab Content -->
         <div id="enhanceTab" class="tab-content active">
             <div class="tab-header">
-                <h2 class="tab-title">Enhance Your Prompt</h2>
-                <button class="help-btn" onclick="showHelp('enhance')">❓ Help</button>
+                <h2 class="tab-title" data-id="Tingkatkan Prompt Anda" data-en="Enhance Your Prompt">Tingkatkan Prompt Anda</h2>
+                <button class="help-btn" onclick="showHelp('enhance')">❓ <span data-id="Bantuan" data-en="Help">Bantuan</span></button>
             </div>
 
             <!-- Basic Settings -->
             <div class="section">
-                <h2>Basic Settings</h2>
+                <h2 data-id="Pengaturan Dasar" data-en="Basic Settings">Pengaturan Dasar</h2>
                 
-                <label for="description">Your Prompt *</label>
+                <label for="description" data-id="Prompt Anda *" data-en="Your Prompt *">Prompt Kamu *</label>
                 <textarea id="description" rows="4" placeholder="e.g. A cat flying through a futuristic city during a thunderstorm..."></textarea>
 
                 <div class="form-grid form-grid-2">
                     <div>
-                        <label for="subject">Subject / Character Focus</label>
+                        <label for="subject" data-id="Subjek / Fokus Karakter" data-en="Subject / Character Focus">Subjek / Fokus Karakter</label>
                         <input id="subject" type="text" placeholder="e.g. Cat, Robot, Samurai, Cloud, etc."/>
                     </div>
                     
                     <div>
-                        <label for="action">Action / Movement Type</label>
+                        <label for="action" data-id="Jenis Aksi / Gerakan" data-en="Action / Movement Type">Jenis Aksi / Gerakan</label>
                         <select id="action">
                             <option value="">Auto Detect</option>
                             <option>Walking</option>
@@ -1557,7 +1508,7 @@
                     </div>
                 </div>
 
-                <label for="style">Video Style</label>
+                <label for="style" data-id="Gaya Video" data-en="Video Style">Gaya Video</label>
                 <select id="style">
                     <option>Auto Detect (AI chooses best style)</option>
                     <option>Cinematic / Hollywood Film</option>
@@ -1608,11 +1559,11 @@
 
             <!-- Video Tone/Genre -->
             <div class="section">
-                <h2>Video Tone/Genre</h2>
+                <h2 data-id="Tone/Genre Video" data-en="Video Tone/Genre">Tone/Genre Video</h2>
                 
                 <div class="form-grid form-grid-2">
                     <div>
-                        <label for="generalTone">General Tone</label>
+                        <label for="generalTone" data-id="Tone Umum" data-en="General Tone">Tone Umum</label>
                         <select id="generalTone" onchange="updateSubTones('enhance')">
                             <option value="">Auto Detect</option>
                             <option value="emotional">Emotional Tones</option>
@@ -1627,7 +1578,7 @@
                     </div>
 
                     <div>
-                        <label for="subTone">Specific Tone</label>
+                        <label for="subTone" data-id="Tone Spesifik" data-en="Specific Tone">Tone Spesifik</label>
                         <select id="subTone">
                             <option value="">Auto Detect</option>
                         </select>
@@ -1637,11 +1588,11 @@
 
             <!-- Technical Settings -->
             <div class="section">
-                <h2>Technical Settings</h2>
+                <h2 data-id="Pengaturan Teknis" data-en="Technical Settings">Pengaturan Teknis</h2>
                 
                 <div class="form-grid form-grid-2">
                     <div>
-                        <label for="aspectRatio">Aspect Ratio</label>
+                        <label for="aspectRatio" data-id="Rasio Aspek" data-en="Aspect Ratio">Rasio Aspek</label>
                         <select id="aspectRatio">
                             <option value="16:9">16:9 (Widescreen)</option>
                             <option value="9:16">9:16 (Vertical)</option>
@@ -1652,21 +1603,21 @@
                     </div>
 
                     <div>
-                        <label for="duration">Duration</label>
+                        <label for="duration" data-id="Durasi" data-en="Duration">Durasi</label>
                         <input id="duration" type="text" value="8 seconds" readonly style="background-color: rgba(64, 64, 64, 0.5); color: #94a3b8;"/>
                     </div>
                 </div>
             </div>
 
             <!-- Advanced Parameters -->
-            <button class="collapsible" onclick="toggleAdvanced('enhance')">+ Advanced Parameters (Optional)</button>
+            <button class="collapsible" onclick="toggleAdvanced('enhance')" data-id="+ Parameter Lanjutan (Opsional)" data-en="+ Advanced Parameters (Optional)">+ Parameter Lanjutan (Opsional)</button>
             <div id="enhanceAdvanced" class="advanced-section">
                 <div class="section">
                     <!-- Camera Settings -->
-                    <h3>Camera Settings</h3>
+                    <h3 data-id="Pengaturan Kamera" data-en="Camera Settings">Pengaturan Kamera</h3>
                     <div class="form-grid form-grid-3">
                         <div>
-                            <label for="cameraMovement">Camera Movement</label>
+                            <label for="cameraMovement" data-id="Gerakan Kamera" data-en="Camera Movement">Gerakan Kamera</label>
                             <select id="cameraMovement">
                                 <option>Auto Detect</option>
                                 <option>Static</option>
@@ -1683,7 +1634,7 @@
                         </div>
 
                         <div>
-                            <label for="cameraLevel">Camera Level</label>
+                            <label for="cameraLevel" data-id="Level Kamera" data-en="Camera Level">Level Kamera</label>
                             <select id="cameraLevel">
                                 <option>Auto Detect</option>
                                 <option>Eye Level</option>
@@ -1696,7 +1647,7 @@
                         </div>
 
                         <div>
-                            <label for="lensType">Lens Type</label>
+                            <label for="lensType" data-id="Jenis Lensa" data-en="Lens Type">Jenis Lensa</label>
                             <select id="lensType">
                                 <option>Auto Detect</option>
                                 <option>Standard (50mm)</option>
@@ -1710,10 +1661,10 @@
                     </div>
 
                     <!-- Visual Settings -->
-                    <h3>Visual Settings</h3>
+                    <h3 data-id="Pengaturan Visual" data-en="Visual Settings">Pengaturan Visual</h3>
                     <div class="form-grid form-grid-2">
                         <div>
-                            <label for="depthOfField">Depth of Field</label>
+                            <label for="depthOfField" data-id="Kedalaman Bidang" data-en="Depth of Field">Kedalaman Bidang</label>
                             <select id="depthOfField">
                                 <option>Auto Detect</option>
                                 <option>Shallow</option>
@@ -1723,7 +1674,7 @@
                         </div>
 
                         <div>
-                            <label for="lighting">Lighting Preference</label>
+                            <label for="lighting" data-id="Preferensi Pencahayaan" data-en="Lighting Preference">Preferensi Pencahayaan</label>
                             <select id="lighting">
                                 <option>Auto Detect</option>
                                 <option>Natural</option>
@@ -1740,7 +1691,7 @@
                     </div>
 
                     <!-- Visual Effects Sliders -->
-                    <h3>Visual Effects</h3>
+                    <h3 data-id="Efek Visual" data-en="Visual Effects">Efek Visual</h3>
                     <div class="slider-container">
                         <div class="slider-label">
                             <label for="filmGrain">Film Grain</label>
@@ -1758,10 +1709,10 @@
                     </div>
 
                     <!-- Environment & Atmosphere -->
-                    <h3>Environment & Atmosphere</h3>
+                    <h3 data-id="Lingkungan & Atmosfer" data-en="Environment & Atmosphere">Lingkungan & Atmosfer</h3>
                     <div class="form-grid form-grid-3">
                         <div>
-                            <label for="environment">Environment/Setting</label>
+                            <label for="environment" data-id="Lingkungan/Setting" data-en="Environment/Setting">Lingkungan/Setting</label>
                             <select id="environment">
                                 <option>Auto Detect</option>
                                 <option>Indoor</option>
@@ -1778,7 +1729,7 @@
                         </div>
 
                         <div>
-                            <label for="colorPalette">Color Palette</label>
+                            <label for="colorPalette" data-id="Palet Warna" data-en="Color Palette">Palet Warna</label>
                             <select id="colorPalette">
                                 <option>Auto Detect</option>
                                 <option>Warm Tones</option>
@@ -1793,7 +1744,7 @@
                         </div>
 
                         <div>
-                            <label for="weather">Weather/Atmosphere</label>
+                            <label for="weather" data-id="Cuaca/Atmosfer" data-en="Weather/Atmosphere">Cuaca/Atmosfer</label>
                             <select id="weather">
                                 <option>Auto Detect</option>
                                 <option>Sunny</option>
@@ -1809,7 +1760,7 @@
                         </div>
 
                         <div>
-                            <label for="timeOfDay">Time of Day</label>
+                            <label for="timeOfDay" data-id="Waktu Hari" data-en="Time of Day">Waktu Hari</label>
                             <select id="timeOfDay">
                                 <option>Auto Detect</option>
                                 <option>Dawn</option>
@@ -1823,7 +1774,7 @@
                         </div>
 
                         <div>
-                            <label for="motionIntensity">Motion Intensity</label>
+                            <label for="motionIntensity" data-id="Intensitas Gerakan" data-en="Motion Intensity">Intensitas Gerakan</label>
                             <select id="motionIntensity">
                                 <option>Auto Detect</option>
                                 <option>Subtle</option>
@@ -1835,7 +1786,7 @@
                         </div>
 
                         <div>
-                            <label for="moodEmotion">Mood/Emotion</label>
+                            <label for="moodEmotion" data-id="Suasana/Emosi" data-en="Mood/Emotion">Suasana/Emosi</label>
                             <select id="moodEmotion">
                                 <option>Auto Detect</option>
                                 <option>Happy</option>
@@ -1851,42 +1802,42 @@
                     </div>
 
                     <!-- Dialogue/Text Overlay -->
-                    <label for="dialogue">Dialogue/Text Overlay (Optional)</label>
+                    <label for="dialogue" data-id="Dialog/Overlay Teks (Opsional)" data-en="Dialogue/Text Overlay (Optional)">Dialog/Overlay Teks (Opsional)</label>
                     <textarea id="dialogue" rows="2" placeholder="Enter any dialogue or text elements to include..."></textarea>
                 </div>
             </div>
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-                <button class="clear-btn" onclick="clearForm('enhance')">🗑️ Clear All</button>
-                <button class="generate-btn" onclick="generatePrompt()">✨ Enhance Prompt</button>
+                <button class="clear-btn" onclick="clearForm('enhance')">🗑️ <span data-id="Hapus Semua" data-en="Clear All">Hapus Semua</span></button>
+                <button class="generate-btn" onclick="generatePrompt()">✨ <span data-id="Tingkatkan Prompt" data-en="Enhance Prompt">Tingkatkan Prompt</span></button>
             </div>
 
             <!-- Output Section -->
             <div id="enhanceOutputSection" class="hidden">
                 <div class="output-header">
-                    <h2>Enhanced Prompt</h2>
-                    <button class="copy-btn" onclick="copyPrompt('enhanceOutput')">📋 Copy Prompt</button>
+                    <h2 data-id="Prompt yang Ditingkatkan" data-en="Enhanced Prompt">Prompt yang Ditingkatkan</h2>
+                    <button class="copy-btn" onclick="copyPrompt('enhanceOutput')">📋 <span data-id="Salin Prompt" data-en="Copy Prompt">Salin Prompt</span></button>
                 </div>
                 <div id="enhanceOutput"></div>
             </div>
 
             <!-- Sample Gallery -->
             <div class="section">
-                <button class="collapsible" onclick="toggleGallery('enhance')">+ Sample Gallery</button>
+                <button class="collapsible" onclick="toggleGallery('enhance')" data-id="+ Galeri Contoh" data-en="+ Sample Gallery">+ Galeri Contoh</button>
                 <div id="enhanceVideoGallery" class="video-gallery">
                     <div class="video-container">
                         <div class="video-title" id="enhanceVideoTitle">Sample Video 1</div>
                         <iframe id="enhanceVideoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
                     </div>
                     <div class="video-navigation">
-                        <button class="video-nav-btn" id="enhancePrevBtn" onclick="previousVideo('enhance')">← Previous</button>
+                        <button class="video-nav-btn" id="enhancePrevBtn" onclick="previousVideo('enhance')">← <span data-id="Sebelumnya" data-en="Previous">Sebelumnya</span></button>
                         <span class="video-counter" id="enhanceVideoCounter">1 / 3</span>
-                        <button class="video-nav-btn" id="enhanceNextBtn" onclick="nextVideo('enhance')">Next →</button>
+                        <button class="video-nav-btn" id="enhanceNextBtn" onclick="nextVideo('enhance')"><span data-id="Selanjutnya" data-en="Next">Selanjutnya</span> →</button>
                     </div>
                 </div>
                 <div id="enhanceGalleryPlaceholder" class="gallery-placeholder">
-                    Click on expand button above to view sample videos
+                    <span data-id="Klik tombol expand di atas untuk melihat video contoh" data-en="Click on expand button above to view sample videos">Klik tombol expand di atas untuk melihat video contoh</span>
                 </div>
             </div>
         </div>
@@ -1894,25 +1845,25 @@
         <!-- Remix Tab Content -->
         <div id="remixTab" class="tab-content">
             <div class="tab-header">
-                <h2 class="tab-title">Remix Existing Prompt</h2>
-                <button class="help-btn" onclick="showHelp('remix')">❓ Help</button>
+                <h2 class="tab-title" data-id="Remix Prompt yang Ada" data-en="Remix Existing Prompt">Remix Prompt yang Ada</h2>
+                <button class="help-btn" onclick="showHelp('remix')">❓ <span data-id="Bantuan" data-en="Help">Bantuan</span></button>
             </div>
 
             <!-- Remix Input Section -->
             <div class="section">
-                <h2>Original Prompt & Variations</h2>
+                <h2 data-id="Prompt Asli & Variasi" data-en="Original Prompt & Variations">Prompt Asli & Variasi</h2>
                 
-                <label for="originalPrompt">Original Prompt *</label>
+                <label for="originalPrompt" data-id="Prompt Asli *" data-en="Original Prompt *">Prompt Asli *</label>
                 <textarea id="originalPrompt" rows="6" placeholder="Paste your existing prompt here... (can be any length from simple to detailed) eg. A gigantic leech-like creature floats silently across a cloudy twilight sky, its translucent wings shimmering in the light. Cinematic side-tracking shot. Add low mechanical hum, faint wing flaps, and subtle atmospheric rumble. Purple-orange color grading with dreamy film grain. 8 seconds, ethereal and alien feel..."></textarea>
 
-                <label for="variationInstructions">How to Vary This Prompt *</label>
+                <label for="variationInstructions" data-id="Cara Mengubah Prompt Ini *" data-en="How to Vary This Prompt *">Cara Mengubah Prompt Ini *</label>
                 <textarea id="variationInstructions" rows="4" placeholder="e.g. Make the creature a giant lobster instead, and the view is from a drone, the time of day is dusk, the tone is chilling and gritty. And there is a deep old man voice narrating that says 'Earth is facing her end of time..'"></textarea>
 
                 <!-- Simple/Advanced Toggle -->
                 <div class="toggle-container">
                     <span class="toggle-labels">
-                        <span class="toggle-label active" id="simpleLabel">Simple</span>
-                        <span class="toggle-label inactive" id="advancedLabel">Advanced</span>
+                        <span class="toggle-label active" id="simpleLabel" data-id="Sederhana" data-en="Simple">Sederhana</span>
+                        <span class="toggle-label inactive" id="advancedLabel" data-id="Lanjutan" data-en="Advanced">Lanjutan</span>
                     </span>
                     <label class="toggle-switch">
                         <input type="checkbox" id="remixModeToggle" onchange="toggleRemixMode()">
@@ -1925,16 +1876,16 @@
             <div id="remixAdvancedSection" class="hidden">
                 <!-- Basic Settings -->
                 <div class="section">
-                    <h2>Basic Settings</h2>
+                    <h2 data-id="Pengaturan Dasar" data-en="Basic Settings">Pengaturan Dasar</h2>
                     
                     <div class="form-grid form-grid-2">
                         <div>
-                            <label for="remixSubject">Subject / Character Focus</label>
+                            <label for="remixSubject" data-id="Subjek / Fokus Karakter" data-en="Subject / Character Focus">Subjek / Fokus Karakter</label>
                             <input id="remixSubject" type="text" placeholder="e.g. Cat, Robot, Samurai, Cloud, etc."/>
                         </div>
                         
                         <div>
-                            <label for="remixAction">Action / Movement Type</label>
+                            <label for="remixAction" data-id="Jenis Aksi / Gerakan" data-en="Action / Movement Type">Jenis Aksi / Gerakan</label>
                             <select id="remixAction">
                                 <option value="">Auto Detect</option>
                                 <option>Walking</option>
@@ -1950,7 +1901,7 @@
                         </div>
                     </div>
 
-                    <label for="remixStyle">Video Style</label>
+                    <label for="remixStyle" data-id="Gaya Video" data-en="Video Style">Gaya Video</label>
                     <select id="remixStyle">
                         <option>Auto Detect (AI chooses best style)</option>
                         <option>Cinematic / Hollywood Film</option>
@@ -2001,11 +1952,11 @@
 
                 <!-- Video Tone/Genre -->
                 <div class="section">
-                    <h2>Video Tone/Genre</h2>
+                    <h2 data-id="Tone/Genre Video" data-en="Video Tone/Genre">Tone/Genre Video</h2>
                     
                     <div class="form-grid form-grid-2">
                         <div>
-                            <label for="remixGeneralTone">General Tone</label>
+                            <label for="remixGeneralTone" data-id="Tone Umum" data-en="General Tone">Tone Umum</label>
                             <select id="remixGeneralTone" onchange="updateSubTones('remix')">
                                 <option value="">Auto Detect</option>
                                 <option value="emotional">Emotional Tones</option>
@@ -2020,7 +1971,7 @@
                         </div>
 
                         <div>
-                            <label for="remixSubTone">Specific Tone</label>
+                            <label for="remixSubTone" data-id="Tone Spesifik" data-en="Specific Tone">Tone Spesifik</label>
                             <select id="remixSubTone">
                                 <option value="">Auto Detect</option>
                             </select>
@@ -2030,11 +1981,11 @@
 
                 <!-- Technical Settings -->
                 <div class="section">
-                    <h2>Technical Settings</h2>
+                    <h2 data-id="Pengaturan Teknis" data-en="Technical Settings">Pengaturan Teknis</h2>
                     
                     <div class="form-grid form-grid-2">
                         <div>
-                            <label for="remixAspectRatio">Aspect Ratio</label>
+                            <label for="remixAspectRatio" data-id="Rasio Aspek" data-en="Aspect Ratio">Rasio Aspek</label>
                             <select id="remixAspectRatio">
                                 <option value="16:9">16:9 (Widescreen)</option>
                                 <option value="9:16">9:16 (Vertical)</option>
@@ -2045,21 +1996,21 @@
                         </div>
 
                         <div>
-                            <label for="remixDuration">Duration</label>
+                            <label for="remixDuration" data-id="Durasi" data-en="Duration">Durasi</label>
                             <input id="remixDuration" type="text" value="8 seconds" readonly style="background-color: rgba(64, 64, 64, 0.5); color: #94a3b8;"/>
                         </div>
                     </div>
                 </div>
 
                 <!-- Advanced Parameters -->
-                <button class="collapsible" onclick="toggleAdvanced('remix')">+ Advanced Parameters (Optional)</button>
+                <button class="collapsible" onclick="toggleAdvanced('remix')" data-id="+ Parameter Lanjutan (Opsional)" data-en="+ Advanced Parameters (Optional)">+ Parameter Lanjutan (Opsional)</button>
                 <div id="remixAdvanced" class="advanced-section">
                     <div class="section">
                         <!-- Camera Settings -->
-                        <h3>Camera Settings</h3>
+                        <h3 data-id="Pengaturan Kamera" data-en="Camera Settings">Pengaturan Kamera</h3>
                         <div class="form-grid form-grid-3">
                             <div>
-                                <label for="remixCameraMovement">Camera Movement</label>
+                                <label for="remixCameraMovement" data-id="Gerakan Kamera" data-en="Camera Movement">Gerakan Kamera</label>
                                 <select id="remixCameraMovement">
                                     <option>Auto Detect</option>
                                     <option>Static</option>
@@ -2076,7 +2027,7 @@
                             </div>
 
                             <div>
-                                <label for="remixCameraLevel">Camera Level</label>
+                                <label for="remixCameraLevel" data-id="Level Kamera" data-en="Camera Level">Level Kamera</label>
                                 <select id="remixCameraLevel">
                                     <option>Auto Detect</option>
                                     <option>Eye Level</option>
@@ -2089,7 +2040,7 @@
                             </div>
 
                             <div>
-                                <label for="remixLensType">Lens Type</label>
+                                <label for="remixLensType" data-id="Jenis Lensa" data-en="Lens Type">Jenis Lensa</label>
                                 <select id="remixLensType">
                                     <option>Auto Detect</option>
                                     <option>Standard (50mm)</option>
@@ -2103,10 +2054,10 @@
                         </div>
 
                         <!-- Visual Settings -->
-                        <h3>Visual Settings</h3>
+                        <h3 data-id="Pengaturan Visual" data-en="Visual Settings">Pengaturan Visual</h3>
                         <div class="form-grid form-grid-2">
                             <div>
-                                <label for="remixDepthOfField">Depth of Field</label>
+                                <label for="remixDepthOfField" data-id="Kedalaman Bidang" data-en="Depth of Field">Kedalaman Bidang</label>
                                 <select id="remixDepthOfField">
                                     <option>Auto Detect</option>
                                     <option>Shallow</option>
@@ -2116,7 +2067,7 @@
                             </div>
 
                             <div>
-                                <label for="remixLighting">Lighting Preference</label>
+                                <label for="remixLighting" data-id="Preferensi Pencahayaan" data-en="Lighting Preference">Preferensi Pencahayaan</label>
                                 <select id="remixLighting">
                                     <option>Auto Detect</option>
                                     <option>Natural</option>
@@ -2133,7 +2084,7 @@
                         </div>
 
                         <!-- Visual Effects Sliders -->
-                        <h3>Visual Effects</h3>
+                        <h3 data-id="Efek Visual" data-en="Visual Effects">Efek Visual</h3>
                         <div class="slider-container">
                             <div class="slider-label">
                                 <label for="remixFilmGrain">Film Grain</label>
@@ -2151,10 +2102,10 @@
                         </div>
 
                         <!-- Environment & Atmosphere -->
-                        <h3>Environment & Atmosphere</h3>
+                        <h3 data-id="Lingkungan & Atmosfer" data-en="Environment & Atmosphere">Lingkungan & Atmosfer</h3>
                         <div class="form-grid form-grid-3">
                             <div>
-                                <label for="remixEnvironment">Environment/Setting</label>
+                                <label for="remixEnvironment" data-id="Lingkungan/Setting" data-en="Environment/Setting">Lingkungan/Setting</label>
                                 <select id="remixEnvironment">
                                     <option>Auto Detect</option>
                                     <option>Indoor</option>
@@ -2171,7 +2122,7 @@
                             </div>
 
                             <div>
-                                <label for="remixColorPalette">Color Palette</label>
+                                <label for="remixColorPalette" data-id="Palet Warna" data-en="Color Palette">Palet Warna</label>
                                 <select id="remixColorPalette">
                                     <option>Auto Detect</option>
                                     <option>Warm Tones</option>
@@ -2186,7 +2137,7 @@
                             </div>
 
                             <div>
-                                <label for="remixWeather">Weather/Atmosphere</label>
+                                <label for="remixWeather" data-id="Cuaca/Atmosfer" data-en="Weather/Atmosphere">Cuaca/Atmosfer</label>
                                 <select id="remixWeather">
                                     <option>Auto Detect</option>
                                     <option>Sunny</option>
@@ -2202,7 +2153,7 @@
                             </div>
 
                             <div>
-                                <label for="remixTimeOfDay">Time of Day</label>
+                                <label for="remixTimeOfDay" data-id="Waktu Hari" data-en="Time of Day">Waktu Hari</label>
                                 <select id="remixTimeOfDay">
                                     <option>Auto Detect</option>
                                     <option>Dawn</option>
@@ -2216,7 +2167,7 @@
                             </div>
 
                             <div>
-                                <label for="remixMotionIntensity">Motion Intensity</label>
+                                <label for="remixMotionIntensity" data-id="Intensitas Gerakan" data-en="Motion Intensity">Intensitas Gerakan</label>
                                 <select id="remixMotionIntensity">
                                     <option>Auto Detect</option>
                                     <option>Subtle</option>
@@ -2228,7 +2179,7 @@
                             </div>
 
                             <div>
-                                <label for="remixMoodEmotion">Mood/Emotion</label>
+                                <label for="remixMoodEmotion" data-id="Suasana/Emosi" data-en="Mood/Emotion">Suasana/Emosi</label>
                                 <select id="remixMoodEmotion">
                                     <option>Auto Detect</option>
                                     <option>Happy</option>
@@ -2244,7 +2195,7 @@
                         </div>
 
                         <!-- Dialogue/Text Overlay -->
-                        <label for="remixDialogue">Dialogue/Text Overlay (Optional)</label>
+                        <label for="remixDialogue" data-id="Dialog/Overlay Teks (Opsional)" data-en="Dialogue/Text Overlay (Optional)">Dialog/Overlay Teks (Opsional)</label>
                         <textarea id="remixDialogue" rows="2" placeholder="Enter any dialogue or text elements to include..."></textarea>
                     </div>
                 </div>
@@ -2252,35 +2203,35 @@
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-                <button class="clear-btn" onclick="clearForm('remix')">🗑️ Clear All</button>
-                <button class="generate-btn" onclick="remixPrompt()">🎛️ Remix Prompt</button>
+                <button class="clear-btn" onclick="clearForm('remix')">🗑️ <span data-id="Hapus Semua" data-en="Clear All">Hapus Semua</span></button>
+                <button class="generate-btn" onclick="remixPrompt()">🎛️ <span data-id="Remix Prompt" data-en="Remix Prompt">Remix Prompt</span></button>
             </div>
 
             <!-- Output Section -->
             <div id="remixOutputSection" class="hidden">
                 <div class="output-header">
-                    <h2>Remixed Prompt</h2>
-                    <button class="copy-btn" onclick="copyPrompt('remixOutput')">📋 Copy Prompt</button>
+                    <h2 data-id="Prompt yang Diremix" data-en="Remixed Prompt">Prompt yang Diremix</h2>
+                    <button class="copy-btn" onclick="copyPrompt('remixOutput')">📋 <span data-id="Salin Prompt" data-en="Copy Prompt">Salin Prompt</span></button>
                 </div>
                 <div id="remixOutput"></div>
             </div>
 
             <!-- Sample Gallery -->
             <div class="section">
-                <button class="collapsible" onclick="toggleGallery('remix')">+ Sample Gallery</button>
+                <button class="collapsible" onclick="toggleGallery('remix')" data-id="+ Galeri Contoh" data-en="+ Sample Gallery">+ Galeri Contoh</button>
                 <div id="remixVideoGallery" class="video-gallery">
                     <div class="video-container">
                         <div class="video-title" id="remixVideoTitle">Sample Video 1</div>
                         <iframe id="remixVideoFrame" class="video-frame" src="about:blank" allowfullscreen></iframe>
                     </div>
                     <div class="video-navigation">
-                        <button class="video-nav-btn" id="remixPrevBtn" onclick="previousVideo('remix')">← Previous</button>
+                        <button class="video-nav-btn" id="remixPrevBtn" onclick="previousVideo('remix')">← <span data-id="Sebelumnya" data-en="Previous">Sebelumnya</span></button>
                         <span class="video-counter" id="remixVideoCounter">1 / 3</span>
-                        <button class="video-nav-btn" id="remixNextBtn" onclick="nextVideo('remix')">Next →</button>
+                        <button class="video-nav-btn" id="remixNextBtn" onclick="nextVideo('remix')"><span data-id="Selanjutnya" data-en="Next">Selanjutnya</span> →</button>
                     </div>
                 </div>
                 <div id="remixGalleryPlaceholder" class="gallery-placeholder">
-                    Click on expand button above to view sample videos
+                    <span data-id="Klik tombol expand di atas untuk melihat video contoh" data-en="Click on expand button above to view sample videos">Klik tombol expand di atas untuk melihat video contoh</span>
                 </div>
             </div>
         </div>
@@ -2288,44 +2239,63 @@
         <!-- Menu Tab Content -->
         <div id="menuTab" class="tab-content">
             <div class="tab-header">
-                <h2 class="tab-title">Menu & Account</h2>
+                <h2 class="tab-title" data-id="Menu & Akun" data-en="Menu & Account">Menu & Akun</h2>
             </div>
 
             <!-- Sign In Prompt (for guests) -->
             <div id="menuSignInPrompt" class="sign-in-prompt">
-                <h3>Sign In Required</h3>
-                <p>Please sign in to access your account menu, redeem codes, and view your usage statistics.</p>
-                <button class="generate-btn" onclick="signIn()" style="margin-top: 16px;">🔐 Sign in with Google</button>
+                <h3 data-id="Perlu Masuk" data-en="Sign In Required">Perlu Masuk</h3>
+                <p data-id="Silakan masuk untuk mengakses menu akun, redeem kode, dan melihat statistik penggunaan Anda." data-en="Please sign in to access your account menu, redeem codes, and view your usage statistics.">Silakan masuk untuk mengakses menu akun, redeem kode, dan melihat statistik penggunaan Anda.</p>
+                <button class="generate-btn" onclick="signIn()" style="margin-top: 16px;">🔐 <span data-id="Masuk dengan Google" data-en="Sign in with Google">Masuk dengan Google</span></button>
             </div>
 
             <!-- User Menu Content (for signed-in users) -->
             <div id="menuUserContent" class="hidden">
+                <!-- Theme Toggle Section -->
+                <div class="section">
+                    <h2>🎨 <span data-id="Tema Tampilan" data-en="Display Theme">Tema Tampilan</span></h2>
+                    <div class="theme-toggle">
+                        <span data-id="Pilih tema:" data-en="Choose theme:">Pilih tema:</span>
+                        <div class="theme-options">
+                            <div class="theme-option active" onclick="setTheme('auto')">
+                                🔄 <span data-id="Otomatis" data-en="Auto">Otomatis</span>
+                            </div>
+                            <div class="theme-option" onclick="setTheme('light')">
+                                ☀️ <span data-id="Terang" data-en="Light">Terang</span>
+                            </div>
+                            <div class="theme-option" onclick="setTheme('dark')">
+                                🌙 <span data-id="Gelap" data-en="Dark">Gelap</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Personal Statistics -->
                 <div class="section">
-                    <h2>📊 Your Statistics</h2>
+                    <h2>📊 <span data-id="Statistik Anda" data-en="Your Statistics">Statistik Anda</span></h2>
                     <div class="stats-grid">
                         <div class="stats-card">
                             <div class="stat-item">
                                 <div class="stat-value" id="userTotalGenerated">0</div>
-                                <div class="stat-label">Total Prompts Generated</div>
+                                <div class="stat-label" data-id="Total Prompt Dibuat" data-en="Total Prompts Generated">Total Prompt Dibuat</div>
                             </div>
                         </div>
                         <div class="stats-card">
                             <div class="stat-item">
                                 <div class="stat-value" id="userEnhanceCount">0</div>
-                                <div class="stat-label">Enhance Used</div>
+                                <div class="stat-label" data-id="Enhance Digunakan" data-en="Enhance Used">Enhance Digunakan</div>
                             </div>
                         </div>
                         <div class="stats-card">
                             <div class="stat-item">
                                 <div class="stat-value" id="userRemixCount">0</div>
-                                <div class="stat-label">Remix Used</div>
+                                <div class="stat-label" data-id="Remix Digunakan" data-en="Remix Used">Remix Digunakan</div>
                             </div>
                         </div>
                         <div class="stats-card">
                             <div class="stat-item">
                                 <div class="stat-value" id="userQuotaRemaining">0</div>
-                                <div class="stat-label">Prompts Remaining</div>
+                                <div class="stat-label" data-id="Prompt Tersisa" data-en="Prompts Remaining">Prompt Tersisa</div>
                             </div>
                         </div>
                     </div>
@@ -2333,17 +2303,17 @@
 
                 <!-- Redeem Code Section -->
                 <div class="section">
-                    <h2>🎟️ Redeem Code</h2>
-                    <p style="margin-bottom: 16px; color: #94a3b8;">Enter your redeem code here to add more prompts.</p>
+                    <h2>🎟️ <span data-id="Redeem Kode" data-en="Redeem Code">Redeem Kode</span></h2>
+                    <p style="margin-bottom: 16px; color: var(--text-secondary);" data-id="Masukkan kode redeem di sini untuk menambah prompt." data-en="Enter your redeem code here to add more prompts.">Masukkan kode redeem di sini untuk menambah prompt.</p>
                     
                     <div class="form-grid form-grid-2">
                         <div>
-                            <label for="redeemCodeInput">Redeem Code</label>
-                            <input type="text" id="redeemCodeInput" placeholder="Enter your code here" style="text-transform: uppercase;"/>
+                            <label for="redeemCodeInput" data-id="Kode Redeem" data-en="Redeem Code">Kode Redeem</label>
+                            <input type="text" id="redeemCodeInput" placeholder="Masukkan kode di sini" style="text-transform: uppercase;" data-placeholder-id="Masukkan kode di sini" data-placeholder-en="Enter your code here"/>
                         </div>
                         <div style="display: flex; align-items: end;">
                             <button class="generate-btn" onclick="redeemCode()" style="margin: 0; width: 100%;">
-                                🎁 Redeem Code
+                                🎁 <span data-id="Redeem Kode" data-en="Redeem Code">Redeem Kode</span>
                             </button>
                         </div>
                     </div>
@@ -2353,21 +2323,21 @@
 
                 <!-- Payment UI Section -->
                 <div class="section">
-                    <h2>💳 Buy More Prompts (Coming Soon!)</h2>
-                    <p>Purchase additional prompts to continue generating.</p>
+                    <h2>💳 <span data-id="Beli Lebih Banyak Prompt (Segera Hadir!)" data-en="Buy More Prompts (Coming Soon!)">Beli Lebih Banyak Prompt (Segera Hadir!)</span></h2>
+                    <p data-id="Beli prompt tambahan untuk terus menghasilkan." data-en="Purchase additional prompts to continue generating.">Beli prompt tambahan untuk terus menghasilkan.</p>
                     <select id="quota-purchase">
-                        <option value="10|50000">10 Prompts - IDR 50,000</option>
-                        <option value="25|100000">25 Prompts - IDR 100,000</option>
-                        <option value="60|200000">60 Prompts - IDR 200,000</option>
+                        <option value="10|50000">10 Prompt - IDR 50,000</option>
+                        <option value="25|100000">25 Prompt - IDR 100,000</option>
+                        <option value="60|200000">60 Prompt - IDR 200,000</option>
                     </select>
-                    <button onclick="initiatePayment()">Buy Now</button>
+                    <button onclick="initiatePayment()"><span data-id="Beli Sekarang" data-en="Buy Now">Beli Sekarang</span></button>
                 </div>
 
                 <!-- Recent Activity -->
                 <div class="section">
-                    <h2>📝 Recent Activity</h2>
+                    <h2>📝 <span data-id="Aktivitas Terbaru" data-en="Recent Activity">Aktivitas Terbaru</span></h2>
                     <div id="recentActivity">
-                        <p style="color: #94a3b8; font-style: italic;">Loading recent activity...</p>
+                        <p style="color: var(--text-secondary); font-style: italic;" data-id="Memuat aktivitas terbaru..." data-en="Loading recent activity...">Memuat aktivitas terbaru...</p>
                     </div>
                 </div>
             </div>
@@ -2472,7 +2442,7 @@
                         </thead>
                         <tbody id="usersTableBody">
                             <tr>
-                                <td colspan="7" style="text-align: center; padding: 32px; color: #94a3b8;">
+                                <td colspan="7" style="text-align: center; padding: 32px; color: var(--text-secondary);">
                                     Loading users...
                                 </td>
                             </tr>
@@ -2502,57 +2472,57 @@
         <!-- Contact Tab Content -->
         <div id="contactTab" class="tab-content">
             <div class="tab-header">
-                <h2 class="tab-title">Contact Us</h2>
+                <h2 class="tab-title" data-id="Hubungi Kami" data-en="Contact Us">Hubungi Kami</h2>
             </div>
 
             <!-- Contact Form -->
             <div class="section">
-                <h2>Send us a Message</h2>
+                <h2 data-id="Kirim Pesan kepada Kami" data-en="Send us a Message">Kirim Pesan kepada Kami</h2>
                 
                 <form id="contactForm">
                     <div class="form-grid form-grid-2">
                         <div>
-                            <label for="contactName">Name <span class="required-field">*</span></label>
-                            <input type="text" id="contactName" placeholder="Your full name" required/>
+                            <label for="contactName" data-id="Nama" data-en="Name">Nama</label> <span class="required-field">*</span>
+                            <input type="text" id="contactName" placeholder="Nama lengkap Anda" required data-placeholder-id="Nama lengkap Anda" data-placeholder-en="Your full name"/>
                         </div>
                         
                         <div>
-                            <label for="contactEmail">Email <span class="required-field">*</span></label>
-                            <input type="email" id="contactEmail" placeholder="your.email@example.com" required/>
+                            <label for="contactEmail" data-id="Email" data-en="Email">Email</label> <span class="required-field">*</span>
+                            <input type="email" id="contactEmail" placeholder="email.anda@contoh.com" required data-placeholder-id="email.anda@contoh.com" data-placeholder-en="your.email@example.com"/>
                         </div>
                     </div>
 
                     <div class="form-grid form-grid-2">
                         <div>
-                            <label for="contactPhone">Phone (Optional)</label>
-                            <input type="tel" id="contactPhone" placeholder="(+62) ..."/>
+                            <label for="contactPhone" data-id="Telepon (Opsional)" data-en="Phone (Optional)">Telepon (Opsional)</label>
+                            <input type="tel" id="contactPhone" placeholder="(+62) ..." data-placeholder-id="(+62) ..." data-placeholder-en="(+62) ..."/>
                         </div>
                         
                         <div>
-                            <label for="contactCategory">Category <span class="required-field">*</span></label>
+                            <label for="contactCategory" data-id="Kategori" data-en="Category">Kategori</label> <span class="required-field">*</span>
                             <select id="contactCategory" required>
-                                <option value="">Select a category</option>
-                                <option value="bug_report">Bug Report</option>
-                                <option value="feature_request">Feature Request</option>
-                                <option value="general_inquiry">General Inquiry</option>
-                                <option value="billing_support">Billing Support</option>
-                                <option value="technical_support">Technical Support</option>
-                                <option value="feedback">Feedback & Suggestions</option>
-                                <option value="partnership">Partnership Inquiry</option>
-                                <option value="other">Other</option>
+                                <option value="" data-id="Pilih kategori" data-en="Select a category">Pilih kategori</option>
+                                <option value="bug_report" data-id="Laporan Bug" data-en="Bug Report">Laporan Bug</option>
+                                <option value="feature_request" data-id="Permintaan Fitur" data-en="Feature Request">Permintaan Fitur</option>
+                                <option value="general_inquiry" data-id="Pertanyaan Umum" data-en="General Inquiry">Pertanyaan Umum</option>
+                                <option value="billing_support" data-id="Dukungan Billing" data-en="Billing Support">Dukungan Billing</option>
+                                <option value="technical_support" data-id="Dukungan Teknis" data-en="Technical Support">Dukungan Teknis</option>
+                                <option value="feedback" data-id="Masukan & Saran" data-en="Feedback & Suggestions">Masukan & Saran</option>
+                                <option value="partnership" data-id="Pertanyaan Kemitraan" data-en="Partnership Inquiry">Pertanyaan Kemitraan</option>
+                                <option value="other" data-id="Lainnya" data-en="Other">Lainnya</option>
                             </select>
                         </div>
                     </div>
 
-                    <label for="contactSubject">Subject <span class="required-field">*</span></label>
-                    <input type="text" id="contactSubject" placeholder="Brief description of your message" required/>
+                    <label for="contactSubject" data-id="Subjek" data-en="Subject">Subjek</label> <span class="required-field">*</span>
+                    <input type="text" id="contactSubject" placeholder="Deskripsi singkat pesan Anda" required data-placeholder-id="Deskripsi singkat pesan Anda" data-placeholder-en="Brief description of your message"/>
 
-                    <label for="contactMessage">Message <span class="required-field">*</span></label>
-                    <textarea id="contactMessage" rows="6" placeholder="Please provide details about your inquiry, issue, or feedback..." required></textarea>
+                    <label for="contactMessage" data-id="Pesan" data-en="Message">Pesan</label> <span class="required-field">*</span>
+                    <textarea id="contactMessage" rows="6" placeholder="Silakan berikan detail tentang pertanyaan, masalah, atau masukan Anda..." required data-placeholder-id="Silakan berikan detail tentang pertanyaan, masalah, atau masukan Anda..." data-placeholder-en="Please provide details about your inquiry, issue, or feedback..."></textarea>
 
                     <div class="action-buttons">
-                        <button type="button" class="clear-btn" onclick="clearContactForm()">🗑️ Clear Form</button>
-                        <button type="submit" class="generate-btn">📞 Send Message</button>
+                        <button type="button" class="clear-btn" onclick="clearContactForm()">🗑️ <span data-id="Hapus Form" data-en="Clear Form">Hapus Form</span></button>
+                        <button type="submit" class="generate-btn">📞 <span data-id="Kirim Pesan" data-en="Send Message">Kirim Pesan</span></button>
                     </div>
                 </form>
             </div>
@@ -2560,23 +2530,24 @@
             <!-- Contact Success Message -->
             <div id="contactSuccessMessage" class="hidden">
                 <div class="section" style="text-align: center; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
-                    <h2 style="color: #10b981; margin-bottom: 16px;">✅ Message Sent Successfully!</h2>
-                    <p style="color: #94a3b8; margin-bottom: 20px;">Thank you for reaching out! We'll get back to you as soon as possible.</p>
-                    <button class="generate-btn" onclick="resetContactForm()">📞 Send Another Message</button>
+                    <h2 style="color: #10b981; margin-bottom: 16px;">✅ <span data-id="Pesan Berhasil Dikirim!" data-en="Message Sent Successfully!">Pesan Berhasil Dikirim!</span></h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;" data-id="Terima kasih telah menghubungi kami! Kami akan merespons sesegera mungkin." data-en="Thank you for reaching out! We'll get back to you as soon as possible.">Terima kasih telah menghubungi kami! Kami akan merespons sesegera mungkin.</p>
+                    <button class="generate-btn" onclick="resetContactForm()">📞 <span data-id="Kirim Pesan Lain" data-en="Send Another Message">Kirim Pesan Lain</span></button>
                 </div>
             </div>
-	<!-- Contact info section before footer -->
-        <div class="contact-info-footer">
-            <h3>You Can Also Reach Us Here</h3>
-            <p>Email: <a href="mailto:cygryuu@gmail.com" class="contact-email-footer">cygryuu@gmail.com</a></p>
-        </div>
+
+            <!-- Contact info section before footer -->
+            <div class="contact-info-footer">
+                <h3 data-id="Anda Juga Dapat Menghubungi Kami Di Sini" data-en="You Can Also Reach Us Here">Anda Juga Dapat Menghubungi Kami Di Sini</h3>
+                <p>Email: <a href="mailto:cygryuu@gmail.com" class="contact-email-footer">cygryuu@gmail.com</a></p>
+            </div>
         </div>
 
         <!-- Help Modals -->
         <div id="helpModal" class="help-modal">
             <div class="help-modal-content">
                 <div class="help-modal-header">
-                    <h3 class="help-modal-title" id="helpModalTitle">Help</h3>
+                    <h3 class="help-modal-title" id="helpModalTitle" data-id="Bantuan" data-en="Help">Bantuan</h3>
                     <button class="help-close" onclick="closeHelp()">&times;</button>
                 </div>
                 <div class="help-content" id="helpModalContent">
@@ -2608,11 +2579,120 @@
         let userStats = {};
         let adminData = {};
 
+        // Current language - default to Indonesian
+        let currentLang = 'id';
+
+        // Current theme - default to auto
+        let currentTheme = 'auto';
+
+        // Language and theme management
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('veo3-language', lang);
+            
+            // Update language toggle UI
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.lang-option[onclick="setLanguage('${lang}')"]`).classList.add('active');
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update all translatable content
+            updateLanguageContent();
+        }
+
+        function updateLanguageContent() {
+            // Update all elements with data-id and data-en attributes
+            document.querySelectorAll('[data-id]').forEach(element => {
+                const idText = element.getAttribute('data-id');
+                const enText = element.getAttribute('data-en');
+                
+                if (currentLang === 'id' && idText) {
+                    element.textContent = idText;
+                } else if (currentLang === 'en' && enText) {
+                    element.textContent = enText;
+                }
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-placeholder-id]').forEach(element => {
+                const idPlaceholder = element.getAttribute('data-placeholder-id');
+                const enPlaceholder = element.getAttribute('data-placeholder-en');
+                
+                if (currentLang === 'id' && idPlaceholder) {
+                    element.placeholder = idPlaceholder;
+                } else if (currentLang === 'en' && enPlaceholder) {
+                    element.placeholder = enPlaceholder;
+                }
+            });
+
+            // Update select options for contact form
+            if (document.getElementById('contactCategory')) {
+                const categorySelect = document.getElementById('contactCategory');
+                const options = categorySelect.querySelectorAll('option');
+                options.forEach(option => {
+                    const idText = option.getAttribute('data-id');
+                    const enText = option.getAttribute('data-en');
+                    
+                    if (currentLang === 'id' && idText) {
+                        option.textContent = idText;
+                    } else if (currentLang === 'en' && enText) {
+                        option.textContent = enText;
+                    }
+                });
+            }
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            localStorage.setItem('veo3-theme', theme);
+            
+            // Update theme options UI
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-option[onclick="setTheme('${theme}')"]`).classList.add('active');
+            
+            // Apply theme
+            applyTheme(theme);
+        }
+
+        function applyTheme(theme) {
+            const body = document.body;
+            
+            if (theme === 'light') {
+                body.classList.add('light-mode');
+            } else if (theme === 'dark') {
+                body.classList.remove('light-mode');
+            } else { // auto
+                // Check system preference
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    body.classList.add('light-mode');
+                } else {
+                    body.classList.remove('light-mode');
+                }
+            }
+        }
+
+        // Load saved preferences on page load
+        function loadUserPreferences() {
+            // Load language preference
+            const savedLang = localStorage.getItem('veo3-language') || 'id';
+            setLanguage(savedLang);
+            
+            // Load theme preference
+            const savedTheme = localStorage.getItem('veo3-theme') || 'auto';
+            setTheme(savedTheme);
+        }
+
         // Function to initiate payment - MOVED OUTSIDE DOMContentLoaded
         async function initiatePayment() {
             const user = firebase.auth().currentUser;
             if (!user) {
-                showPopupNotification("❌ Please sign in to purchase prompts.", 'error');
+                const message = currentLang === 'id' ? "❌ Silakan masuk untuk membeli prompt." : "❌ Please sign in to purchase prompts.";
+                showPopupNotification(message, 'error');
                 return;
             }
 
@@ -2645,13 +2725,15 @@
                 }
 
                 if (!data.snap_token) {
-                    showPopupNotification("❌ Payment token not received", 'error');
+                    const message = currentLang === 'id' ? "❌ Token pembayaran tidak diterima" : "❌ Payment token not received";
+                    showPopupNotification(message, 'error');
                     return;
                 }
 
                 // Check if Snap is loaded
                 if (typeof window.snap === 'undefined') {
-                    showPopupNotification("❌ Payment system not loaded. Please refresh the page.", 'error');
+                    const message = currentLang === 'id' ? "❌ Sistem pembayaran tidak dimuat. Silakan refresh halaman." : "❌ Payment system not loaded. Please refresh the page.";
+                    showPopupNotification(message, 'error');
                     return;
                 }
 
@@ -2659,7 +2741,8 @@
                 window.snap.pay(data.snap_token, {
                     onSuccess: function (result) {
                         console.log("Payment success:", result);
-                        showPopupNotification("✅ Payment successful! Your prompts have been added.", 'success');
+                        const message = currentLang === 'id' ? "✅ Pembayaran berhasil! Prompt Anda telah ditambahkan." : "✅ Payment successful! Your prompts have been added.";
+                        showPopupNotification(message, 'success');
                         updateQuotaCounter();
                         if (currentUser) {
                             loadUserStats(); // Refresh stats
@@ -2667,20 +2750,24 @@
                     },
                     onPending: function (result) {
                         console.log("Payment pending:", result);
-                        showPopupNotification("⏳ Payment is pending. You'll receive your prompts once confirmed.", 'warning');
+                        const message = currentLang === 'id' ? "⏳ Pembayaran sedang diproses. Anda akan menerima prompt setelah dikonfirmasi." : "⏳ Payment is pending. You'll receive your prompts once confirmed.";
+                        showPopupNotification(message, 'warning');
                     },
                     onError: function (result) {
                         console.log("Payment error:", result);
-                        showPopupNotification("❌ Payment failed. Please try again.", 'error');
+                        const message = currentLang === 'id' ? "❌ Pembayaran gagal. Silakan coba lagi." : "❌ Payment failed. Please try again.";
+                        showPopupNotification(message, 'error');
                     },
                     onClose: function () {
                         console.log("Payment popup closed");
-                        showPopupNotification("⚠️ Payment was not completed.", 'warning');
+                        const message = currentLang === 'id' ? "⚠️ Pembayaran tidak diselesaikan." : "⚠️ Payment was not completed.";
+                        showPopupNotification(message, 'warning');
                     }
                 });
             } catch (error) {
                 console.error("Error initiating payment:", error);
-                showPopupNotification("❌ Network error. Please check your connection and try again.", 'error');
+                const message = currentLang === 'id' ? "❌ Kesalahan jaringan. Silakan periksa koneksi dan coba lagi." : "❌ Network error. Please check your connection and try again.";
+                showPopupNotification(message, 'error');
             }
         }
 
@@ -2792,7 +2879,11 @@
         }
 
         function clearContactForm() {
-            if (confirm('Are you sure you want to clear the form?')) {
+            const confirmMessage = currentLang === 'id' ? 
+                'Apakah Anda yakin ingin menghapus form?' : 
+                'Are you sure you want to clear the form?';
+                
+            if (confirm(confirmMessage)) {
                 document.getElementById('contactForm').reset();
                 // Re-auto-fill if user is signed in
                 if (currentUser) {
@@ -2827,13 +2918,15 @@
                     // Show success message
                     document.getElementById('contactForm').classList.add('hidden');
                     document.getElementById('contactSuccessMessage').classList.remove('hidden');
-                    showPopupNotification('✅ Message sent successfully!', 'success');
+                    const message = currentLang === 'id' ? '✅ Pesan berhasil dikirim!' : '✅ Message sent successfully!';
+                    showPopupNotification(message, 'success');
                 } else {
                     throw new Error(result.error || 'Failed to send message');
                 }
             } catch (error) {
                 console.error('Contact form error:', error);
-                showPopupNotification('❌ Failed to send message. Please try again.', 'error');
+                const message = currentLang === 'id' ? '❌ Gagal mengirim pesan. Silakan coba lagi.' : '❌ Failed to send message. Please try again.';
+                showPopupNotification(message, 'error');
             }
         }
 
@@ -2867,10 +2960,12 @@
             
             if (adv.style.display === "none" || adv.style.display === "") {
                 adv.style.display = "block";
-                button.innerHTML = "- Advanced Parameters (Optional)";
+                const newText = currentLang === 'id' ? "- Parameter Lanjutan (Opsional)" : "- Advanced Parameters (Optional)";
+                button.innerHTML = newText;
             } else {
                 adv.style.display = "none";
-                button.innerHTML = "+ Advanced Parameters (Optional)";
+                const newText = currentLang === 'id' ? "+ Parameter Lanjutan (Opsional)" : "+ Advanced Parameters (Optional)";
+                button.innerHTML = newText;
             }
         }
 
@@ -2882,12 +2977,14 @@
             if (gallery.style.display === "none" || gallery.style.display === "") {
                 gallery.style.display = "block";
                 placeholder.style.display = "none";
-                button.innerHTML = "- Sample Gallery";
+                const newText = currentLang === 'id' ? "- Galeri Contoh" : "- Sample Gallery";
+                button.innerHTML = newText;
                 loadVideo(tabName, currentVideoIndex[tabName]);
             } else {
                 gallery.style.display = "none";
                 placeholder.style.display = "block";
-                button.innerHTML = "+ Sample Gallery";
+                const newText = currentLang === 'id' ? "+ Galeri Contoh" : "+ Sample Gallery";
+                button.innerHTML = newText;
             }
         }
 
@@ -2966,7 +3063,11 @@
 
         // Clear form function
         function clearForm(tabName) {
-            if (confirm('Are you sure you want to clear all fields? This action cannot be undone.')) {
+            const confirmMessage = currentLang === 'id' ? 
+                'Apakah Anda yakin ingin menghapus semua field? Tindakan ini tidak dapat dibatalkan.' : 
+                'Are you sure you want to clear all fields? This action cannot be undone.';
+                
+            if (confirm(confirmMessage)) {
                 if (tabName === 'enhance') {
                     // Clear enhance form
                     document.getElementById('description').value = '';
@@ -3045,54 +3146,141 @@
             const content = document.getElementById('helpModalContent');
             
             if (tabName === 'enhance') {
-                title.textContent = 'Enhance Tab - Best Practices';
-                content.innerHTML = `
-                    <h4>🎯 What is the Enhance Feature?</h4>
-                    <p>The Enhance feature transforms your basic prompt idea into a detailed, professional-quality Veo 3 prompt with rich cinematographic details, structured formatting, and technical specifications optimized for AI video generation.</p>
-                    
-                    <h4>📝 How to Use Effectively:</h4>
-                    <ul>
-                        <li><strong>Start Simple:</strong> Enter a basic description in "Your Prompt" field (e.g., "A cat flying through a city")</li>
-                        <li><strong>Add Context:</strong> Use Subject and Action fields to specify key elements and movements</li>
-                        <li><strong>Choose Style:</strong> Select from 40+ video styles including Cinematic, Documentary, Animation, VHS, etc.</li>
-			<li><strong>Set Tone:</strong> Pick from 8 general tone categories with specific sub-tones for precise mood control</li>
-                        <li><strong>Advanced Parameters:</strong> Fine-tune camera movement, lighting, visual effects, environment, and atmosphere</li>
-    			<li><strong>Include Dialogue:</strong> Add specific dialogue in quotes - the AI will preserve exact wording and add proper formatting</li>
-                    </ul>
-                    
-                    <h4>💡 Pro Tips:</h4>
-                    <ul>
-                        <li><strong>Start Broad:</strong> Even vague prompts work well - the AI will add professional details</li>
-		        <li><strong>Control Tips:</strong> But if you want more control in output result, feel free to be as detailed as possible</li>
-		        <li><strong>Mix Styles:</strong> Combine different elements for unique results (e.g., "Horror + Documentary")</li>
-                        <li><strong>Use Auto Detect:</strong> Let AI choose optimal settings when unsure</li>
-			<li><strong>Dialogue Precision:</strong> The AI preserves exact dialogue wording and adds proper tone descriptions</li>
-			<li><strong>Technical Quality:</strong> Generated prompts include professional terminology for lighting, camera work, and audio design</li>
-                    </ul>
-                    
-                    <div class="example">
+                if (currentLang === 'id') {
+                    title.textContent = 'Tab Enhance - Praktik Terbaik';
+                    content.innerHTML = `
+                        <h4>🎯 Apa itu Fitur Enhance?</h4>
+                        <p>Fitur Enhance mengubah ide prompt dasar Anda menjadi prompt Veo 3 berkualitas profesional yang detail dengan kaya detail sinematografi, format terstruktur, dan spesifikasi teknis yang dioptimalkan untuk generasi video AI.</p>
+                        
+                        <h4>📝 Cara Menggunakan dengan Efektif:</h4>
+                        <ul>
+                            <li><strong>Mulai Sederhana:</strong> Masukkan deskripsi dasar di field "Prompt Kamu" (contoh: "Seekor kucing terbang melewati kota")</li>
+                            <li><strong>Tambah Konteks:</strong> Gunakan field Subject dan Action untuk menentukan elemen kunci dan gerakan</li>
+                            <li><strong>Pilih Gaya:</strong> Pilih dari 40+ gaya video termasuk Cinematic, Documentary, Animation, VHS, dll.</li>
+                            <li><strong>Atur Tone:</strong> Pilih dari 8 kategori tone umum dengan sub-tone spesifik untuk kontrol mood yang presisi</li>
+                            <li><strong>Parameter Lanjutan:</strong> Fine-tune gerakan kamera, pencahayaan, efek visual, lingkungan, dan atmosfer</li>
+                            <li><strong>Sertakan Dialog:</strong> Tambahkan dialog spesifik dalam tanda kutip - AI akan mempertahankan kata-kata persis dan menambahkan format yang tepat</li>
+                        </ul>
+                        
+                        <h4>💡 Tips Pro:</h4>
+                        <ul>
+                            <li><strong>Mulai Luas:</strong> Bahkan prompt yang samar bekerja dengan baik - AI akan menambahkan detail profesional</li>
+                            <li><strong>Tips Kontrol:</strong> Tapi jika Anda ingin lebih kontrol dalam hasil output, jangan ragu untuk sedetail mungkin</li>
+                            <li><strong>Campurkan Gaya:</strong> Kombinasikan elemen berbeda untuk hasil unik (contoh: "Horror + Documentary")</li>
+                            <li><strong>Gunakan Auto Detect:</strong> Biarkan AI memilih pengaturan optimal ketika tidak yakin</li>
+                            <li><strong>Presisi Dialog:</strong> AI mempertahankan kata-kata dialog persis dan menambahkan deskripsi tone yang tepat</li>
+                            <li><strong>Kualitas Teknis:</strong> Prompt yang dihasilkan mencakup terminologi profesional untuk pencahayaan, kerja kamera, dan desain audio</li>
+                        </ul>
+                        
+                        <div class="example">
+    <strong>Contoh Enhancement:</strong><br>
+    <strong>Input:</strong> "A robot serving coffee"<br>
+    <strong>Output yang Ditingkatkan:</strong><br>
+    "[Medium shot] of a sleek, advanced humanoid robot with a polished titanium exterior and bright, intelligent white optical sensors. The robot expertly serves a steaming cup of espresso, its movements precise and fluid, in a modern, upscale coffee shop with Scandinavian design elements. Bright, natural daylight filters through large glass windows, casting soft shadows. The camera smoothly tracks the robot's motion, seamlessly transitioning to reveal the cafe's sleek interior, complete with elegant wooden furniture and a few patrons engaged in quiet conversation. Style: Ultra-realistic, cinematic quality with sharp detail, vibrant colors, and smooth depth of field using a 50mm lens. Lighting is natural with soft diffusion, maintaining a clean and inviting atmosphere. Audio: Soft mechanical sounds from the robot, gentle clinking of ceramic, ambient chatter, and a soothing instrumental background music. (no film grain, no dialogue, no motion blur) --ar 16:9"
+</div>
+                    `;
+                } else {
+                    title.textContent = 'Enhance Tab - Best Practices';
+                    content.innerHTML = `
+                        <h4>🎯 What is the Enhance Feature?</h4>
+                        <p>The Enhance feature transforms your basic prompt idea into a detailed, professional-quality Veo 3 prompt with rich cinematographic details, structured formatting, and technical specifications optimized for AI video generation.</p>
+                        
+                        <h4>📝 How to Use Effectively:</h4>
+                        <ul>
+                            <li><strong>Start Simple:</strong> Enter a basic description in "Your Prompt" field (e.g., "A cat flying through a city")</li>
+                            <li><strong>Add Context:</strong> Use Subject and Action fields to specify key elements and movements</li>
+                            <li><strong>Choose Style:</strong> Select from 40+ video styles including Cinematic, Documentary, Animation, VHS, etc.</li>
+                            <li><strong>Set Tone:</strong> Pick from 8 general tone categories with specific sub-tones for precise mood control</li>
+                            <li><strong>Advanced Parameters:</strong> Fine-tune camera movement, lighting, visual effects, environment, and atmosphere</li>
+                            <li><strong>Include Dialogue:</strong> Add specific dialogue in quotes - the AI will preserve exact wording and add proper formatting</li>
+                        </ul>
+                        
+                        <h4>💡 Pro Tips:</h4>
+                        <ul>
+                            <li><strong>Start Broad:</strong> Even vague prompts work well - the AI will add professional details</li>
+                            <li><strong>Control Tips:</strong> But if you want more control in output result, feel free to be as detailed as possible</li>
+                            <li><strong>Mix Styles:</strong> Combine different elements for unique results (e.g., "Horror + Documentary")</li>
+                            <li><strong>Use Auto Detect:</strong> Let AI choose optimal settings when unsure</li>
+                            <li><strong>Dialogue Precision:</strong> The AI preserves exact dialogue wording and adds proper tone descriptions</li>
+                            <li><strong>Technical Quality:</strong> Generated prompts include professional terminology for lighting, camera work, and audio design</li>
+                        </ul>
+                        
+                        <div class="example">
     <strong>Example Enhancement:</strong><br>
     <strong>Input:</strong> "A robot serving coffee"<br>
     <strong>Enhanced Output:</strong><br>
     "[Medium shot] of a sleek, advanced humanoid robot with a polished titanium exterior and bright, intelligent white optical sensors. The robot expertly serves a steaming cup of espresso, its movements precise and fluid, in a modern, upscale coffee shop with Scandinavian design elements. Bright, natural daylight filters through large glass windows, casting soft shadows. The camera smoothly tracks the robot's motion, seamlessly transitioning to reveal the cafe's sleek interior, complete with elegant wooden furniture and a few patrons engaged in quiet conversation. Style: Ultra-realistic, cinematic quality with sharp detail, vibrant colors, and smooth depth of field using a 50mm lens. Lighting is natural with soft diffusion, maintaining a clean and inviting atmosphere. Audio: Soft mechanical sounds from the robot, gentle clinking of ceramic, ambient chatter, and a soothing instrumental background music. (no film grain, no dialogue, no motion blur) --ar 16:9"
 </div>
-                `;
+                    `;
+                }
             } else {
-                title.textContent = 'Remix Tab - Best Practices';
-                content.innerHTML = `
-                    <h4>🎛️ What is the Remix Feature?</h4>
-                    <p>The Remix feature takes any existing prompt (from social media, other generators, or previous creations) and creates intelligent variations based on your specific instructions. Perfect for adapting viral prompts, exploring creative alternatives, or fine-tuning existing concepts. 
+                if (currentLang === 'id') {
+                    title.textContent = 'Tab Remix - Praktik Terbaik';
+                    content.innerHTML = `
+                        <h4>🎛️ Apa itu Fitur Remix?</h4>
+                        <p>Fitur Remix mengambil prompt yang sudah ada (dari media sosial, generator lain, atau kreasi sebelumnya) dan membuat variasi cerdas berdasarkan instruksi spesifik Anda. Sempurna untuk mengadaptasi prompt viral, menjelajahi alternatif kreatif, atau menyempurnakan konsep yang sudah ada. 
+(PS: Ini juga meningkatkan prompt output secara otomatis. Keren kan?)</p>
+                        
+                        <h4>📝 Cara Menggunakan dengan Efektif:</h4>
+                        <ul>
+                            <li><strong>Tempel Original:</strong> Salin prompt yang sudah ada ke field "Prompt Asli"</li>
+                            <li><strong>Tentukan Perubahan:</strong> Jelaskan modifikasi dengan jelas di field "Cara Mengubah Prompt Ini"</li>
+                            <li><strong>Pilih Mode:</strong> Toggle antara mode remix Sederhana dan Lanjutan</li>
+                            <li><strong>Bersikap Spesifik:</strong> Semakin detail instruksi variasi Anda, semakin presisi outputnya</li>
+                        </ul>
+                        
+                        <h4>🔀 Mode Sederhana vs Lanjutan:</h4>
+<ul>
+    <li><strong>Mode Sederhana:</strong> 
+        <ul>
+            <li>Hanya menggunakan instruksi variasi dan prompt asli Anda</li>
+            <li>Mempertahankan struktur asli dan elemen gaya jika memungkinkan</li>
+            <li>Terbaik untuk penggantian karakter cepat, perubahan setting, atau pergeseran mood</li>
+        </ul>
+    </li>
+    <li><strong>Mode Lanjutan:</strong>
+        <ul>
+            <li>Menggabungkan instruksi variasi dengan semua parameter teknis</li>
+            <li>Rekonstruksi lengkap menggunakan konsep asli dan spesifikasi baru</li>
+            <li>Terbaik untuk reimagining komprehensif dengan presisi teknis</li>
+        </ul>
+    </li>
+</ul>
+                        
+                        <h4>💡 Tips Pro Remix:</h4>
+<ul>
+    <li><strong>Adaptasi Viral:</strong> Ambil prompt trending dan tambahkan sentuhan unik Anda</li>
+    <li><strong>Perubahan Bertahap:</strong> Ubah satu elemen pada satu waktu untuk eksperimen terkontrol</li>
+    <li><strong>Genre Hopping:</strong> Transformasi prompt realistis ke fantasi, horor ke komedi, dll.</li>
+    <li><strong>Enhancement Teknis:</strong> Gunakan mode Lanjutan untuk menambahkan sinematografi profesional ke prompt sederhana</li>
+    <li><strong>Integrasi Dialog:</strong> Tambahkan suara karakter dan dialog spesifik ke prompt visual yang sudah ada</li>
+    <li><strong>Konflik Kreatif:</strong> Sengaja campurkan elemen yang bertentangan untuk hasil artistik yang mengejutkan</li>
+</ul>
+                        
+                        <div class="example">
+    <strong>Contoh Mode Lanjutan:</strong><br>
+    <strong>Original:</strong> "A towering creature resembling a pine tree with multiple glowing eyes stands still in the dense forest fog. The camera slowly zooms in from a handheld perspective behind the trees. Add light wind, distant bird cries, and subtle whisper-like sounds. Cold green-gray palette with fog particles and grain. 8 seconds, unsettling and meditative."<br>
+    <strong>Variasi:</strong> "Change the creature to a towering spider with multiple eyes and sharp mandibles. Continuously sprouting web that traps nearby running people. People are screaming."<br>
+    <strong>Parameter Lanjutan:</strong> "Video Style: Analog/Film Grain, Time of Day: Dusk"<br>
+    <strong>Hasil:</strong> "[Wide shot] of a towering spider with multiple glowing eyes and sharp mandibles. The spider continuously sprouts webs that trap nearby running people, who are screaming, in a dense forest at dusk. [The camera slowly zooms in from a handheld perspective behind the trees, capturing the chaos and tension]. Style: Analog look with a cold, green-gray palette, utilizing fog particles to enhance atmosphere with film grain at 0%. Lighting captures the eerie dusk ambiance. Audio: Light wind rustles leaves, distant bird cries mix with the panic-stricken screams, and subtle whisper-like sounds fill the air. (No film grain) --ar 16:9" 
+</div>
+                    `;
+                } else {
+                    title.textContent = 'Remix Tab - Best Practices';
+                    content.innerHTML = `
+                        <h4>🎛️ What is the Remix Feature?</h4>
+                        <p>The Remix feature takes any existing prompt (from social media, other generators, or previous creations) and creates intelligent variations based on your specific instructions. Perfect for adapting viral prompts, exploring creative alternatives, or fine-tuning existing concepts. 
 (PS: It also enhances the output prompt automatically. How cool is that?)</p>
-                    
-                    <h4>📝 How to Use Effectively:</h4>
-                    <ul>
-                        <li><strong>Paste Original:</strong> Copy any existing prompt into "Original Prompt" field</li>
-                        <li><strong>Specify Changes:</strong> Clearly describe modifications in "How to Vary This Prompt" field</li>
-                        <li><strong>Choose Mode:</strong> Toggle between Simple and Advanced remix modes</li>
-                        <li><strong>Be Specific:</strong> The more detailed your variation instructions, the more precise the output</li>
-                    </ul>
-                    
-                    <h4>🔀 Simple vs Advanced Mode:</h4>
+                        
+                        <h4>📝 How to Use Effectively:</h4>
+                        <ul>
+                            <li><strong>Paste Original:</strong> Copy any existing prompt into "Original Prompt" field</li>
+                            <li><strong>Specify Changes:</strong> Clearly describe modifications in "How to Vary This Prompt" field</li>
+                            <li><strong>Choose Mode:</strong> Toggle between Simple and Advanced remix modes</li>
+                            <li><strong>Be Specific:</strong> The more detailed your variation instructions, the more precise the output</li>
+                        </ul>
+                        
+                        <h4>🔀 Simple vs Advanced Mode:</h4>
 <ul>
     <li><strong>Simple Mode:</strong> 
         <ul>
@@ -3109,8 +3297,8 @@
         </ul>
     </li>
 </ul>
-                    
-                    <h4>💡 Pro Remix Tips:</h4>
+                        
+                        <h4>💡 Pro Remix Tips:</h4>
 <ul>
     <li><strong>Viral Adaptation:</strong> Take trending prompts and add your unique twist</li>
     <li><strong>Incremental Changes:</strong> Change one element at a time for controlled experimentation</li>
@@ -3119,15 +3307,16 @@
     <li><strong>Dialogue Integration:</strong> Add character voices and specific lines to existing visual prompts</li>
     <li><strong>Creative Conflicts:</strong> Intentionally mix contradictory elements for surprising artistic results</li>
 </ul>
-                    
-                    <div class="example">
+                        
+                        <div class="example">
     <strong>Advanced Mode Example:</strong><br>
     <strong>Original:</strong> "A towering creature resembling a pine tree with multiple glowing eyes stands still in the dense forest fog. The camera slowly zooms in from a handheld perspective behind the trees. Add light wind, distant bird cries, and subtle whisper-like sounds. Cold green-gray palette with fog particles and grain. 8 seconds, unsettling and meditative."<br>
     <strong>Variation:</strong> "Change the creature to a towering spider with multiple eyes and sharp mandibles. Continuously sprouting web that traps nearby running people. People are screaming."<br>
     <strong>Advanced Parameters:</strong> "Video Style: Analog/Film Grain, Time of Day: Dusk"<br>
     <strong>Result:</strong> "[Wide shot] of a towering spider with multiple glowing eyes and sharp mandibles. The spider continuously sprouts webs that trap nearby running people, who are screaming, in a dense forest at dusk. [The camera slowly zooms in from a handheld perspective behind the trees, capturing the chaos and tension]. Style: Analog look with a cold, green-gray palette, utilizing fog particles to enhance atmosphere with film grain at 0%. Lighting captures the eerie dusk ambiance. Audio: Light wind rustles leaves, distant bird cries mix with the panic-stricken screams, and subtle whisper-like sounds fill the air. (No film grain) --ar 16:9" 
 </div>
-                `;
+                    `;
+                }
             }
             
             modal.style.display = 'block';
@@ -3151,13 +3340,19 @@
             // Validate description field
             const description = document.getElementById("description").value.trim();
             if (!description) {
-                showError("Please enter a prompt description before generating.");
+                const message = currentLang === 'id' ? 
+                    "Silakan masukkan deskripsi prompt sebelum generate." : 
+                    "Please enter a prompt description before generating.";
+                showError(message);
                 return;
             }
             
             // Check if user is logged in
             if (!window.currentUID) {
-                showError("Please sign in to use this feature.");
+                const message = currentLang === 'id' ? 
+                    "Silakan masuk untuk menggunakan fitur ini." : 
+                    "Please sign in to use this feature.";
+                showError(message);
                 return;
             }
             
@@ -3196,7 +3391,8 @@
 
             console.log("Sending payload:", payload);
 
-            document.getElementById("enhanceOutput").innerText = "⏳ Generating...";
+            const generatingText = currentLang === 'id' ? "⏳ Sedang membuat..." : "⏳ Generating...";
+            document.getElementById("enhanceOutput").innerText = generatingText;
             document.getElementById("enhanceOutputSection").classList.remove("hidden");
 
             try {
@@ -3226,7 +3422,10 @@
                 }
             } catch (error) {
                 console.error('Network error:', error);
-                showError("Error connecting to server. Please check your internet connection and try again.");
+                const message = currentLang === 'id' ? 
+                    "Error menghubungkan ke server. Silakan periksa koneksi internet dan coba lagi." : 
+                    "Error connecting to server. Please check your internet connection and try again.";
+                showError(message);
                 document.getElementById("enhanceOutputSection").classList.add("hidden");
             }
         }
@@ -3239,18 +3438,27 @@
             const variationInstructions = document.getElementById("variationInstructions").value.trim();
             
             if (!originalPrompt) {
-                showError("Please enter an original prompt to remix.");
+                const message = currentLang === 'id' ? 
+                    "Silakan masukkan prompt asli untuk diremix." : 
+                    "Please enter an original prompt to remix.";
+                showError(message);
                 return;
             }
             
             if (!variationInstructions) {
-                showError("Please specify how you want to vary the prompt.");
+                const message = currentLang === 'id' ? 
+                    "Silakan tentukan bagaimana Anda ingin mengubah prompt." : 
+                    "Please specify how you want to vary the prompt.";
+                showError(message);
                 return;
             }
             
             // Check if user is logged in
             if (!window.currentUID) {
-                showError("Please sign in to use this feature.");
+                const message = currentLang === 'id' ? 
+                    "Silakan masuk untuk menggunakan fitur ini." : 
+                    "Please sign in to use this feature.";
+                showError(message);
                 return;
             }
             
@@ -3297,7 +3505,8 @@
 
             console.log("Sending remix payload:", payload);
 
-            document.getElementById("remixOutput").innerText = "⏳ Remixing...";
+            const remixingText = currentLang === 'id' ? "⏳ Sedang meremix..." : "⏳ Remixing...";
+            document.getElementById("remixOutput").innerText = remixingText;
             document.getElementById("remixOutputSection").classList.remove("hidden");
 
             try {
@@ -3327,7 +3536,10 @@
                 }
             } catch (error) {
                 console.error('Network error:', error);
-                showError("Error connecting to server. Please check your internet connection and try again.");
+                const message = currentLang === 'id' ? 
+                    "Error menghubungkan ke server. Silakan periksa koneksi internet dan coba lagi." : 
+                    "Error connecting to server. Please check your internet connection and try again.";
+                showError(message);
                 document.getElementById("remixOutputSection").classList.add("hidden");
             }
         }
@@ -3370,12 +3582,14 @@
 
         function showCopyFeedback() {
             // Show popup notification
-            showPopupNotification('✅ Copied to clipboard!', 'success');
+            const message = currentLang === 'id' ? '✅ Disalin ke clipboard!' : '✅ Copied to clipboard!';
+            showPopupNotification(message, 'success');
             
             // Also change button text briefly
             const button = event.target;
             const originalText = button.innerHTML;
-            button.innerHTML = '✅ Copied!';
+            const copiedText = currentLang === 'id' ? '✅ Disalin!' : '✅ Copied!';
+            button.innerHTML = copiedText;
             const originalBg = button.style.backgroundColor;
             button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
             
@@ -3430,7 +3644,8 @@
                 if (data.quota !== undefined) {
                     const quotaDisplay = document.getElementById("quotaDisplay");
                     if (quotaDisplay) {
-                        quotaDisplay.textContent = `🎟️ ${data.quota} prompts left`;
+                        const promptText = currentLang === 'id' ? 'prompt tersisa' : 'prompts left';
+                        quotaDisplay.innerHTML = `🎟️ ${data.quota} <span data-id="prompt tersisa" data-en="prompts left">${promptText}</span>`;
                     }
                     
                     // Update menu stats if visible
@@ -3469,12 +3684,13 @@
                     const recentActivity = document.getElementById("recentActivity");
                     if (data.recentActivity && data.recentActivity.length > 0) {
                         recentActivity.innerHTML = data.recentActivity.map(activity => `
-                            <div style="padding: 8px; border-bottom: 1px solid rgba(99, 102, 241, 0.2);">
+                            <div style="padding: 8px; border-bottom: 1px solid var(--border-primary);">
                                 <strong>${activity.type}</strong> - ${activity.date}
                             </div>
                         `).join('');
                     } else {
-                        recentActivity.innerHTML = '<p style="color: #94a3b8; font-style: italic;">No recent activity</p>';
+                        const noActivityText = currentLang === 'id' ? 'Tidak ada aktivitas terbaru' : 'No recent activity';
+                        recentActivity.innerHTML = `<p style="color: var(--text-secondary); font-style: italic;">${noActivityText}</p>`;
                     }
                 }
             } catch (error) {
@@ -3489,12 +3705,14 @@
             const user = firebase.auth().currentUser;
 
             if (!uid || !code || !user || !user.email) {
-                showPopupNotification("❌ Please enter a code and sign in.", 'error');
+                const message = currentLang === 'id' ? "❌ Silakan masukkan kode dan masuk." : "❌ Please enter a code and sign in.";
+                showPopupNotification(message, 'error');
                 return;
             }
 
             const redeemStatus = document.getElementById('redeemStatus');
-            redeemStatus.innerHTML = '⏳ Redeeming code...';
+            const redeemingText = currentLang === 'id' ? '⏳ Meredeem kode...' : '⏳ Redeeming code...';
+            redeemStatus.innerHTML = redeemingText;
 
             try {
                 const response = await fetch(`${API_BASE_URL}/redeem-code`, {
@@ -3505,9 +3723,17 @@
 
                 const data = await response.json();
                 if (data.success) {
-                    showPopupNotification(`✅ Code redeemed! +${data.added} prompts added.`, 'success');
+                    const message = currentLang === 'id' ? 
+                        `✅ Kode berhasil diredeem! +${data.added} prompt ditambahkan.` : 
+                        `✅ Code redeemed! +${data.added} prompts added.`;
+                    showPopupNotification(message, 'success');
                     document.getElementById('redeemCodeInput').value = '';
-                    redeemStatus.innerHTML = `<span style="color: #10b981;">✅ Successfully redeemed! +${data.added} prompts added.</span>`;
+                    
+                    const successText = currentLang === 'id' ? 
+                        `<span style="color: #10b981;">✅ Berhasil diredeem! +${data.added} prompt ditambahkan.</span>` : 
+                        `<span style="color: #10b981;">✅ Successfully redeemed! +${data.added} prompts added.</span>`;
+                    redeemStatus.innerHTML = successText;
+                    
                     await updateQuotaCounter();
                     loadUserStats(); // Refresh stats
                 } else {
@@ -3516,8 +3742,13 @@
                 }
             } catch (err) {
                 console.error("Redeem failed", err);
-                showPopupNotification("⚠️ Network error", 'warning');
-                redeemStatus.innerHTML = '<span style="color: #f59e0b;">⚠️ Network error. Please try again.</span>';
+                const message = currentLang === 'id' ? "⚠️ Kesalahan jaringan" : "⚠️ Network error";
+                showPopupNotification(message, 'warning');
+                
+                const errorText = currentLang === 'id' ? 
+                    '<span style="color: #f59e0b;">⚠️ Kesalahan jaringan. Silakan coba lagi.</span>' : 
+                    '<span style="color: #f59e0b;">⚠️ Network error. Please try again.</span>';
+                redeemStatus.innerHTML = errorText;
             }
         }
 
@@ -3572,12 +3803,12 @@
                     const tbody = document.getElementById('usersTableBody');
                     tbody.innerHTML = data.users.map(user => `
                         <tr>
-                            <td style="color: #e2e8f0;">${user.email || 'N/A'}</td>
-                            <td style="font-family: monospace; font-size: 12px; color: #e2e8f0;">${user.uid}</td>
-                            <td style="color: #e2e8f0;">${user.quota || 0}</td>
-                            <td style="color: #e2e8f0;">${user.usedToday || 0}</td>
-                            <td style="color: #e2e8f0;">${user.lastUseDate || 'Never'}</td>
-                            <td style="color: #e2e8f0;">${user.totalGenerated || 0}</td>
+                            <td style="color: var(--text-primary);">${user.email || 'N/A'}</td>
+                            <td style="font-family: monospace; font-size: 12px; color: var(--text-primary);">${user.uid}</td>
+                            <td style="color: var(--text-primary);">${user.quota || 0}</td>
+                            <td style="color: var(--text-primary);">${user.usedToday || 0}</td>
+                            <td style="color: var(--text-primary);">${user.lastUseDate || 'Never'}</td>
+                            <td style="color: var(--text-primary);">${user.totalGenerated || 0}</td>
                             <td>
                                 <button class="copy-btn" onclick="viewUserDetails('${user.uid}')" style="margin: 0;">View</button>
                             </td>
@@ -3717,10 +3948,10 @@
                         : '<li>No codes redeemed</li>';
                         
                     resultDiv.innerHTML = `
-                        <div style="background: rgba(30, 32, 42, 0.8); padding: 16px; border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.3); color: #e2e8f0;">
-                            <h4 style="margin-top: 0; color: #e2e8f0;">User Details</h4>
+                        <div style="background: var(--bg-input); padding: 16px; border-radius: 8px; border: 1px solid var(--border-secondary); color: var(--text-primary);">
+                            <h4 style="margin-top: 0; color: var(--text-primary);">User Details</h4>
                             <p><strong>Email:</strong> ${data.email}</p>
-                            <p><strong>UID:</strong> <code style="font-size: 12px; background: rgba(15, 16, 25, 0.6); padding: 2px 4px; border-radius: 4px;">${lookup.uid}</code></p>
+                            <p><strong>UID:</strong> <code style="font-size: 12px; background: var(--bg-tertiary); padding: 2px 4px; border-radius: 4px;">${lookup.uid}</code></p>
                             <p><strong>Current Quota:</strong> ${data.quota}</p>
                             <p><strong>Used Today:</strong> ${data.usedToday}</p>
                             <p><strong>Last Use:</strong> ${data.lastUseDate}</p>
@@ -3743,11 +3974,23 @@
         }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Load user preferences first
+  loadUserPreferences();
+
   // Collapse Advanced sections by default
   document.getElementById("enhanceAdvanced").style.display = "none";
   document.getElementById("remixAdvanced").style.display = "none";
   document.getElementById("enhanceVideoGallery").style.display = "none";
   document.getElementById("remixVideoGallery").style.display = "none";
+
+  // Listen for system theme changes if in auto mode
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      if (currentTheme === 'auto') {
+        applyTheme('auto');
+      }
+    });
+  }
 
   // Firebase Auth
   const firebaseConfig = {
@@ -3791,7 +4034,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Basic validation
     if (!formData.name || !formData.email || !formData.category || !formData.subject || !formData.message) {
-      showPopupNotification('❌ Please fill in all required fields.', 'error');
+      const message = currentLang === 'id' ? 
+        '❌ Silakan isi semua field yang wajib.' : 
+        '❌ Please fill in all required fields.';
+      showPopupNotification(message, 'error');
       return;
     }
 
@@ -3806,7 +4052,10 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("User signed in:", result.user);
     } catch (error) {
       console.error("Login error:", error);
-      showPopupNotification(`Login failed: ${error.message}`, 'error');
+      const message = currentLang === 'id' ? 
+        `Login gagal: ${error.message}` : 
+        `Login failed: ${error.message}`;
+      showPopupNotification(message, 'error');
     }
   });
 
@@ -3817,7 +4066,10 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("User signed out");
     } catch (error) {
       console.error("Logout error:", error);
-      showPopupNotification(`Logout failed: ${error.message}`, 'error');
+      const message = currentLang === 'id' ? 
+        `Logout gagal: ${error.message}` : 
+        `Logout failed: ${error.message}`;
+      showPopupNotification(message, 'error');
     }
   });
 
